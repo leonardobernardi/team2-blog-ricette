@@ -1,6 +1,7 @@
 package org.generation.italy.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
@@ -44,6 +46,31 @@ public class Ricetta {
 	
 	@ManyToOne
 	private Categoria categoria;
+	
+	
+	@OneToMany(mappedBy = "ricetta")
+	private List<IngredientiRicetta> ingredienti;
+	
+	private Boolean isVegan;
+	private Boolean isVegetarian;
+	
+	
+
+	public Boolean getIsVegan() {
+		return isVegan;
+	}
+
+	public void setIsVegan(Boolean isVegan) {
+		this.isVegan = isVegan;
+	}
+
+	public Boolean getIsVegetarian() {
+		return isVegetarian;
+	}
+
+	public void setIsVegetarian(Boolean isVegetarian) {
+		this.isVegetarian = isVegetarian;
+	}
 
 	public Integer getId() {
 		return id;
@@ -107,6 +134,14 @@ public class Ricetta {
 
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
+	}
+
+	public List<IngredientiRicetta> getIngredienti() {
+		return ingredienti;
+	}
+
+	public void setIngredienti(List<IngredientiRicetta> ingredienti) {
+		this.ingredienti = ingredienti;
 	}
 	
 	
