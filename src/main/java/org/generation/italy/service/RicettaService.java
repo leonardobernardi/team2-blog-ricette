@@ -36,7 +36,7 @@ public class RicettaService {
 		List<Ricetta> lista = repo.findAll(Sort.by("dataDiCreazione"));
 		List<Ricetta> piuRecenti = null;
 		int i = 0;
-		while(i < 5 && i < lista.size()) {
+		while(i < 6 && i < lista.size()) {
 			piuRecenti.add(lista.get(i));
 			i++;
 		}
