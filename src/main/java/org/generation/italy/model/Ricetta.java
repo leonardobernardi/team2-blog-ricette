@@ -1,0 +1,115 @@
+package org.generation.italy.model;
+
+import java.time.LocalDateTime;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
+@Entity
+public class Ricetta {
+
+	@Id
+	@GeneratedValue (strategy = GenerationType.IDENTITY)
+	private Integer id;
+	
+	@NotNull
+	@NotEmpty
+	private String titolo;
+	
+	@NotNull
+	@NotEmpty
+	private String tempoDiPreparazione;
+	
+	@NotNull
+	@Min(value=1)
+	@Max(value=5)
+	private Integer livelloDiDifficolta;
+	
+	@NotNull
+	@NotEmpty
+	@Lob
+	private String testoDellaRicetta;
+	
+	private LocalDateTime dataDiCreazione;
+	
+	private Integer visualizzazioni;	
+	
+	@ManyToOne
+	private Categoria categoria;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getTitolo() {
+		return titolo;
+	}
+
+	public void setTitolo(String titolo) {
+		this.titolo = titolo;
+	}
+
+	public String getTempoDiPreparazione() {
+		return tempoDiPreparazione;
+	}
+
+	public void setTempoDiPreparazione(String tempoDiPreparazione) {
+		this.tempoDiPreparazione = tempoDiPreparazione;
+	}
+
+	public Integer getLivelloDiDifficolta() {
+		return livelloDiDifficolta;
+	}
+
+	public void setLivelloDiDifficolta(Integer livelloDiDifficolta) {
+		this.livelloDiDifficolta = livelloDiDifficolta;
+	}
+
+	public String getTestoDellaRicetta() {
+		return testoDellaRicetta;
+	}
+
+	public void setTestoDellaRicetta(String testoDellaRicetta) {
+		this.testoDellaRicetta = testoDellaRicetta;
+	}
+
+	public LocalDateTime getDataDiCreazione() {
+		return dataDiCreazione;
+	}
+
+	public void setDataDiCreazione(LocalDateTime dataDiCreazione) {
+		this.dataDiCreazione = dataDiCreazione;
+	}
+
+	public Integer getVisualizzazioni() {
+		return visualizzazioni;
+	}
+
+	public void setVisualizzazioni(Integer visualizzazioni) {
+		this.visualizzazioni = visualizzazioni;
+	}
+
+	public Categoria getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
+	
+	
+	
+	
+}
