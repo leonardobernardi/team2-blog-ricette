@@ -1,35 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <div th:replace="fragments/resources :: headTags"></div>
     <link rel="stylesheet" href="style.css">
-    <title>Dettaglio Ricetta</title>
+    <title th:text="${ricetta.titolo}">Ricetta</title>
 </head>
 
 <body class="bg-light">
     <div th:replace="fragments/navbar :: navbar"></div>
     <div class="container flex ">
         <div class="flex-row justify-content-center">
-            <h1 class="text-center">Amatriciana</h1>
+            <h1 th:text="${ricetta.titolo}" class="text-center"></h1>
+            <span>la ricetta è stata visualizzata</span>
+            <span th:text="${ricetta.visualizzazioni}"> volte</span>
         </div>
         <div class="row justify-content-start">
             <h5>Descrizione</h5>
-            <div class="col-8 p-2">
+            <div class="col p-2">
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ultricies pellentesque lectus,
-                    condimentum gravida leo fringilla non. Suspendisse volutpat ultricies ex et tempor. Aenean porttitor
-                    gravida diam, nec auctor lectus accumsan non. Nulla facilisi. Sed gravida tellus nec lectus blandit
-                    pharetra. Suspendisse finibus condimentum leo id maximus. Nulla et metus sed dolor varius aliquam
-                    nec quis metus. Phasellus a magna massa. Nullam ultrices blandit arcu ut faucibus. Mauris
-                    sollicitudin justo maximus, dignissim arcu mollis, blandit odio. Aenean et sapien varius, ornare
-                    neque at, semper ipsum. Nam aliquet rhoncus mauris, et mattis tellus semper elementum. Cras quam
-                    ante, dictum sed metus sit amet, tincidunt volutpat ligula.</p>
-            </div>
-            <div class="col-3">
-                <img class="p-0" style="width:250px"
-                    src="https://media.istockphoto.com/photos/pasta-bucatini-amatriciana-picture-id1022198442?b=1&k=20&m=1022198442&s=170667a&w=0&h=2MXj1Gh0pEsj6nWO_pqny0hN5xmigY01D84iX69qXuw="
-                    alt="ricetta-foto">
+                <p th:text="${ricetta.descrizioneDellaRicetta}"></p>
             </div>
         </div>
         <hr>
@@ -45,28 +35,17 @@
                 </ol>
             </div>
             <div class="col-3 p-2">
-                <img class="p-0" style="width:250px"
-                    src="https://media.istockphoto.com/photos/pasta-bucatini-amatriciana-picture-id1022198442?b=1&k=20&m=1022198442&s=170667a&w=0&h=2MXj1Gh0pEsj6nWO_pqny0hN5xmigY01D84iX69qXuw="
-                    alt="ingerdiente1">
-            </div>
-            <div class="col-3 p-2">
-                <img class="p-0" style="width:250px"
-                    src="https://media.istockphoto.com/photos/pasta-bucatini-amatriciana-picture-id1022198442?b=1&k=20&m=1022198442&s=170667a&w=0&h=2MXj1Gh0pEsj6nWO_pqny0hN5xmigY01D84iX69qXuw="
-                    alt="ingrediente2">
+                <img class="p-0" style="width:250px" th:src="${ingrediente.img}" alt="ingerdienteimg">
             </div>
         </div>
         <hr>
         <div class="row justify-content-start">
             <h5>Procedimento</h5>
-            <div class="col p-2">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ultricies pellentesque lectus,
-                    condimentum gravida leo fringilla non. Suspendisse volutpat ultricies ex et tempor. Aenean porttitor
-                    gravida diam, nec auctor lectus accumsan non. Nulla facilisi. Sed gravida tellus nec lectus blandit
-                    pharetra. Suspendisse finibus condimentum leo id maximus. Nulla et metus sed dolor varius aliquam
-                    nec quis metus. Phasellus a magna massa. Nullam ultrices blandit arcu ut faucibus. Mauris
-                    sollicitudin justo maximus, dignissim arcu mollis, blandit odio. Aenean et sapien varius, ornare
-                    neque at, semper ipsum. Nam aliquet rhoncus mauris, et mattis tellus semper elementum. Cras quam
-                    ante, dictum sed metus sit amet, tincidunt volutpat ligula.</p>
+            <div class="col-8 p-2">
+                <p th:text="${ricetta.testoDellaRicetta}"></p>
+            </div>
+            <div class="col-3">
+                <img th:src="${img1}" class="p-0" style="width:250px" alt="ricetta-foto">
             </div>
         </div>
     </div>
@@ -86,20 +65,23 @@
                 <label for="commento" classe="form-label">Commenta</label>
                 <input type="text" class="form-control" id="commento" placeholder="commento">
             </div>
+            <div class="row p-3">
+                <input type="submit" class="btn btn-light">
+            </div>
 
         </div>
         </form>
         <div class="col">
 
-            <div class="row mt-5"></div>
-            <h5>Commenti di altri utenti</h5>
-            <div class="border rounded-2 p-3">
-                <span>GinoPaoli@gmial.com</span>
-                <p>Best Pasta ever</p>
-                <i class="bi bi-hand-thumbs-up">32</i>
-                <i class="bi bi-chat ps-2">5</i>
+
+            <div th:if="${list.size() > 0}" class="row mt-5">
+                <h5>Commenti di altri utenti</h5>
+                <div th:each ="item : ${list}" class="border rounded-2 p-3">
+                    <span th:text="${item.email}"></span>
+                    <p th:text="${item.testo}"></p>
+                </div>
             </div>
-<hr>
+            <hr>
 </body>
 
 </html>

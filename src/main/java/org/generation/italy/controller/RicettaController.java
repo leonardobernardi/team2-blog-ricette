@@ -25,7 +25,7 @@ public class RicettaController {
 	@GetMapping
 	public String mostRecent(Model model) {
 		model.addAttribute("lista", service.findFiveMostRecent());
-		return "ricetta/dettagli";
+		return "index";
 	}
 	//Create
 		@GetMapping("/admin/ricetta/crea")
