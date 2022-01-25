@@ -3,6 +3,7 @@ package org.generation.italy.model;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,6 +35,11 @@ public class Ricetta {
 	@Min(value=1)
 	@Max(value=5)
 	private Integer livelloDiDifficolta;
+	
+	@NotNull
+	@NotEmpty
+	@Column(length=250)
+	private String descrizione;
 	
 	@NotNull
 	@NotEmpty
