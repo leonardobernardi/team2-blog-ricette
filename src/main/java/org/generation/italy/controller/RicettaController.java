@@ -2,6 +2,8 @@ package org.generation.italy.controller;
 
 import javax.validation.Valid;
 
+import org.generation.italy.model.Commento;
+import org.generation.italy.model.Immagine;
 import org.generation.italy.model.Ricetta;
 import org.generation.italy.service.RicettaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +50,11 @@ public class RicettaController {
 		@GetMapping("/ricetta/{id}")
 		public String detail(@PathVariable("id") Integer id, Model model) {
 			service.visualizzazioniPiuUno(service.getById(id));
-			model.addAttribute("ricetta", service.getById(id));			
+			model.addAttribute("ricetta", service.getById(id));		
+			model.addAttribute("commento", new Commento());
+			for(Immagine img : service.getById(id).getImmagini()) {
+				model.addAttribute("img" + service.getById(id).getImmagini().indexOf(img), img);
+			}
 			return "ricetta/dettagli";
 		}
 		

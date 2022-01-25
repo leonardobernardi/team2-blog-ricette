@@ -14,7 +14,7 @@ public class Immagine {
 	private Integer id;
 	
 	@Lob
-	private byte[] immagine;
+	private byte[] content;
 	
 	@ManyToOne
 	private Ricetta ricetta;
@@ -27,12 +27,12 @@ public class Immagine {
 		this.id = id;
 	}
 
-	public byte[] getImmagine() {
-		return immagine;
+	public byte[] getContent() {
+		return content;
 	}
 
-	public void setImmagine(byte[] immagine) {
-		this.immagine = immagine;
+	public void setContent(byte[] content) {
+		this.content = content;
 	}
 
 	public Ricetta getRicetta() {

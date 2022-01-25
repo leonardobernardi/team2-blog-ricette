@@ -3,7 +3,9 @@ package org.generation.italy.service;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 
+import org.generation.italy.model.Immagine;
 import org.generation.italy.model.IngredientiRicetta;
 import org.generation.italy.model.Ricetta;
 import org.generation.italy.repository.RicettaRepository;
@@ -115,6 +117,14 @@ public class RicettaService {
 		}
 		return piuRecenti;			
 	}
+	
+//	public Immagine getARandomImg(Ricetta ricetta) {
+//		List<Immagine> list = ricetta.getImmagini();
+//		Random rng = new Random();
+//		int upperbound = list.size();
+//		int intRng = rng.nextInt(upperbound);
+//		return list.get(intRng);
+//	}
 	
 	//Update
 	public Ricetta update(Ricetta ricetta) {
