@@ -51,10 +51,22 @@ public class Ricetta {
 	@OneToMany(mappedBy = "ricetta")
 	private List<IngredientiRicetta> ingredienti;
 	
+	@OneToMany(mappedBy = "ricetta")
+	private List<Commento> commenti;
+	
 	private Boolean isVegan;
 	private Boolean isVegetarian;
 	
 	
+
+	
+	public List<Commento> getCommenti() {
+		return commenti;
+	}
+
+	public void setCommenti(List<Commento> commenti) {
+		this.commenti = commenti;
+	}
 
 	public Boolean getIsVegan() {
 		return isVegan;

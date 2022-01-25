@@ -1,6 +1,7 @@
 package org.generation.italy.service;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 
 import org.generation.italy.model.IngredientiRicetta;
@@ -75,6 +76,28 @@ public class RicettaService {
 			i++;
 		}
 		return piuVisualizzate;	
+	}
+	
+	Comparator<Ricetta> compareByComments = new Comparator<Ricetta>() {
+		@Override
+		public int compare(Ricetta o1, Ricetta o2) {
+			Integer o1Size = o1.getCommenti().size();
+			Integer o2Size = o2.getCommenti().size();
+			return o1Size.compareTo(o2Size);
+		}
+	};
+	
+	@SuppressWarnings("null")
+	public List<Ricetta> findMostCommented(){
+		List<Ricetta> list = repo.findAll();
+		List<Ricetta> piuCommentate = null;
+		list.sort(compareByComments);
+		int i = 0;
+		while(i < 6 && i < list.size()) {
+			piuCommentate.add(list.get(i));
+			i++;
+		}
+		return piuCommentate;
 	}
 	
 	@SuppressWarnings("null")
