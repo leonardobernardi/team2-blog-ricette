@@ -47,6 +47,9 @@ public class Ricetta {
 	@ManyToOne
 	private Categoria categoria;
 	
+	@OneToMany(mappedBy="ricetta")
+	private List<Immagine> immagini;
+	
 	
 	@OneToMany(mappedBy = "ricetta")
 	private List<IngredientiRicetta> ingredienti;
@@ -60,6 +63,14 @@ public class Ricetta {
 	
 
 	
+	public List<Immagine> getImmagini() {
+		return immagini;
+	}
+
+	public void setImmagini(List<Immagine> immagini) {
+		this.immagini = immagini;
+	}
+
 	public List<Commento> getCommenti() {
 		return commenti;
 	}
