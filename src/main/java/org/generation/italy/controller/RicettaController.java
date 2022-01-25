@@ -47,6 +47,7 @@ public class RicettaController {
 		//Read
 		@GetMapping("/ricetta/{id}")
 		public String detail(@PathVariable("id") Integer id, Model model) {
+			service.visualizzazioniPiuUno(service.getById(id));
 			model.addAttribute("ricetta", service.getById(id));			
 			return "ricetta/dettagli";
 		}

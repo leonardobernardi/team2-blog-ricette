@@ -62,6 +62,10 @@ public class RicettaService {
 		}
 	}
 	
+	public List<Ricetta> findByTitolo(String keyword){
+		return repo.findByTitoloContainingIgnoreCaseOrderByDataDiCreazione(keyword);
+	}
+	
 	public List<Ricetta> findLastSevenDays(){
 		return repo.findLastSevenDays();
 	}
@@ -120,6 +124,11 @@ public class RicettaService {
 		ricetta.setVisualizzazioni(visualizzazioni);
 		ricetta.setIsVegan(isVegan(ricetta));
 		ricetta.setIsVegetarian(isVegetarian(ricetta));
+		return repo.save(ricetta);
+	}
+	
+	public Ricetta visualizzazioniPiuUno(Ricetta ricetta) {
+		ricetta.setVisualizzazioni(ricetta.getVisualizzazioni() + 1);
 		return repo.save(ricetta);
 	}
 	
