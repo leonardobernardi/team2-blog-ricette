@@ -8,6 +8,7 @@ import org.generation.italy.model.Ricetta;
 import org.generation.italy.repository.RicettaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -60,17 +61,32 @@ public class RicettaService {
 		}
 	}
 	
+	public List<Ricetta> findLastSevenDays(){
+		return repo.findLastSevenDays();
+	}
+	
+	@SuppressWarnings("null")
+	public List<Ricetta> findMostViewed(){
+		List<Ricetta> lista = repo.findAll(Sort.by(Direction.DESC, "visualizzazioni"));
+		List<Ricetta> piuVisualizzate = null;
+		int i = 0;
+		while(i < 10 && i < lista.size()) {
+			piuVisualizzate.add(lista.get(i));
+			i++;
+		}
+		return piuVisualizzate;	
+	}
+	
 	@SuppressWarnings("null")
 	public List<Ricetta> findFiveMostRecent(){
-		List<Ricetta> lista = repo.findAll(Sort.by("dataDiCreazione"));
+		List<Ricetta> lista = repo.findAll(Sort.by(Direction.DESC, "dataDiCreazione"));
 		List<Ricetta> piuRecenti = null;
 		int i = 0;
 		while(i < 6 && i < lista.size()) {
 			piuRecenti.add(lista.get(i));
 			i++;
 		}
-		return piuRecenti;
-			
+		return piuRecenti;			
 	}
 	
 	//Update
