@@ -1,13 +1,16 @@
 package org.generation.italy.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
@@ -35,6 +38,11 @@ public class Ricetta {
 	
 	@NotNull
 	@NotEmpty
+	@Column(length=250)
+	private String descrizione;
+	
+	@NotNull
+	@NotEmpty
 	@Lob
 	private String testoDellaRicetta;
 	
@@ -44,6 +52,54 @@ public class Ricetta {
 	
 	@ManyToOne
 	private Categoria categoria;
+	
+	@OneToMany(mappedBy="ricetta")
+	private List<Immagine> immagini;
+	
+	
+	@OneToMany(mappedBy = "ricetta")
+	private List<IngredientiRicetta> ingredienti;
+	
+	@OneToMany(mappedBy = "ricetta")
+	private List<Commento> commenti;
+	
+	private Boolean isVegan;
+	private Boolean isVegetarian;
+	
+	
+
+	
+	public List<Immagine> getImmagini() {
+		return immagini;
+	}
+
+	public void setImmagini(List<Immagine> immagini) {
+		this.immagini = immagini;
+	}
+
+	public List<Commento> getCommenti() {
+		return commenti;
+	}
+
+	public void setCommenti(List<Commento> commenti) {
+		this.commenti = commenti;
+	}
+
+	public Boolean getIsVegan() {
+		return isVegan;
+	}
+
+	public void setIsVegan(Boolean isVegan) {
+		this.isVegan = isVegan;
+	}
+
+	public Boolean getIsVegetarian() {
+		return isVegetarian;
+	}
+
+	public void setIsVegetarian(Boolean isVegetarian) {
+		this.isVegetarian = isVegetarian;
+	}
 
 	public Integer getId() {
 		return id;
@@ -107,6 +163,14 @@ public class Ricetta {
 
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
+	}
+
+	public List<IngredientiRicetta> getIngredienti() {
+		return ingredienti;
+	}
+
+	public void setIngredienti(List<IngredientiRicetta> ingredienti) {
+		this.ingredienti = ingredienti;
 	}
 	
 	

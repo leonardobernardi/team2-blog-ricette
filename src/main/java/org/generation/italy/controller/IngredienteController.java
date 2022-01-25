@@ -24,20 +24,20 @@ public class IngredienteController {
 	
 	// create
 	
-	@GetMapping("/create")
+	@GetMapping("/admin/ingredienti/crea")
 	//temp. "/admin/ingredienti/edit" etc
 	public String create(Model model) {
 		model.addAttribute("edit", false);
 		model.addAttribute("ingrediente", new Ingrediente());
-		return "/admin/ingredienti/edit";
+		return "/admin/ingredienti/dettagli";
 	}
 	
-	@PostMapping("/create")
+	@PostMapping("/admin/ingredienti/crea")
 	public String doCreate(@Valid @ModelAttribute("ingrediente") Ingrediente formIngrediente, BindingResult bindingResult, Model model) {
 
 		if(bindingResult.hasErrors()) {
 			model.addAttribute("edit", false);
-			return "/admin/ingredienti/edit";
+			return "/admin/ingredienti/dettagli";
 		}
 		ingredienteService.create(formIngrediente);
 		return "redirect:/admin/ingredienti";
@@ -45,19 +45,19 @@ public class IngredienteController {
 	
 	// edit
 	
-	@GetMapping("/admin/edit/{id}")
+	@GetMapping("/admin/ingredienti/modifica/{id}")
 	public String edit(@PathVariable("id") Integer id, Model model) {
 		model.addAttribute("edit", true);
 		model.addAttribute("ingrediente", ingredienteService.getById(id));
-		return "/admin/ingredienti/edit";
+		return "/admin/ingredienti/dettagli";
 	}
 	
-	@PostMapping("/edit/{id}")
+	@PostMapping("/admin/ingredienti/modifica/{id}")
 	public String doEdit (@Valid @ModelAttribute("ingrediente") Ingrediente formIngrediente, 
 			BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
 		if(bindingResult.hasErrors()) {
 			model.addAttribute("edit", true);
-			return "/admin/ingredienti/edit";
+			return "/admin/ingredienti/dettagli";
 		}
 		ingredienteService.create(formIngrediente);
 		return "redirect:/admin/ingredienti";
@@ -65,7 +65,7 @@ public class IngredienteController {
 	
 	// delete
 	
-	@GetMapping("/delete/{id}")
+	@GetMapping("/admin/ingredienti/cancella/{id}")
 	public String doDelete(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
 		if(ingredienteService.getById(id) == null) {
 		}
