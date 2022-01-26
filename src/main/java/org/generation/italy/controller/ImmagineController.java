@@ -31,8 +31,8 @@ public class ImmagineController {
 	private ImmagineService service;
 	
 	//temp. using index3
-	@GetMapping
-	public String index3 (Model model) {
+	@GetMapping("/admin/imm/crea")
+	public String index (Model model) {
 		model.addAttribute("immagine", new ImmagineForm());
 		model.addAttribute("list", service.findAll());
 		return "index3";
@@ -59,6 +59,17 @@ public class ImmagineController {
 			e.printStackTrace();
 		}
 		return "redirect:/imm";
+		
+	}
+	
+	//delete
+	@GetMapping("/admin/imm/cancella/{id}")
+	public String delete (@PathVariable("id") Integer id) {
+		if(service.getById(id) == null) {
+		}
+		service.deleteById(id);
+		return "redirect:/imm";
+	
 		
 	}
 	

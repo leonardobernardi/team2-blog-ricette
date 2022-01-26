@@ -32,4 +32,11 @@ public class ImmagineService {
 	public Immagine getById(Integer id) {
 		return repo.getById(id);
 	}
+	
+	//Delete
+	public void deleteById(Integer id) {
+		repo.deleteById(id);
+	}
+	
+	
 }
