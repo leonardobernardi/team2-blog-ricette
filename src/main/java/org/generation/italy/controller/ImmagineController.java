@@ -65,9 +65,9 @@ public class ImmagineController {
 	//delete
 	@GetMapping("/admin/imm/cancella/{id}")
 	public String delete (@PathVariable("id") Integer id) {
-		if(service.getById(id) == null) {
+		if(service.getById(id) != null) {
+			service.deleteById(id);
 		}
-		service.deleteById(id);
 		return "redirect:/imm";
 	
 		
