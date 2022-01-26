@@ -19,7 +19,7 @@
             <h5>Descrizione</h5>
             <div class="col p-2">
 
-                <p th:text="${ricetta.descrizioneDellaRicetta}"></p>
+                <p th:text="#{ricetta.descrizione}"></p>
             </div>
         </div>
         <hr>
@@ -34,9 +34,10 @@
                     <li>Pecorino Romano 30g</li>
                 </ol>
             </div>
-            <div class="col-3 p-2">
+           <!--  <div class="col-3 p-2">
                 <img class="p-0" style="width:250px" th:src="${ingrediente.img}" alt="ingerdienteimg">
             </div>
+        -->
         </div>
         <hr>
         <div class="row justify-content-start">
@@ -45,7 +46,7 @@
                 <p th:text="${ricetta.testoDellaRicetta}"></p>
             </div>
             <div class="col-3">
-                <img th:src="${img1}" class="p-0" style="width:250px" alt="ricetta-foto">
+                <!-- <img th:src="${img1}" class="p-0" style="width:250px" alt="ricetta-foto"> -->
             </div>
         </div>
     </div>
@@ -75,8 +76,8 @@
 
 
             <div th:if="${list.size() > 0}" class="row mt-5">
-                <h5>Commenti di altri utenti</h5>
-                <div th:each ="item : ${list}" class="border rounded-2 p-3">
+                <h5>Commenti di altri utenti</h5>/
+                <div th:each="item : ${list}" class="border rounded-2 p-3">
                     <span th:text="${item.email}"></span>
                     <p th:text="${item.testo}"></p>
                 </div>
