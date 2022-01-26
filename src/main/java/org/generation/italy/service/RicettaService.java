@@ -1,9 +1,9 @@
 package org.generation.italy.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-
 import org.generation.italy.model.IngredientiRicetta;
 import org.generation.italy.model.Ricetta;
 import org.generation.italy.repository.RicettaRepository;
@@ -91,10 +91,9 @@ public class RicettaService {
 		}
 	};
 	
-	@SuppressWarnings("null")
 	public List<Ricetta> findMostCommented(){
 		List<Ricetta> list = repo.findAll();
-		List<Ricetta> piuCommentate = null;
+		List<Ricetta> piuCommentate = new ArrayList<Ricetta>();
 		list.sort(compareByComments);
 		int i = 0;
 		while(i < 6 && i < list.size()) {
@@ -104,10 +103,10 @@ public class RicettaService {
 		return piuCommentate;
 	}
 	
-	@SuppressWarnings("null")
+	
 	public List<Ricetta> findFiveMostRecent(){
 		List<Ricetta> lista = repo.findAll(Sort.by(Direction.DESC, "dataDiCreazione"));
-		List<Ricetta> piuRecenti = null;
+		List<Ricetta> piuRecenti = new ArrayList<Ricetta>();
 		int i = 0;
 		while(i < 6 && i < lista.size()) {
 			piuRecenti.add(lista.get(i));
@@ -115,6 +114,14 @@ public class RicettaService {
 		}
 		return piuRecenti;			
 	}
+	
+//	public Immagine getARandomImg(Ricetta ricetta) {
+//		List<Immagine> list = ricetta.getImmagini();
+//		Random rng = new Random();
+//		int upperbound = list.size();
+//		int intRng = rng.nextInt(upperbound);
+//		return list.get(intRng);
+//	}
 	
 	//Update
 	public Ricetta update(Ricetta ricetta) {

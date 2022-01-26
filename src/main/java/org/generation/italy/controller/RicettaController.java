@@ -1,7 +1,11 @@
 package org.generation.italy.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
+import org.generation.italy.model.Commento;
+import org.generation.italy.model.Immagine;
 import org.generation.italy.model.Ricetta;
 import org.generation.italy.service.RicettaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +28,17 @@ public class RicettaController {
 	//Homepage
 	@GetMapping
 	public String mostRecent(Model model) {
-		model.addAttribute("lista", service.findFiveMostRecent());
-		return "index";
+		List<Ricetta> list = service.findFiveMostRecent();
+		if (list!=null) {
+			for (Ricetta ricetta : list) {
+				if (!ricetta.getImmagini().isEmpty()) {
+					Immagine img = ricetta.getImmagini().get(0);
+					model.addAttribute("img" + list.indexOf(ricetta), img);
+				}
+			}
+			model.addAttribute("lista", service.findFiveMostRecent());
+		}
+		return "/home/index";
 	}
 	//Create
 		@GetMapping("/admin/ricetta/crea")
@@ -41,14 +54,20 @@ public class RicettaController {
 				model.addAttribute("edit", false);
 			}
 			service.create(formRicetta);
-			return "redirect:/index";
+			return "redirect:/home/index";
 		}
 		
 		//Read
 		@GetMapping("/ricetta/{id}")
 		public String detail(@PathVariable("id") Integer id, Model model) {
 			service.visualizzazioniPiuUno(service.getById(id));
-			model.addAttribute("ricetta", service.getById(id));			
+			model.addAttribute("ricetta", service.getById(id));		
+			model.addAttribute("commento", new Commento());
+			if (!service.getById(id).getImmagini().isEmpty()) {
+				for (Immagine img : service.getById(id).getImmagini()) {
+					model.addAttribute("img" + service.getById(id).getImmagini().indexOf(img), img);
+				} 
+			}
 			return "ricetta/dettagli";
 		}
 		
@@ -67,7 +86,7 @@ public class RicettaController {
 				return "ricetta/dettagli";
 			}
 			service.update(formRicetta);
-			return "redirect:/index";
+			return "redirect:/home/index";
 		}
 		
 		//Delete 
@@ -77,6 +96,6 @@ public class RicettaController {
 				//messaggio d'errore
 			}
 			service.deleteById(id);
-			return "redirect:/index";
+			return "redirect:/home/index";
 		}
 }
