@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <div th:replace="fragments/resources :: headTags"></div>
+    <title>Document</title>
+</head>
+<body>
+    <nav th:replace="fragments/navbar :: navbar"></nav>
+    
+    <form id="ricetta-form"
+        th:object="${ricetta}"
+        th:action="${edit} ? @{/admin/ricetta/modifica/{id}(id=${ricetta.id})} : @{/admin/ricetta/crea}"
+        method="post"    
+    >
+    <ul>
+        <li th:each="err : ${#fields.allErrors()}" th:text="${err}" class="text-danger"></li>
+    </ul>
+    <div class="row">
+        <div class="col-8">
+            <div class="row gy-2">
+                <div class="col-12">
+                    <label class="form-label" for="titolo">Titolo</label>
+                    <input type="text" class="form-control" id="titolo" th:field="*{titolo}" th:errorClass="is-invalid">
+                    <div th:if="${#fields.hasErrors('titolo')}" class="invalid-feedback">
+                        <ul>
+                            <li th:each="err : ${#fields.errors('titolo')}" th:text="${err}"></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <label class="form-label" for="tempoDiPreparazione">tempoDiPreparazione</label>
+                    <input type="text" class="form-control" id="tempoDiPreparazione" th:field="*{tempoDiPreparazione}" th:errorClass="is-invalid">
+                    <div th:if="${#fields.hasErrors('tempoDiPreparazione')}" class="invalid-feedback">
+                        <ul>
+                            <li th:each="err : ${#fields.errors('tempoDiPreparazione')}" th:text="${err}"></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <label class="form-label" for="livelloDiDifficolta">livelloDiDifficolta</label>
+                    <input type="number" class="form-control" id="livelloDiDifficolta" th:field="*{livelloDiDifficolta}" th:errorClass="is-invalid">
+                    <div th:if="${#fields.hasErrors('livelloDiDifficolta')}" class="invalid-feedback">
+                        <ul>
+                            <li th:each="err : ${#fields.errors('livelloDiDifficolta')}" th:text="${err}"></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <label class="form-label" for="descrizione">descrizione</label>
+                    <input type="text" class="form-control" id="descrizione" th:field="*{descrizione}" th:errorClass="is-invalid">
+                    <div th:if="${#fields.hasErrors('descrizione')}" class="invalid-feedback">
+                        <ul>
+                            <li th:each="err : ${#fields.errors('descrizione')}" th:text="${err}"></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <label class="form-label" for="testoDellaRicetta">testoDellaRicetta</label>
+                    <input type="text" class="form-control" id="testoDellaRicetta" th:field="*{testoDellaRicetta}" th:errorClass="is-invalid">
+                    <div th:if="${#fields.hasErrors('testoDellaRicetta')}" class="invalid-feedback">
+                        <ul>
+                            <li th:each="err : ${#fields.errors('testoDellaRicetta')}" th:text="${err}"></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <button class="btn btn-primary" type="submit"><i class="fas fa-check"></i> Save</button>
+                    <a class="btn btn-primary" th:href="@{/home/index}"><i class="fas fa-times"></i> Cancel</a>
+                </div>
+    </form>
+</body>
+</html>

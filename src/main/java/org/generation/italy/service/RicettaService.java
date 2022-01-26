@@ -4,7 +4,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import org.generation.italy.model.IngredientiRicetta;
+
+import org.generation.italy.model.Ingrediente;
 import org.generation.italy.model.Ricetta;
 import org.generation.italy.repository.RicettaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +40,8 @@ public class RicettaService {
 	
 	public boolean isVegan(Ricetta ricetta) {
 		if(ricetta != null) {
-			for(IngredientiRicetta i : ricetta.getIngredienti()) {
-				if(!i.getIngrediente().getIsVegan()) {
+			for(Ingrediente i : ricetta.getIngrediente()) {
+				if(!i.getIsVegan()) {
 					return false;
 				}
 			}
@@ -52,8 +53,8 @@ public class RicettaService {
 	
 	public boolean isVegetarian(Ricetta ricetta) {		
 		if(ricetta != null) {			
-			for(IngredientiRicetta i : ricetta.getIngredienti()) {
-				if(!i.getIngrediente().getIsVegetarian()) {
+			for(Ingrediente i : ricetta.getIngrediente()) {
+				if(!i.getIsVegetarian()) {
 					return false;
 				}
 			}
@@ -71,10 +72,9 @@ public class RicettaService {
 		return repo.findLastSevenDays();
 	}
 	
-	@SuppressWarnings("null")
 	public List<Ricetta> findMostViewed(){
 		List<Ricetta> lista = repo.findAll(Sort.by(Direction.DESC, "visualizzazioni"));
-		List<Ricetta> piuVisualizzate = null;
+		List<Ricetta> piuVisualizzate = new ArrayList<Ricetta>();
 		int i = 0;
 		while(i < 10 && i < lista.size()) {
 			piuVisualizzate.add(lista.get(i));

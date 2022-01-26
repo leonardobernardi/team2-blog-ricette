@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -18,6 +19,25 @@ public class Ingrediente {
 	@NotEmpty
 	private String nome;
 	
+	@NotNull
+	@NotEmpty
+	private String quantita;
+	
+	@ManyToOne
+	private Ricetta ricetta;
+	
+	public Ricetta getRicetta() {
+		return ricetta;
+	}
+	public void setRicetta(Ricetta ricetta) {
+		this.ricetta = ricetta;
+	}
+	public String getQuantita() {
+		return quantita;
+	}
+	public void setQuantita(String quantita) {
+		this.quantita = quantita;
+	}
 	private Boolean isVegan;
 	private Boolean isVegetarian;
 	public Integer getId() {

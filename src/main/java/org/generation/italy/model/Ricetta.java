@@ -60,7 +60,7 @@ public class Ricetta {
 	
 	
 	@OneToMany(mappedBy = "ricetta")
-	private List<IngredientiRicetta> ingredienti;
+	private List<Ingrediente> ingrediente;
 	
 	@OneToMany(mappedBy = "ricetta")
 	private List<Commento> commenti;
@@ -183,13 +183,15 @@ public class Ricetta {
 		this.categoria = categoria;
 	}
 
-	public List<IngredientiRicetta> getIngredienti() {
-		return ingredienti;
+	public List<Ingrediente> getIngrediente() {
+		return ingrediente;
 	}
 
-	public void setIngredienti(List<IngredientiRicetta> ingredienti) {
-		this.ingredienti = ingredienti;
+	public void setIngrediente(List<Ingrediente> ingrediente) {
+		this.ingrediente = ingrediente;
 	}
+
+
 	
 	
 	
