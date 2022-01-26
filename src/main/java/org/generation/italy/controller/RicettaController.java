@@ -6,6 +6,8 @@ import javax.validation.Valid;
 
 import org.generation.italy.model.Commento;
 import org.generation.italy.model.Immagine;
+import org.generation.italy.model.Ingrediente;
+import org.generation.italy.model.IngredienteList;
 import org.generation.italy.model.Ricetta;
 import org.generation.italy.service.CommentoService;
 import org.generation.italy.service.RicettaService;
@@ -53,6 +55,11 @@ public class RicettaController {
 	//Create
 		@GetMapping("/admin/ricetta/crea")
 		public String create(Model model) {
+			IngredienteList ingredientiForm = new IngredienteList();
+			for (int i = 0; i < 30; i++) {
+				ingredientiForm.addIngrediente(new Ingrediente());
+			}
+			model.addAttribute("ingredientiForm", ingredientiForm);
 			model.addAttribute("edit", false);
 			model.addAttribute("ricetta", new Ricetta());
 			return "/ricetta/edit";
@@ -84,6 +91,7 @@ public class RicettaController {
 			service.visualizzazioniPiuUno(service.getById(id));
 			model.addAttribute("ricetta", service.getById(id));		
 			model.addAttribute("commento", new Commento());
+			model.addAttribute("list", service.getById(id).getCommenti());
 			if (!service.getById(id).getImmagini().isEmpty()) {
 				for (Immagine img : service.getById(id).getImmagini()) {
 					model.addAttribute("img" + service.getById(id).getImmagini().indexOf(img), img);

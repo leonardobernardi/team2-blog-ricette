@@ -63,6 +63,34 @@
                         </ul>
                     </div>
                 </div>
+                <!-- <div class="col-3" th:object="${ingrediente}">
+                    <label class="form-label" for="nome">Nome ingrediente</label>
+                    <input type="text" class="form-control" id="nome" th:field="*{nome}" th:errorClass="is-invalid">
+                    <div th:if="${#fields.hasErrors('nome')}" class="invalid-feedback">
+                        <ul>
+                            <li th:each="err : ${#fields.errors('nome')}" th:text="${err}"></li>
+                        </ul>
+                    </div>
+                    <label class="form-label" for="quantita">Quantita ingrediente</label>
+                    <input type="text" class="form-control" id="quantita" th:field="*{quantita}" th:errorClass="is-invalid">
+                    <div th:if="${#fields.hasErrors('quantita')}" class="invalid-feedback">
+                        <ul>
+                            <li th:each="err : ${#fields.errors('quantita')}" th:text="${err}"></li>
+                        </ul>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="isVegan">
+                        <label class="form-check-label" for="isVegan">
+                          Vegano?
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="isVegetarian">
+                        <label class="form-check-label" for="isVegetarian">
+                          Vegetariano?
+                        </label>
+                      </div>
+                </div> -->
                 <div class="col-12">
                     <button class="btn btn-primary" type="submit"><i class="fas fa-check"></i> Save</button>
                     <a class="btn btn-primary" th:href="@{/home/index}"><i class="fas fa-times"></i> Cancel</a>
