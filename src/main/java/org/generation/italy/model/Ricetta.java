@@ -36,6 +36,14 @@ public class Ricetta {
 	@Max(value=5)
 	private Integer livelloDiDifficolta;
 	
+	public String getDescrizione() {
+		return descrizione;
+	}
+
+	public void setDescrizione(String descrizione) {
+		this.descrizione = descrizione;
+	}
+
 	@NotNull
 	@NotEmpty
 	@Column(length=250)

@@ -3,7 +3,7 @@
 
 <head>
     <div th:replace="fragments/resources :: headTags"></div>
-    <link rel="stylesheet" href="style.css">
+    
     <title th:text="${ricetta.titolo}">Ricetta</title>
 </head>
 
@@ -12,14 +12,15 @@
     <div class="container flex ">
         <div class="flex-row justify-content-center">
             <h1 th:text="${ricetta.titolo}" class="text-center"></h1>
-            <span>la ricetta è stata visualizzata</span>
-            <span th:text="${ricetta.visualizzazioni}"> volte</span>
+            <span>la ricetta è stata visualizzata:</span>
+            <span th:text="${ricetta.visualizzazioni}"></span>
+            <span>volte</span>
         </div>
         <div class="row justify-content-start">
             <h5>Descrizione</h5>
             <div class="col p-2">
 
-                <p th:text="#{ricetta.descrizione}"></p>
+                <p th:text="${ricetta.descrizione}"></p>
             </div>
         </div>
         <hr>
@@ -34,7 +35,7 @@
                     <li>Pecorino Romano 30g</li>
                 </ol>
             </div>
-           <!--  <div class="col-3 p-2">
+            <!--  <div class="col-3 p-2">
                 <img class="p-0" style="width:250px" th:src="${ingrediente.img}" alt="ingerdienteimg">
             </div>
         -->
@@ -52,37 +53,46 @@
     </div>
     <div class="container" id="commento">
         <h5 class="text-center">Lascia un commento</h5>
-        <form action=""></form>
+
+        
+
+        <form th:action="@{/ricetta/commento/{id}(id=${ricetta.id})}" th:object="${commento}" method="post">
+        <div th:if="#{fields.hasErrors}">
+            <ul>
+                <li th:each="error : ${#fields.errors}"></li>
+            </ul>    
+        </div>
         <div class="col border rounded-3 border-2 p-2">
             <div class="row p-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" placeholder="name@example.com">
+                <input type="email" th:field="*{email.email}" class="form-control" id="email"
+                    placeholder="name@example.com">
             </div>
             <div class="row p-3">
                 <label for="nome" classe="form-label">Nome</label>
-                <input type="text" class="form-control" id="nome" placeholder="nome">
+                <input type="text" th:field="*{nome}" class="form-control" id="nome" placeholder="nome">
             </div>
             <div class="row p-3">
                 <label for="commento" classe="form-label">Commenta</label>
-                <input type="text" class="form-control" id="commento" placeholder="commento">
+                <input type="text" th:field="*{testo}" class="form-control" id="commento"
+                    placeholder="commento">
             </div>
             <div class="row p-3">
-                <input type="submit" class="btn btn-light">
+                <button type="submit" class="btn btn-light">invia</button>
             </div>
-
         </div>
+       
         </form>
         <div class="col">
 
-
-            <div th:if="${list.size() > 0}" class="row mt-5">
+            <!-- <div th:if="${list.size() > 0}" class="row mt-5">
                 <h5>Commenti di altri utenti</h5>/
                 <div th:each="item : ${list}" class="border rounded-2 p-3">
                     <span th:text="${item.email}"></span>
                     <p th:text="${item.testo}"></p>
                 </div>
             </div>
-            <hr>
+            <hr>-->
 </body>
 
 </html>
