@@ -33,9 +33,9 @@ public class Ricetta {
 	
 	@NotNull
 	@Min(value=1)
-	@Max(value=5)
+	@Max(value=3)
 	private Integer livelloDiDifficolta;
-	
+
 	@NotNull
 	@NotEmpty
 	@Column(length=250)
@@ -69,15 +69,6 @@ public class Ricetta {
 	private Boolean isVegetarian;
 	
 	
-
-	
-	public String getDescrizione() {
-		return descrizione;
-	}
-
-	public void setDescrizione(String descrizione) {
-		this.descrizione = descrizione;
-	}
 
 	public Integer getMiPiace() {
 		return miPiace;
@@ -192,8 +183,14 @@ public class Ricetta {
 	}
 
 
-	
-	
+	public String getDescrizione() {
+		return descrizione;
+	}
+
+	public void setDescrizione(String descrizione) {
+		this.descrizione = descrizione;
+	}
+
 	
 	
 }

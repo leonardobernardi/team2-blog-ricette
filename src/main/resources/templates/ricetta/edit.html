@@ -53,7 +53,7 @@
                             <li th:each="err : ${#fields.errors('descrizione')}" th:text="${err}"></li>
                         </ul>
                     </div>
-                </div>
+                </div> 
                 <div class="col-3">
                     <label class="form-label" for="testoDellaRicetta">testoDellaRicetta</label>
                     <input type="text" class="form-control" id="testoDellaRicetta" th:field="*{testoDellaRicetta}" th:errorClass="is-invalid">
