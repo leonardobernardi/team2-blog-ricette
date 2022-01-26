@@ -63,6 +63,15 @@ public class RicettaController {
 		}
 		
 		//Read
+		
+		@GetMapping("/admin")
+		public String admin(Model model) {
+			model.addAttribute("piuRecenti", service.findLastSevenDays());
+			model.addAttribute("piu viste", service.findMostViewed());
+			model.addAttribute("piuCommentate", service.findMostCommented());
+			return "/admin/attivita";
+		}
+		
 		@GetMapping("/ricetta/{id}")
 		public String detail(@PathVariable("id") Integer id, Model model) {
 			service.visualizzazioniPiuUno(service.getById(id));

@@ -50,6 +50,8 @@ public class Ricetta {
 	
 	private Integer visualizzazioni;	
 	
+	private Integer miPiace;
+	
 	@ManyToOne
 	private Categoria categoria;
 	
@@ -68,7 +70,14 @@ public class Ricetta {
 	
 	
 
-	
+	public Integer getMiPiace() {
+		return miPiace;
+	}
+
+	public void setMiPiace(Integer miPiace) {
+		this.miPiace = miPiace;
+	}
+
 	public List<Immagine> getImmagini() {
 		return immagini;
 	}

@@ -22,8 +22,11 @@ public class RicettaService {
 	public Ricetta create(Ricetta ricetta) {
 		ricetta.setDataDiCreazione(LocalDateTime.now());
 		ricetta.setVisualizzazioni(0);
+
 		// ricetta.setIsVegan(isVegan(ricetta));
 		// ricetta.setIsVegetarian(isVegetarian(ricetta));
+		ricetta.setMiPiace(0);
+
 		return repo.save(ricetta);
 	}
 
@@ -132,6 +135,7 @@ public class RicettaService {
 		ricetta.setVisualizzazioni(visualizzazioni);
 		ricetta.setIsVegan(isVegan(ricetta));
 		ricetta.setIsVegetarian(isVegetarian(ricetta));
+		ricetta.setMiPiace(repo.getById(ricetta.getId()).getMiPiace());
 		return repo.save(ricetta);
 	}
 
@@ -139,8 +143,14 @@ public class RicettaService {
 		ricetta.setVisualizzazioni(ricetta.getVisualizzazioni() + 1);
 		return repo.save(ricetta);
 	}
+	
+	public Ricetta miPiace(Ricetta ricetta) {
+		ricetta.setMiPiace(ricetta.getMiPiace() + 1);
+		return repo.save(ricetta);
+	}
+	
+	//Delete
 
-	// Delete
 	public void deleteById(Integer id) {
 		repo.deleteById(id);
 	}
