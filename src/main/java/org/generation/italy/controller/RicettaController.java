@@ -24,8 +24,10 @@ public class RicettaController {
 	//Homepage
 	@GetMapping
 	public String mostRecent(Model model) {
-		model.addAttribute("lista", service.findFiveMostRecent());
-		return "index";
+		if (service.findSixMostRecent() != null) {
+			model.addAttribute("lista", service.findSixMostRecent());
+		}
+		return "/home/index";
 	}
 	//Create
 		@GetMapping("/admin/ricetta/crea")
@@ -39,9 +41,10 @@ public class RicettaController {
 		public String create(@Valid @ModelAttribute("ricetta") Ricetta formRicetta, BindingResult bindingResult, Model model) {
 			if(bindingResult.hasErrors()) {
 				model.addAttribute("edit", false);
+				return "/ricetta/edit";
 			}
 			service.create(formRicetta);
-			return "redirect:/index";
+			return "redirect:/home/index";
 		}
 		
 		//Read
@@ -67,7 +70,7 @@ public class RicettaController {
 				return "ricetta/dettagli";
 			}
 			service.update(formRicetta);
-			return "redirect:/index";
+			return "redirect:/home/index";
 		}
 		
 		//Delete 
@@ -77,6 +80,6 @@ public class RicettaController {
 				//messaggio d'errore
 			}
 			service.deleteById(id);
-			return "redirect:/index";
+			return "redirect:/home/index";
 		}
 }

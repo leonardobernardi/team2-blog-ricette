@@ -33,7 +33,7 @@ public class Ricetta {
 	
 	@NotNull
 	@Min(value=1)
-	@Max(value=5)
+	@Max(value=3)
 	private Integer livelloDiDifficolta;
 	
 	@NotNull
@@ -172,7 +172,14 @@ public class Ricetta {
 	public void setIngredienti(List<IngredientiRicetta> ingredienti) {
 		this.ingredienti = ingredienti;
 	}
-	
+
+	public String getDescrizione() {
+		return descrizione;
+	}
+
+	public void setDescrizione(String descrizione) {
+		this.descrizione = descrizione;
+	}
 	
 	
 	

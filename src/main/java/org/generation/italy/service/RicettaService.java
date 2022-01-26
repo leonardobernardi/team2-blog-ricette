@@ -1,6 +1,7 @@
 package org.generation.italy.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -22,8 +23,8 @@ public class RicettaService {
 	public Ricetta create(Ricetta ricetta) {
 		ricetta.setDataDiCreazione(LocalDateTime.now());
 		ricetta.setVisualizzazioni(0);
-		ricetta.setIsVegan(isVegan(ricetta));
-		ricetta.setIsVegetarian(isVegetarian(ricetta));
+		//ricetta.setIsVegan(isVegan(ricetta));
+		//ricetta.setIsVegetarian(isVegetarian(ricetta));
 		return repo.save(ricetta);
 	}
 	
@@ -105,13 +106,15 @@ public class RicettaService {
 	}
 	
 	@SuppressWarnings("null")
-	public List<Ricetta> findFiveMostRecent(){
+	public List<Ricetta> findSixMostRecent(){
 		List<Ricetta> lista = repo.findAll(Sort.by(Direction.DESC, "dataDiCreazione"));
-		List<Ricetta> piuRecenti = null;
+		List<Ricetta> piuRecenti = new ArrayList<Ricetta>();
 		int i = 0;
-		while(i < 6 && i < lista.size()) {
-			piuRecenti.add(lista.get(i));
-			i++;
+		if (!lista.isEmpty()) {
+			while (i < 6 && i < lista.size()) {
+				piuRecenti.add(lista.get(i));
+				i++;
+			} 
 		}
 		return piuRecenti;			
 	}
