@@ -24,6 +24,7 @@ public class RicettaService {
 		ricetta.setVisualizzazioni(0);
 		ricetta.setIsVegan(isVegan(ricetta));
 		ricetta.setIsVegetarian(isVegetarian(ricetta));
+		ricetta.setMiPiace(0);
 		return repo.save(ricetta);
 	}
 	
@@ -131,11 +132,17 @@ public class RicettaService {
 		ricetta.setVisualizzazioni(visualizzazioni);
 		ricetta.setIsVegan(isVegan(ricetta));
 		ricetta.setIsVegetarian(isVegetarian(ricetta));
+		ricetta.setMiPiace(repo.getById(ricetta.getId()).getMiPiace());
 		return repo.save(ricetta);
 	}
 	
 	public Ricetta visualizzazioniPiuUno(Ricetta ricetta) {
 		ricetta.setVisualizzazioni(ricetta.getVisualizzazioni() + 1);
+		return repo.save(ricetta);
+	}
+	
+	public Ricetta miPiace(Ricetta ricetta) {
+		ricetta.setMiPiace(ricetta.getMiPiace() + 1);
 		return repo.save(ricetta);
 	}
 	
