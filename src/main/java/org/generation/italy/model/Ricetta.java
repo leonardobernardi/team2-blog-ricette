@@ -33,7 +33,7 @@ public class Ricetta {
 	
 	@NotNull
 	@Min(value=1)
-	@Max(value=5)
+	@Max(value=3)
 	private Integer livelloDiDifficolta;
 	
 	public String getDescrizione() {
@@ -58,6 +58,8 @@ public class Ricetta {
 	
 	private Integer visualizzazioni;	
 	
+	private Integer miPiace;
+	
 	@ManyToOne
 	private Categoria categoria;
 	
@@ -76,7 +78,14 @@ public class Ricetta {
 	
 	
 
-	
+	public Integer getMiPiace() {
+		return miPiace;
+	}
+
+	public void setMiPiace(Integer miPiace) {
+		this.miPiace = miPiace;
+	}
+
 	public List<Immagine> getImmagini() {
 		return immagini;
 	}
@@ -180,7 +189,14 @@ public class Ricetta {
 	public void setIngredienti(List<IngredientiRicetta> ingredienti) {
 		this.ingredienti = ingredienti;
 	}
-	
+
+	public String getDescrizione() {
+		return descrizione;
+	}
+
+	public void setDescrizione(String descrizione) {
+		this.descrizione = descrizione;
+	}
 	
 	
 	

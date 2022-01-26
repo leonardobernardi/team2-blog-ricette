@@ -34,7 +34,7 @@ public class RicettaController {
 	//Homepage
 	@GetMapping
 	public String mostRecent(Model model) {
-		List<Ricetta> list = service.findFiveMostRecent();
+		List<Ricetta> list = service.findSixMostRecent();
 		if (list!=null) {
 			for (Ricetta ricetta : list) {
 				if (!ricetta.getImmagini().isEmpty()) {
@@ -42,10 +42,14 @@ public class RicettaController {
 					model.addAttribute("img" + list.indexOf(ricetta), img);
 				}
 			}
-			model.addAttribute("lista", service.findFiveMostRecent());
+
+		if (service.findSixMostRecent() != null) {
+			model.addAttribute("lista", service.findSixMostRecent());
+		}
 		}
 		return "/home/index";
 	}
+	
 	//Create
 		@GetMapping("/admin/ricetta/crea")
 		public String create(Model model) {
@@ -58,6 +62,7 @@ public class RicettaController {
 		public String create(@Valid @ModelAttribute("ricetta") Ricetta formRicetta, BindingResult bindingResult, Model model) {
 			if(bindingResult.hasErrors()) {
 				model.addAttribute("edit", false);
+				return "/ricetta/edit";
 			}
 			service.create(formRicetta);
 			
@@ -65,6 +70,15 @@ public class RicettaController {
 		}
 		
 		//Read
+		
+		@GetMapping("/admin")
+		public String admin(Model model) {
+			model.addAttribute("piuRecenti", service.findLastSevenDays());
+			model.addAttribute("piu viste", service.findMostViewed());
+			model.addAttribute("piuCommentate", service.findMostCommented());
+			return "/admin/attivita";
+		}
+		
 		@GetMapping("/ricetta/{id}")
 		public String detail(@PathVariable("id") Integer id, Model model) {
 			service.visualizzazioniPiuUno(service.getById(id));
