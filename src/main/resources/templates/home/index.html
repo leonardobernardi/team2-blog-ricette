@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<div th:replace="fragments/resources :: headTags"></div>
-<link rel="stylesheet" th:href="@{/home/style.css}">
-<title>Blog ricette</title>
+	<div th:replace="fragments/resources :: headTags"></div>
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<title>Blog ricette</title>
 </head>
 <body class="bg-light">
 	<nav th:replace="fragments/navbar :: navbar"></nav>
@@ -21,11 +21,11 @@
                                 <span class="text-center bg-info text-light rounded p-1" th:case="'2'">
                                     <i class="fas fa-utensil-spoon"></i> medio</span>
                                 <span class="text-center bg-info text-light rounded p-1" th:case="'3'">
-                                    <i class="fas fa-utensil-spoon"></i> facile</span>
+                                    <i class="fas fa-utensil-spoon"></i> difficile</span>
                             </th:block>
                             <div class="position-relative">
-                                <img src="" class="img-fluid"
-                                    alt="">
+                                <img src="https://foodphotographyitalia.it/wp-content/uploads/2020/09/cadorin00269-Modifica-700x400.jpg" class="img-fluid"
+                                    alt="img">
                                 <div class="text-center bg-success text-light px-1 position-bottom-left" 
                                     th:if="${ricetta.isVegan == true}">
                                     <span><i class="fas fa-seedling"></i> vegano</span>
