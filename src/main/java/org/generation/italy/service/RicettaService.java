@@ -1,11 +1,9 @@
 package org.generation.italy.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Random;
-
-import org.generation.italy.model.Immagine;
 import org.generation.italy.model.IngredientiRicetta;
 import org.generation.italy.model.Ricetta;
 import org.generation.italy.repository.RicettaRepository;
@@ -93,10 +91,9 @@ public class RicettaService {
 		}
 	};
 	
-	@SuppressWarnings("null")
 	public List<Ricetta> findMostCommented(){
 		List<Ricetta> list = repo.findAll();
-		List<Ricetta> piuCommentate = null;
+		List<Ricetta> piuCommentate = new ArrayList<Ricetta>();
 		list.sort(compareByComments);
 		int i = 0;
 		while(i < 6 && i < list.size()) {
@@ -106,10 +103,10 @@ public class RicettaService {
 		return piuCommentate;
 	}
 	
-	@SuppressWarnings("null")
+	
 	public List<Ricetta> findFiveMostRecent(){
 		List<Ricetta> lista = repo.findAll(Sort.by(Direction.DESC, "dataDiCreazione"));
-		List<Ricetta> piuRecenti = null;
+		List<Ricetta> piuRecenti = new ArrayList<Ricetta>();
 		int i = 0;
 		while(i < 6 && i < lista.size()) {
 			piuRecenti.add(lista.get(i));
