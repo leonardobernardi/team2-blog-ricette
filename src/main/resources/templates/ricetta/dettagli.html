@@ -3,8 +3,7 @@
 
 <head>
     <div th:replace="fragments/resources :: headTags"></div>
-    
-    <title th:text="${ricetta.titolo}">Ricetta</title>
+	<title th:text="${ricetta.titolo}">Ricetta</title>
 </head>
 
 <body class="bg-light">
@@ -28,12 +27,11 @@
 
             <div class="col-4">
                 <h5>Ingredienti</h5>
-                <ol>
-                    <li>Bucatini 100g</li>
-                    <li>Guanciale 50g</li>
-                    <li>Pomodorini 100g</li>
-                    <li>Pecorino Romano 30g</li>
-                </ol>
+                <div th:if="${ingredienti.size() > 0}">
+                    <ul th:each="item : ${ingredienti}">
+                        <li><span th:text="${item.nome}"></span>: <span th:text="${item.quantita}"></span></li>
+                    </ul>
+                </div>
             </div>
             <!--  <div class="col-3 p-2">
                 <img class="p-0" style="width:250px" th:src="${ingrediente.img}" alt="ingerdienteimg">
@@ -54,42 +52,41 @@
     <div class="container" id="commento">
         <h5 class="text-center">Lascia un commento</h5>
 
-        
+
 
         <form th:action="@{/ricetta/commento/{id}(id=${ricetta.id})}" th:object="${commento}" method="post">
-        <div th:if="#{fields.hasErrors}">
-            <ul>
-                <li th:each="error : ${#fields.errors}"></li>
-            </ul>    
-        </div>
-        <div class="col border rounded-3 border-2 p-2">
-            <div class="row p-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" th:field="*{email.email}" class="form-control" id="email"
-                    placeholder="name@example.com">
+            <div th:if="#{fields.hasErrors}">
+                <ul>
+                    <li th:each="error : ${#fields.errors}"></li>
+                </ul>
             </div>
-            <div class="row p-3">
-                <label for="nome" classe="form-label">Nome</label>
-                <input type="text" th:field="*{nome}" class="form-control" id="nome" placeholder="nome">
+            <div class="col border rounded-3 border-2 p-2">
+                <div class="row p-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" th:field="*{email.email}" class="form-control" id="email"
+                        placeholder="name@example.com">
+                </div>
+                <div class="row p-3">
+                    <label for="nome" classe="form-label">Nome</label>
+                    <input type="text" th:field="*{nome}" class="form-control" id="nome" placeholder="nome">
+                </div>
+                <div class="row p-3">
+                    <label for="commento" classe="form-label">Commenta</label>
+                    <input type="text" th:field="*{testo}" class="form-control" id="commento" placeholder="commento">
+                </div>
+                <div class="row p-3">
+                    <button type="submit" class="btn btn-light bg-success text-light">Invia</button>
+                </div>
             </div>
-            <div class="row p-3">
-                <label for="commento" classe="form-label">Commenta</label>
-                <input type="text" th:field="*{testo}" class="form-control" id="commento"
-                    placeholder="commento">
-            </div>
-            <div class="row p-3">
-                <button type="submit" class="btn btn-light">invia</button>
-            </div>
-        </div>
-       
+
         </form>
         <div class="col">
 
             <div th:if="${list.size() > 0}" class="row mt-5">
                 <h5>Commenti di altri utenti</h5>
-                <div th:each="item : ${list}" class="border rounded-2 p-3">
-                    <span th:text="${item.email.email}"></span>
-                    <p th:text="${item.testo}"></p>
+                <div th:each="item : ${list}" class="border rounded-2 p-3 m-2" th:if="${item.email.isBanned == false}">
+                    <span th:text="${item.nome}" class="text-success"></span>
+                    <p th:text="${item.testo}" class="border border-2 p-2 rounded-2"></p>
                 </div>
             </div>
             <hr>

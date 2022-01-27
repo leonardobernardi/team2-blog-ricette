@@ -39,19 +39,11 @@ public class RicettaController {
 	@Autowired
 	private CommentoService commentoService;
 	
-	
 	//Homepage
 	@GetMapping
 	public String mostRecent(Model model) {
 		List<Ricetta> list = service.findSixMostRecent();
 		if (list!=null) {
-			for (Ricetta ricetta : list) {
-				if (!ricetta.getImmagini().isEmpty()) {
-					Immagine img = ricetta.getImmagini().get(0);
-					model.addAttribute("img" + list.indexOf(ricetta), img);
-				}
-			}
-
 		if (service.findSixMostRecent() != null) {
 			model.addAttribute("lista", service.findSixMostRecent());
 		}
@@ -76,6 +68,7 @@ public class RicettaController {
 			model.addAttribute("ingredientiForm", ingredientiForm);
 			model.addAttribute("edit", false);
 			model.addAttribute("ricetta", new Ricetta());
+			model.addAttribute("admin", true);
 			return "/ricetta/edit";
 		}
 
@@ -87,6 +80,7 @@ public class RicettaController {
 				Model model) {
 			if(bindingResult.hasErrors()) {
 				model.addAttribute("edit", false);
+				model.addAttribute("admin", true);
 				return "/ricetta/edit";
 			}
 			try {
@@ -106,6 +100,7 @@ public class RicettaController {
 			model.addAttribute("piuRecenti", service.findLastSevenDays());
 			model.addAttribute("piuViste", service.findMostViewed());
 			model.addAttribute("piuCommentate", service.findMostCommented());
+			model.addAttribute("admin", true);
 			return "/admin/attivita";
 		}
 		
@@ -120,6 +115,7 @@ public class RicettaController {
 					model.addAttribute("img" + service.getById(id).getImmagini().indexOf(img), img);
 				} 
 			}
+			model.addAttribute("ingredienti", service.getById(id).getIngrediente());
 			return "ricetta/dettagli";
 		}
 		
@@ -140,7 +136,13 @@ public class RicettaController {
 		
 		@RequestMapping(value = "/{id}/img", produces = org.springframework.http.MediaType.IMAGE_JPEG_VALUE )
 		public ResponseEntity<byte[]> getImgContent(@PathVariable Integer id){
-			byte[] imgContent = service.getById(id).getImmagini().get(0).getContent();
+			byte[] imgContent;
+			if(service.getById(id).getImmagini().size()<=0) {
+				imgContent = null;
+			}else {
+				imgContent = service.getById(id).getImmagini().get(0).getContent();
+			}
+			
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(org.springframework.http.MediaType.IMAGE_JPEG);
 			return new ResponseEntity<byte[]>(imgContent, headers, HttpStatus.OK);
@@ -153,7 +155,8 @@ public class RicettaController {
 		public String edit(@PathVariable("id") Integer id, Model model) {
 			model.addAttribute("edit", true);
 			model.addAttribute("ricetta", service.getById(id));
-			return "ricetta/dettagli";
+			model.addAttribute("admin", true);
+			return "ricetta/edit";
 		}
 
 		@PostMapping("/admin/ricetta/modifica/{id}")

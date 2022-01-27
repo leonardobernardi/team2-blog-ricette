@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import org.generation.italy.utilities.*;
 import org.generation.italy.model.Immagine;
 import org.generation.italy.model.ImmagineForm;
 import org.generation.italy.model.ImmagineList;
@@ -38,29 +37,35 @@ public class RicettaService {
 		ricetta.setVisualizzazioni(0);
 		ricetta.setMiPiace(0);
 		repo.save(ricetta);
-		
-		List<ImmagineForm> imgFormList = new ArrayList<ImmagineForm>();
-		Immagine newImmagine = new Immagine();
+		List<ImmagineForm> imgFormList = new ArrayList<ImmagineForm>();		
 		List<Immagine> ricettaImmagine = new ArrayList<Immagine>();
 		for(ImmagineForm img : immagineList.getListaImmaginiForm()) {
-			if(img.getContent()!=null) {
+			if(img.getContent()!=null & img.getContent().getSize()!=0) {
 				imgFormList.add(img);				
 			}
 		}
 		for(ImmagineForm imgForm : imgFormList) {
 			byte[] contentSerialized = imgForm.getContent().getBytes();
+			Immagine newImmagine = new Immagine();
 			newImmagine.setContent(contentSerialized);
 			newImmagine.setRicetta(ricetta);
 			ricettaImmagine.add(newImmagine);
 			imgRepo.save(newImmagine);	
 		}
-		
-		
 		List<Ingrediente> ingList = new ArrayList<Ingrediente>();
 		for(Ingrediente ing : ingredienteList.getIngredienti()) {
 			if(ing!=null) {
-				if(ing.getNome()!=null || !ing.getNome().isEmpty() || !Strings.isBlank8(ing.getNome())) {
-					if(ing.getQuantita()!=null || !ing.getQuantita().isEmpty() || !Strings.isBlank8(ing.getQuantita())) {
+				if(ing.getNome()!=null && !ing.getNome().isEmpty()) {
+					if(ing.getQuantita()!=null && !ing.getQuantita().isEmpty()) {
+						if(ing.getIsVegan()==true) {
+							ing.setIsVegetarian(true);
+						}
+						if(ing.getIsVegan()==null) {
+							ing.setIsVegan(false);
+						}
+						if(ing.getIsVegetarian()==null) {
+							ing.setIsVegetarian(false);
+						}
 						ing.setRicetta(ricetta);
 						ingList.add(ing);
 						ingredienteRepo.save(ing);
@@ -68,14 +73,11 @@ public class RicettaService {
 				}
 			}
 		}
-		
-		
 		ricetta.setImmagini(ricettaImmagine);
 		ricetta.setIngrediente(ingList);
 		ricetta.setIsVegan(isVegan(ricetta));
 		ricetta.setIsVegetarian(isVegetarian(ricetta));
-		
-
+	
 		return repo.save(ricetta);
 	}
 
@@ -91,12 +93,11 @@ public class RicettaService {
 	public boolean isVegan(Ricetta ricetta) {
 		if(ricetta != null) {
 			for(Ingrediente i : ricetta.getIngrediente()) {
-				if(i.getIsVegan()) {
-					return true;
-				}else if(i.getIsVegan() != null || !i.getIsVegan()) {
+				if(!i.getIsVegan()) {
 					return false;
-				}
+				}				
 			}
+			return true;
 		} 
 		return false;
 		
