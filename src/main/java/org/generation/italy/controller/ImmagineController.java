@@ -4,13 +4,13 @@ import java.io.IOException;
 
 import javax.validation.Valid;
 
-import org.apache.tomcat.util.http.parser.MediaType;
 import org.generation.italy.model.Immagine;
 import org.generation.italy.model.ImmagineForm;
 import org.generation.italy.service.ImmagineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -75,14 +75,14 @@ public class ImmagineController {
 	
 	
 	
-//	@RequestMapping(value = "/{id}/immagine", produces = MediaType.IMAGE_JPEG_VALUE)
-//	public ResponseEntity<byte[]> getImmagineContent(@PathVariable Integer id){
-//		Immagine immagine = service.getById(id);
-//		byte[] immagineContent = immagine.getContent();
-//		HttpHeaders headers = new HttpHeaders();
-//		headers.setContentType(MediaType.IMAGE_JPEG);
-//		return new ResponseEntity<byte[]>(immagineContent, headers, HttpStatus.OK);
-//	}
+	@RequestMapping(value = "/{id}/immagine", produces = MediaType.IMAGE_JPEG_VALUE)
+	public ResponseEntity<byte[]> getImmagineContent(@PathVariable Integer id){
+		Immagine immagine = service.getById(id);
+		byte[] immagineContent = immagine.getContent();
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.IMAGE_JPEG);
+		return new ResponseEntity<byte[]>(immagineContent, headers, HttpStatus.OK);
+	}
 	
 	
 	
