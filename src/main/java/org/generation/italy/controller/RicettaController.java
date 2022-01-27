@@ -11,6 +11,7 @@ import org.generation.italy.model.Ingrediente;
 import org.generation.italy.model.IngredienteList;
 import org.generation.italy.model.Ricetta;
 import org.generation.italy.service.CommentoService;
+import org.generation.italy.service.IngredienteService;
 import org.generation.italy.service.RicettaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,6 +33,9 @@ public class RicettaController {
 	
 	@Autowired
 	private CommentoService commentoService;
+	
+	@Autowired
+	private IngredienteService ingredienteService;
 	
 	
 	//Homepage
@@ -104,6 +108,7 @@ public class RicettaController {
 					model.addAttribute("img" + service.getById(id).getImmagini().indexOf(img), img);
 				} 
 			}
+			model.addAttribute("ingredienti", service.getById(id).getIngrediente());
 			return "ricetta/dettagli";
 		}
 		

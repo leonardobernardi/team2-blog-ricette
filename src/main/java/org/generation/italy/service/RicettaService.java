@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import org.generation.italy.utilities.*;
 
 import org.generation.italy.model.Ingrediente;
 import org.generation.italy.model.IngredienteList;
@@ -33,8 +34,8 @@ public class RicettaService {
 		List<Ingrediente> ingList = new ArrayList<Ingrediente>();
 		for(Ingrediente ing : ingredienteList.getIngredienti()) {
 			if(ing!=null) {
-				if(ing.getNome()!=null || !ing.getNome().isEmpty() || !ing.getNome().isBlank()) {
-					if(ing.getQuantita()!=null || !ing.getQuantita().isEmpty() || !ing.getQuantita().isBlank()) {
+				if(ing.getNome()!=null || !ing.getNome().isEmpty() || !Strings.isBlank8(ing.getNome())) {
+					if(ing.getQuantita()!=null || !ing.getQuantita().isEmpty() || !Strings.isBlank8(ing.getQuantita())) {
 						ing.setRicetta(ricetta);
 						ingList.add(ing);
 						ingredienteRepo.save(ing);
@@ -175,4 +176,6 @@ public class RicettaService {
 		repo.deleteById(id);
 	}
 
+	
+	
 }
