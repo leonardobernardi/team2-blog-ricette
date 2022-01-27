@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <div th:replace="fragments/resources :: headTags"></div>
+    <title>Document</title>
+</head>
+
+<body>
+    <nav th:replace="fragments/navbar :: navbar"></nav>
+
+    <form id="ricetta-form" th:object="${ricetta}"
+        th:action="${edit} ? @{/admin/ricetta/modifica/{id}(id=${ricetta.id})} : @{/admin/ricetta/crea}" method="post">
+        <ul>
+            <li th:each="err : ${#fields.allErrors()}" th:text="${err}" class="text-danger"></li>
+        </ul>
+        <div class="row">
+            <!--Ricetta-->
+            <div class="col-6">
+                <div class="row gy-2">
+                    <div class="col-12">
+                        <label class="form-label" for="titolo">Titolo</label>
+                        <input type="text" class="form-control" id="titolo" th:field="*{titolo}"
+                            th:errorClass="is-invalid">
+                        <div th:if="${#fields.hasErrors('titolo')}" class="invalid-feedback">
+                            <ul>
+                                <li th:each="err : ${#fields.errors('titolo')}" th:text="${err}"></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label" for="tempoDiPreparazione">tempoDiPreparazione</label>
+                        <input type="text" class="form-control" id="tempoDiPreparazione"
+                            th:field="*{tempoDiPreparazione}" th:errorClass="is-invalid">
+                        <div th:if="${#fields.hasErrors('tempoDiPreparazione')}" class="invalid-feedback">
+                            <ul>
+                                <li th:each="err : ${#fields.errors('tempoDiPreparazione')}" th:text="${err}"></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label" for="livelloDiDifficolta">livelloDiDifficolta</label>
+                        <input type="number" class="form-control" id="livelloDiDifficolta"
+                            th:field="*{livelloDiDifficolta}" th:errorClass="is-invalid">
+                        <div th:if="${#fields.hasErrors('livelloDiDifficolta')}" class="invalid-feedback">
+                            <ul>
+                                <li th:each="err : ${#fields.errors('livelloDiDifficolta')}" th:text="${err}"></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <label class="form-label" for="descrizione">descrizione</label>
+                        <input type="text" class="form-control" id="descrizione" th:field="*{descrizione}"
+                            th:errorClass="is-invalid">
+                        <div th:if="${#fields.hasErrors('descrizione')}" class="invalid-feedback">
+                            <ul>
+                                <li th:each="err : ${#fields.errors('descrizione')}" th:text="${err}"></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <label class="form-label" for="testoDellaRicetta">testoDellaRicetta</label>
+                        <input type="text" class="form-control" id="testoDellaRicetta" th:field="*{testoDellaRicetta}"
+                            th:errorClass="is-invalid">
+                        <div th:if="${#fields.hasErrors('testoDellaRicetta')}" class="invalid-feedback">
+                            <ul>
+                                <li th:each="err : ${#fields.errors('testoDellaRicetta')}" th:text="${err}"></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!--Submit-->
+                    <div class="col-12">
+                        <button class="btn btn-primary" type="submit"><i class="fas fa-check"></i> Save</button>
+                        <a class="btn btn-primary" th:href="@{/home/index}"><i class="fas fa-times"></i> Cancel</a>
+                    </div>
+
+                </div>
+            </div>
+            <!--Ingredienti-->
+            <div class="col-6" th:object="${ingredientiForm}">
+                <!--Singolo Ingrediente-->
+                <div class="row">
+                    <div class="col-4">
+                        <label class="form-label" for="nome">Nome ingrediente</label>
+                        <input type="text" class="form-control" id="nome" th:field="*{ingredienti[0].nome}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-4">
+                        <label class="form-label" for="quantita">Quantita ingrediente</label>
+                        <input type="text" class="form-control" id="quantita" th:field="*{ingredienti[0].quantita}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-3 mt-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegan"
+                                th:field=*{ingredienti[0].isVegan}>
+                            <label class="form-check-label" for="isVegan">
+                                Vegano?
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegetarian"
+                                th:field=*{ingredienti[0].isVegetarian}>
+                            <label class="form-check-label" for="isVegetarian">
+                                Vegetariano?
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <button class="btn btn-primary w-auto m-2" id="btn1" type="button" th:onclick="addIng(1)"><i class="fas fa-plus"></i> Aggiungi nuovo ingrediente</button>
+                </div>
+                <!--Singolo Ingrediente-->
+                <div class="row d-none" id="1">
+                    <div class="col-4">
+                        <label class="form-label" for="nome">Nome ingrediente</label>
+                        <input type="text" class="form-control" id="nome" th:field="*{ingredienti[1].nome}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-4">
+                        <label class="form-label" for="quantita">Quantita ingrediente</label>
+                        <input type="text" class="form-control" id="quantita" th:field="*{ingredienti[1].quantita}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-3 mt-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegan"
+                                th:field=*{ingredienti[1].isVegan}>
+                            <label class="form-check-label" for="isVegan">
+                                Vegano?
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegetarian"
+                                th:field=*{ingredienti[1].isVegetarian}>
+                            <label class="form-check-label" for="isVegetarian">
+                                Vegetariano?
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <button class="btn btn-primary w-auto m-2 d-none" id="btn2" type="button" th:onclick="addIng(2)"><i class="fas fa-plus"></i> Aggiungi nuovo ingrediente</button>
+                </div>
+                <!--Singolo Ingrediente-->
+                <div class="row d-none" id="2">
+                    <div class="col-4">
+                        <label class="form-label" for="nome">Nome ingrediente</label>
+                        <input type="text" class="form-control" id="nome" th:field="*{ingredienti[2].nome}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-4">
+                        <label class="form-label" for="quantita">Quantita ingrediente</label>
+                        <input type="text" class="form-control" id="quantita" th:field="*{ingredienti[2].quantita}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-3 mt-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegan"
+                                th:field=*{ingredienti[2].isVegan}>
+                            <label class="form-check-label" for="isVegan">
+                                Vegano?
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegetarian"
+                                th:field=*{ingredienti[2].isVegetarian}>
+                            <label class="form-check-label" for="isVegetarian">
+                                Vegetariano?
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <button class="btn btn-primary w-auto m-2 d-none" id="btn3" type="button" th:onclick="addIng(3)"><i class="fas fa-plus"></i> Aggiungi nuovo ingrediente</button>
+                </div>
+                <!--Singolo Ingrediente-->
+                <div class="row d-none" id="3">
+                    <div class="col-4">
+                        <label class="form-label" for="nome">Nome ingrediente</label>
+                        <input type="text" class="form-control" id="nome" th:field="*{ingredienti[3].nome}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-4">
+                        <label class="form-label" for="quantita">Quantita ingrediente</label>
+                        <input type="text" class="form-control" id="quantita" th:field="*{ingredienti[3].quantita}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-3 mt-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegan"
+                                th:field=*{ingredienti[3].isVegan}>
+                            <label class="form-check-label" for="isVegan">
+                                Vegano?
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegetarian"
+                                th:field=*{ingredienti[3].isVegetarian}>
+                            <label class="form-check-label" for="isVegetarian">
+                                Vegetariano?
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <button class="btn btn-primary w-auto m-2 d-none" id="btn4" type="button" th:onclick="addIng(4)"><i class="fas fa-plus"></i> Aggiungi nuovo ingrediente</button>
+                </div>
+                <!--Singolo Ingrediente-->
+                <div class="row d-none" id="4">
+                    <div class="col-4">
+                        <label class="form-label" for="nome">Nome ingrediente</label>
+                        <input type="text" class="form-control" id="nome" th:field="*{ingredienti[4].nome}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-4">
+                        <label class="form-label" for="quantita">Quantita ingrediente</label>
+                        <input type="text" class="form-control" id="quantita" th:field="*{ingredienti[4].quantita}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-3 mt-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegan"
+                                th:field=*{ingredienti[4].isVegan}>
+                            <label class="form-check-label" for="isVegan">
+                                Vegano?
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegetarian"
+                                th:field=*{ingredienti[4].isVegetarian}>
+                            <label class="form-check-label" for="isVegetarian">
+                                Vegetariano?
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <button class="btn btn-primary w-auto m-2 d-none" id="btn5" type="button" th:onclick="addIng(5)"><i class="fas fa-plus"></i> Aggiungi nuovo ingrediente</button>
+                </div>
+                <!--Singolo Ingrediente-->
+                <div class="row d-none" id="5">
+                    <div class="col-4">
+                        <label class="form-label" for="nome">Nome ingrediente</label>
+                        <input type="text" class="form-control" id="nome" th:field="*{ingredienti[5].nome}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-4">
+                        <label class="form-label" for="quantita">Quantita ingrediente</label>
+                        <input type="text" class="form-control" id="quantita" th:field="*{ingredienti[5].quantita}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-3 mt-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegan"
+                                th:field=*{ingredienti[5].isVegan}>
+                            <label class="form-check-label" for="isVegan">
+                                Vegano?
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegetarian"
+                                th:field=*{ingredienti[5].isVegetarian}>
+                            <label class="form-check-label" for="isVegetarian">
+                                Vegetariano?
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <button class="btn btn-primary w-auto m-2 d-none" id="btn6" type="button" th:onclick="addIng(6)"><i class="fas fa-plus"></i> Aggiungi nuovo ingrediente</button>
+                </div>
+                <!--Singolo Ingrediente-->
+                <div class="row d-none" id="6">
+                    <div class="col-4">
+                        <label class="form-label" for="nome">Nome ingrediente</label>
+                        <input type="text" class="form-control" id="nome" th:field="*{ingredienti[6].nome}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-4">
+                        <label class="form-label" for="quantita">Quantita ingrediente</label>
+                        <input type="text" class="form-control" id="quantita" th:field="*{ingredienti[6].quantita}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-3 mt-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegan"
+                                th:field=*{ingredienti[6].isVegan}>
+                            <label class="form-check-label" for="isVegan">
+                                Vegano?
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegetarian"
+                                th:field=*{ingredienti[6].isVegetarian}>
+                            <label class="form-check-label" for="isVegetarian">
+                                Vegetariano?
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <button class="btn btn-primary w-auto m-2 d-none" id="btn7" type="button" th:onclick="addIng(7)"><i class="fas fa-plus"></i> Aggiungi nuovo ingrediente</button>
+                </div>
+                <!--Singolo Ingrediente-->
+                <div class="row d-none" id="7">
+                    <div class="col-4">
+                        <label class="form-label" for="nome">Nome ingrediente</label>
+                        <input type="text" class="form-control" id="nome" th:field="*{ingredienti[7].nome}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-4">
+                        <label class="form-label" for="quantita">Quantita ingrediente</label>
+                        <input type="text" class="form-control" id="quantita" th:field="*{ingredienti[7].quantita}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-3 mt-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegan"
+                                th:field=*{ingredienti[7].isVegan}>
+                            <label class="form-check-label" for="isVegan">
+                                Vegano?
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegetarian"
+                                th:field=*{ingredienti[7].isVegetarian}>
+                            <label class="form-check-label" for="isVegetarian">
+                                Vegetariano?
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <button class="btn btn-primary w-auto m-2 d-none" id="btn8" type="button" th:onclick="addIng(8)"><i class="fas fa-plus"></i> Aggiungi nuovo ingrediente</button>
+                </div>
+                <!--Singolo Ingrediente-->
+                <div class="row d-none" id="8">
+                    <div class="col-4">
+                        <label class="form-label" for="nome">Nome ingrediente</label>
+                        <input type="text" class="form-control" id="nome" th:field="*{ingredienti[8].nome}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-4">
+                        <label class="form-label" for="quantita">Quantita ingrediente</label>
+                        <input type="text" class="form-control" id="quantita" th:field="*{ingredienti[8].quantita}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-3 mt-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegan"
+                                th:field=*{ingredienti[8].isVegan}>
+                            <label class="form-check-label" for="isVegan">
+                                Vegano?
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegetarian"
+                                th:field=*{ingredienti[8].isVegetarian}>
+                            <label class="form-check-label" for="isVegetarian">
+                                Vegetariano?
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <button class="btn btn-primary w-auto m-2 d-none" id="btn9" type="button" th:onclick="addIng(9)"><i class="fas fa-plus"></i> Aggiungi nuovo ingrediente</button>
+                </div>
+                <!--Singolo Ingrediente-->
+                <div class="row d-none" id="9">
+                    <div class="col-4">
+                        <label class="form-label" for="nome">Nome ingrediente</label>
+                        <input type="text" class="form-control" id="nome" th:field="*{ingredienti[9].nome}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-4">
+                        <label class="form-label" for="quantita">Quantita ingrediente</label>
+                        <input type="text" class="form-control" id="quantita" th:field="*{ingredienti[9].quantita}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-3 mt-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegan"
+                                th:field=*{ingredienti[9].isVegan}>
+                            <label class="form-check-label" for="isVegan">
+                                Vegano?
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegetarian"
+                                th:field=*{ingredienti[9].isVegetarian}>
+                            <label class="form-check-label" for="isVegetarian">
+                                Vegetariano?
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <button class="btn btn-primary w-auto m-2 d-none" id="btn10" type="button" th:onclick="addIng(10)"><i class="fas fa-plus"></i> Aggiungi nuovo ingrediente</button>
+                </div>
+                <!--Singolo Ingrediente-->
+                <div class="row d-none" id="10">
+                    <div class="col-4">
+                        <label class="form-label" for="nome">Nome ingrediente</label>
+                        <input type="text" class="form-control" id="nome" th:field="*{ingredienti[10].nome}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-4">
+                        <label class="form-label" for="quantita">Quantita ingrediente</label>
+                        <input type="text" class="form-control" id="quantita" th:field="*{ingredienti[10].quantita}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-3 mt-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegan"
+                                th:field=*{ingredienti[10].isVegan}>
+                            <label class="form-check-label" for="isVegan">
+                                Vegano?
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegetarian"
+                                th:field=*{ingredienti[10].isVegetarian}>
+                            <label class="form-check-label" for="isVegetarian">
+                                Vegetariano?
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <button class="btn btn-primary w-auto m-2 d-none" id="btn11" type="button" th:onclick="addIng(11)"><i class="fas fa-plus"></i> Aggiungi nuovo ingrediente</button>
+                </div>
+                <!--Singolo Ingrediente-->
+                <div class="row d-none" id="11">
+                    <div class="col-4">
+                        <label class="form-label" for="nome">Nome ingrediente</label>
+                        <input type="text" class="form-control" id="nome" th:field="*{ingredienti[11].nome}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-4">
+                        <label class="form-label" for="quantita">Quantita ingrediente</label>
+                        <input type="text" class="form-control" id="quantita" th:field="*{ingredienti[11].quantita}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-3 mt-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegan"
+                                th:field=*{ingredienti[11].isVegan}>
+                            <label class="form-check-label" for="isVegan">
+                                Vegano?
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegetarian"
+                                th:field=*{ingredienti[11].isVegetarian}>
+                            <label class="form-check-label" for="isVegetarian">
+                                Vegetariano?
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <button class="btn btn-primary w-auto m-2 d-none" id="btn12" type="button" th:onclick="addIng(12)"><i class="fas fa-plus"></i> Aggiungi nuovo ingrediente</button>
+                </div>
+                <!--Singolo Ingrediente-->
+                <div class="row d-none" id="12">
+                    <div class="col-4">
+                        <label class="form-label" for="nome">Nome ingrediente</label>
+                        <input type="text" class="form-control" id="nome" th:field="*{ingredienti[12].nome}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-4">
+                        <label class="form-label" for="quantita">Quantita ingrediente</label>
+                        <input type="text" class="form-control" id="quantita" th:field="*{ingredienti[12].quantita}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-3 mt-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegan"
+                                th:field=*{ingredienti[12].isVegan}>
+                            <label class="form-check-label" for="isVegan">
+                                Vegano?
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegetarian"
+                                th:field=*{ingredienti[12].isVegetarian}>
+                            <label class="form-check-label" for="isVegetarian">
+                                Vegetariano?
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <button class="btn btn-primary w-auto m-2 d-none" id="btn13" type="button" th:onclick="addIng(13)"><i class="fas fa-plus"></i> Aggiungi nuovo ingrediente</button>
+                </div>
+                <!--Singolo Ingrediente-->
+                <div class="row d-none" id="13">
+                    <div class="col-4">
+                        <label class="form-label" for="nome">Nome ingrediente</label>
+                        <input type="text" class="form-control" id="nome" th:field="*{ingredienti[13].nome}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-4">
+                        <label class="form-label" for="quantita">Quantita ingrediente</label>
+                        <input type="text" class="form-control" id="quantita" th:field="*{ingredienti[13].quantita}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-3 mt-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegan"
+                                th:field=*{ingredienti[13].isVegan}>
+                            <label class="form-check-label" for="isVegan">
+                                Vegano?
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegetarian"
+                                th:field=*{ingredienti[13].isVegetarian}>
+                            <label class="form-check-label" for="isVegetarian">
+                                Vegetariano?
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <button class="btn btn-primary w-auto m-2 d-none" id="btn14" type="button" th:onclick="addIng(14)"><i class="fas fa-plus"></i> Aggiungi nuovo ingrediente</button>
+                </div>
+                <!--Singolo Ingrediente-->
+                <div class="row d-none" id="14">
+                    <div class="col-4">
+                        <label class="form-label" for="nome">Nome ingrediente</label>
+                        <input type="text" class="form-control" id="nome" th:field="*{ingredienti[14].nome}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-4">
+                        <label class="form-label" for="quantita">Quantita ingrediente</label>
+                        <input type="text" class="form-control" id="quantita" th:field="*{ingredienti[14].quantita}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-3 mt-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegan"
+                                th:field=*{ingredienti[14].isVegan}>
+                            <label class="form-check-label" for="isVegan">
+                                Vegano?
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegetarian"
+                                th:field=*{ingredienti[14].isVegetarian}>
+                            <label class="form-check-label" for="isVegetarian">
+                                Vegetariano?
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <button class="btn btn-primary w-auto m-2 d-none" id="btn15" type="button" th:onclick="addIng(15)"><i class="fas fa-plus"></i> Aggiungi nuovo ingrediente</button>
+                </div>
+                <!--Singolo Ingrediente-->
+                <div class="row d-none" id="15">
+                    <div class="col-4">
+                        <label class="form-label" for="nome">Nome ingrediente</label>
+                        <input type="text" class="form-control" id="nome" th:field="*{ingredienti[15].nome}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-4">
+                        <label class="form-label" for="quantita">Quantita ingrediente</label>
+                        <input type="text" class="form-control" id="quantita" th:field="*{ingredienti[15].quantita}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-3 mt-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegan"
+                                th:field=*{ingredienti[15].isVegan}>
+                            <label class="form-check-label" for="isVegan">
+                                Vegano?
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegetarian"
+                                th:field=*{ingredienti[15].isVegetarian}>
+                            <label class="form-check-label" for="isVegetarian">
+                                Vegetariano?
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <button class="btn btn-primary w-auto m-2 d-none" id="btn16" type="button" th:onclick="addIng(16)"><i class="fas fa-plus"></i> Aggiungi nuovo ingrediente</button>
+                </div>
+                <!--Singolo Ingrediente-->
+                <div class="row d-none" id="16">
+                    <div class="col-4">
+                        <label class="form-label" for="nome">Nome ingrediente</label>
+                        <input type="text" class="form-control" id="nome" th:field="*{ingredienti[16].nome}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-4">
+                        <label class="form-label" for="quantita">Quantita ingrediente</label>
+                        <input type="text" class="form-control" id="quantita" th:field="*{ingredienti[16].quantita}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-3 mt-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegan"
+                                th:field=*{ingredienti[16].isVegan}>
+                            <label class="form-check-label" for="isVegan">
+                                Vegano?
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegetarian"
+                                th:field=*{ingredienti[16].isVegetarian}>
+                            <label class="form-check-label" for="isVegetarian">
+                                Vegetariano?
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <button class="btn btn-primary w-auto m-2 d-none" id="btn17" type="button" th:onclick="addIng(17)"><i class="fas fa-plus"></i> Aggiungi nuovo ingrediente</button>
+                </div>
+                <!--Singolo Ingrediente-->
+                <div class="row d-none" id="17">
+                    <div class="col-4">
+                        <label class="form-label" for="nome">Nome ingrediente</label>
+                        <input type="text" class="form-control" id="nome" th:field="*{ingredienti[17].nome}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-4">
+                        <label class="form-label" for="quantita">Quantita ingrediente</label>
+                        <input type="text" class="form-control" id="quantita" th:field="*{ingredienti[17].quantita}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-3 mt-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegan"
+                                th:field=*{ingredienti[17].isVegan}>
+                            <label class="form-check-label" for="isVegan">
+                                Vegano?
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegetarian"
+                                th:field=*{ingredienti[17].isVegetarian}>
+                            <label class="form-check-label" for="isVegetarian">
+                                Vegetariano?
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <button class="btn btn-primary w-auto m-2 d-none" id="btn18" type="button" th:onclick="addIng(18)"><i class="fas fa-plus"></i> Aggiungi nuovo ingrediente</button>
+                </div>
+                <!--Singolo Ingrediente-->
+                <div class="row d-none" id="18">
+                    <div class="col-4">
+                        <label class="form-label" for="nome">Nome ingrediente</label>
+                        <input type="text" class="form-control" id="nome" th:field="*{ingredienti[18].nome}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-4">
+                        <label class="form-label" for="quantita">Quantita ingrediente</label>
+                        <input type="text" class="form-control" id="quantita" th:field="*{ingredienti[18].quantita}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-3 mt-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegan"
+                                th:field=*{ingredienti[18].isVegan}>
+                            <label class="form-check-label" for="isVegan">
+                                Vegano?
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegetarian"
+                                th:field=*{ingredienti[18].isVegetarian}>
+                            <label class="form-check-label" for="isVegetarian">
+                                Vegetariano?
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <button class="btn btn-primary w-auto m-2 d-none" id="btn19" type="button" th:onclick="addIng(19)"><i class="fas fa-plus"></i> Aggiungi nuovo ingrediente</button>
+                </div>
+                <!--Singolo Ingrediente-->
+                <div class="row d-none" id="19">
+                    <div class="col-4">
+                        <label class="form-label" for="nome">Nome ingrediente</label>
+                        <input type="text" class="form-control" id="nome" th:field="*{ingredienti[19].nome}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-4">
+                        <label class="form-label" for="quantita">Quantita ingrediente</label>
+                        <input type="text" class="form-control" id="quantita" th:field="*{ingredienti[19].quantita}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-3 mt-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegan"
+                                th:field=*{ingredienti[19].isVegan}>
+                            <label class="form-check-label" for="isVegan">
+                                Vegano?
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegetarian"
+                                th:field=*{ingredienti[19].isVegetarian}>
+                            <label class="form-check-label" for="isVegetarian">
+                                Vegetariano?
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <button class="btn btn-primary w-auto m-2 d-none" id="btn20" type="button" th:onclick="addIng(20)"><i class="fas fa-plus"></i> Aggiungi nuovo ingrediente</button>
+                </div>
+                <!--Singolo Ingrediente-->
+                <div class="row d-none" id="20">
+                    <div class="col-4">
+                        <label class="form-label" for="nome">Nome ingrediente</label>
+                        <input type="text" class="form-control" id="nome" th:field="*{ingredienti[20].nome}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-4">
+                        <label class="form-label" for="quantita">Quantita ingrediente</label>
+                        <input type="text" class="form-control" id="quantita" th:field="*{ingredienti[20].quantita}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-3 mt-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegan"
+                                th:field=*{ingredienti[20].isVegan}>
+                            <label class="form-check-label" for="isVegan">
+                                Vegano?
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegetarian"
+                                th:field=*{ingredienti[20].isVegetarian}>
+                            <label class="form-check-label" for="isVegetarian">
+                                Vegetariano?
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <button class="btn btn-primary w-auto m-2 d-none" id="btn21" type="button" th:onclick="addIng(21)"><i class="fas fa-plus"></i> Aggiungi nuovo ingrediente</button>
+                </div>
+                <!--Singolo Ingrediente-->
+                <div class="row d-none" id="21">
+                    <div class="col-4">
+                        <label class="form-label" for="nome">Nome ingrediente</label>
+                        <input type="text" class="form-control" id="nome" th:field="*{ingredienti[21].nome}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-4">
+                        <label class="form-label" for="quantita">Quantita ingrediente</label>
+                        <input type="text" class="form-control" id="quantita" th:field="*{ingredienti[21].quantita}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-3 mt-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegan"
+                                th:field=*{ingredienti[21].isVegan}>
+                            <label class="form-check-label" for="isVegan">
+                                Vegano?
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegetarian"
+                                th:field=*{ingredienti[21].isVegetarian}>
+                            <label class="form-check-label" for="isVegetarian">
+                                Vegetariano?
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <button class="btn btn-primary w-auto m-2 d-none" id="btn22" type="button" th:onclick="addIng(22)"><i class="fas fa-plus"></i> Aggiungi nuovo ingrediente</button>
+                </div>
+                <!--Singolo Ingrediente-->
+                <div class="row d-none" id="22">
+                    <div class="col-4">
+                        <label class="form-label" for="nome">Nome ingrediente</label>
+                        <input type="text" class="form-control" id="nome" th:field="*{ingredienti[22].nome}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-4">
+                        <label class="form-label" for="quantita">Quantita ingrediente</label>
+                        <input type="text" class="form-control" id="quantita" th:field="*{ingredienti[22].quantita}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-3 mt-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegan"
+                                th:field=*{ingredienti[22].isVegan}>
+                            <label class="form-check-label" for="isVegan">
+                                Vegano?
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegetarian"
+                                th:field=*{ingredienti[22].isVegetarian}>
+                            <label class="form-check-label" for="isVegetarian">
+                                Vegetariano?
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <button class="btn btn-primary w-auto m-2 d-none" id="btn23" type="button" th:onclick="addIng(23)"><i class="fas fa-plus"></i> Aggiungi nuovo ingrediente</button>
+                </div>
+                <!--Singolo Ingrediente-->
+                <div class="row d-none" id="23">
+                    <div class="col-4">
+                        <label class="form-label" for="nome">Nome ingrediente</label>
+                        <input type="text" class="form-control" id="nome" th:field="*{ingredienti[23].nome}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-4">
+                        <label class="form-label" for="quantita">Quantita ingrediente</label>
+                        <input type="text" class="form-control" id="quantita" th:field="*{ingredienti[23].quantita}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-3 mt-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegan"
+                                th:field=*{ingredienti[23].isVegan}>
+                            <label class="form-check-label" for="isVegan">
+                                Vegano?
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegetarian"
+                                th:field=*{ingredienti[23].isVegetarian}>
+                            <label class="form-check-label" for="isVegetarian">
+                                Vegetariano?
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <button class="btn btn-primary w-auto m-2 d-none" id="btn24" type="button" th:onclick="addIng(24)"><i class="fas fa-plus"></i> Aggiungi nuovo ingrediente</button>
+                </div>
+                <!--Singolo Ingrediente-->
+                <div class="row d-none" id="24">
+                    <div class="col-4">
+                        <label class="form-label" for="nome">Nome ingrediente</label>
+                        <input type="text" class="form-control" id="nome" th:field="*{ingredienti[24].nome}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-4">
+                        <label class="form-label" for="quantita">Quantita ingrediente</label>
+                        <input type="text" class="form-control" id="quantita" th:field="*{ingredienti[24].quantita}"
+                            th:errorClass="is-invalid">
+                    </div>
+                    <div class="col-3 mt-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegan"
+                                th:field=*{ingredienti[24].isVegan}>
+                            <label class="form-check-label" for="isVegan">
+                                Vegano?
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" id="isVegetarian"
+                                th:field=*{ingredienti[24].isVegetarian}>
+                            <label class="form-check-label" for="isVegetarian">
+                                Vegetariano?
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <button class="btn btn-primary w-auto m-2 d-none" id="btn25" type="button" th:onclick="addIng(25)"><i class="fas fa-plus"></i> Aggiungi nuovo ingrediente</button>
+                    <div id="alert" class="alert alert-warning w-auto m-2 d-none">Numero massimo ingredienti raggiunto</div>
+                </div>
+                
+            
+            </div>
+            </div>
+            </form>
+            
+            <script type="text/javascript" th:src="@{/js/mainEdit.js}"></script>
+            </body>
+            
+            </html>
