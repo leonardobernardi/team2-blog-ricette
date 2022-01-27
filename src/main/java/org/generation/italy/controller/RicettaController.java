@@ -135,7 +135,7 @@ public class RicettaController {
 			model.addAttribute("edit", true);
 			model.addAttribute("ricetta", service.getById(id));
 			model.addAttribute("admin", true);
-			return "ricetta/dettagli";
+			return "ricetta/edit";
 		}
 
 		@PostMapping("/admin/ricetta/modifica/{id}")

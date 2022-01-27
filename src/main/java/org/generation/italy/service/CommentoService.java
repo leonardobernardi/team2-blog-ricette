@@ -45,7 +45,7 @@ public class CommentoService {
 		Ricetta ricetta = ricettaRepo.getById(id);
 		commento.setRicetta(ricetta);
 		List<Commento> commenti = repo.findAll();
-		commento.setId(commenti.size()+1);
+		commento.setId(commenti.size()+2);
 		return repo.save(commento);
 	}
 
