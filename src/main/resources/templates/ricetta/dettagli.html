@@ -23,7 +23,7 @@
             </div>
         </div>
         <hr>
-        <div class="row justify-content-start">
+        <div class="row justify-content-start">            
 
             <div class="col-4">
                 <h5>Ingredienti</h5>
@@ -33,10 +33,9 @@
                     </ul>
                 </div>
             </div>
-            <!--  <div class="col-3 p-2">
-                <img class="p-0" style="width:250px" th:src="${ingrediente.img}" alt="ingerdienteimg">
+            <div class="col-3 p-2" th:each=" img1: ${ricetta.immagini}">
+                <img class="p-0" style="width:250px" th:src="|/detail/${ricetta.id}/${img1.id}/img|" alt="ingredienteimg">
             </div>
-        -->
         </div>
         <hr>
         <div class="row justify-content-start">

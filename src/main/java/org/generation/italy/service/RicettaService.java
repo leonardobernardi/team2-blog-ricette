@@ -92,28 +92,33 @@ public class RicettaService {
 
 	public boolean isVegan(Ricetta ricetta) {
 		if(ricetta != null) {
-			for(Ingrediente i : ricetta.getIngrediente()) {
-				if(!i.getIsVegan()) {
-					return false;
-				}				
+			if (ricetta.getIngrediente().size()>0) {
+				for (Ingrediente i : ricetta.getIngrediente()) {
+					if (!i.getIsVegan()) {
+						return false;
+					}
+				}
+				return true;
 			}
-			return true;
 		} 
 		return false;
 		
 	}
 	
 	public boolean isVegetarian(Ricetta ricetta) {		
-		if(ricetta != null) {			
-			for(Ingrediente i : ricetta.getIngrediente()) {
-				if(!i.getIsVegetarian()) {
-					return false;
+		if(ricetta != null) {	
+			if(ricetta.getIngrediente().size()>0) {
+				for(Ingrediente i : ricetta.getIngrediente()) {
+					if(!i.getIsVegetarian()) {
+						return false;
+					}
 				}
+				return true;
 			}
-			return true;
-		} else {
+			
+		} 
 			return false;
-		}
+		
 	}
 
 	public List<Ricetta> findByTitolo(String keyword) {
