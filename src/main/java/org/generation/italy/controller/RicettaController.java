@@ -86,7 +86,7 @@ public class RicettaController {
 		@GetMapping("/admin")
 		public String admin(Model model) {
 			model.addAttribute("piuRecenti", service.findLastSevenDays());
-			model.addAttribute("piu viste", service.findMostViewed());
+			model.addAttribute("piuViste", service.findMostViewed());
 			model.addAttribute("piuCommentate", service.findMostCommented());
 			return "/admin/attivita";
 		}
