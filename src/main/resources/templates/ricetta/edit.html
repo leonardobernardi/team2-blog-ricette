@@ -10,7 +10,7 @@
     <nav th:replace="fragments/navbar :: navbar"></nav>
 
     <form id="ricetta-form" th:object="${ricetta}"
-        th:action="${edit} ? @{/admin/ricetta/modifica/{id}(id=${ricetta.id})} : @{/admin/ricetta/crea}" method="post">
+        th:action="${edit} ? @{/admin/ricetta/modifica/{id}(id=${ricetta.id})} : @{/admin/ricetta/crea}" method="post" enctype="multipart/form-data">
         <ul>
             <li th:each="err : ${#fields.allErrors()}" th:text="${err}" class="text-danger"></li>
         </ul>
@@ -67,6 +67,18 @@
                                 <li th:each="err : ${#fields.errors('testoDellaRicetta')}" th:text="${err}"></li>
                             </ul>
                         </div>
+                    </div>
+                    <!--Immagini-->
+                    <div class="col-6" th:object="${immaginiForm}">
+                        <!--Singola Immagine-->
+                        <div class="row">
+                            <div class="col">
+                                <label for="content" class="form-label">Carica Immagine</label>
+                                <input type="file" class="form-control" name="content" th:field="*{listaImmaginiForm[0].content}">
+                            </div>
+                        </div>
+
+
                     </div>
 
                     <!--Submit-->
