@@ -64,6 +64,7 @@ public class RicettaController {
 			model.addAttribute("ingredientiForm", ingredientiForm);
 			model.addAttribute("edit", false);
 			model.addAttribute("ricetta", new Ricetta());
+			model.addAttribute("admin", true);
 			return "/ricetta/edit";
 		}
 
@@ -86,8 +87,9 @@ public class RicettaController {
 		@GetMapping("/admin")
 		public String admin(Model model) {
 			model.addAttribute("piuRecenti", service.findLastSevenDays());
-			model.addAttribute("piu viste", service.findMostViewed());
+			model.addAttribute("piuViste", service.findMostViewed());
 			model.addAttribute("piuCommentate", service.findMostCommented());
+			model.addAttribute("admin", true);
 			return "/admin/attivita";
 		}
 		
@@ -127,6 +129,7 @@ public class RicettaController {
 		public String edit(@PathVariable("id") Integer id, Model model) {
 			model.addAttribute("edit", true);
 			model.addAttribute("ricetta", service.getById(id));
+			model.addAttribute("admin", true);
 			return "ricetta/dettagli";
 		}
 

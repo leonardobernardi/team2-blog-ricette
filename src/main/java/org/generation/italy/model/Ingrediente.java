@@ -34,6 +34,7 @@ public class Ingrediente {
 	}
 	private Boolean isVegan;
 	private Boolean isVegetarian;
+	
 	public Integer getId() {
 		return id;
 	}
