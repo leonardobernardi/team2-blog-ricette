@@ -3,6 +3,7 @@ package org.generation.italy.model;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -59,7 +60,7 @@ public class Ricetta {
 	private List<Immagine> immagini;
 	
 	
-	@OneToMany(mappedBy = "ricetta")
+	@OneToMany(mappedBy = "ricetta", cascade = {CascadeType.ALL})
 	private List<Ingrediente> ingrediente;
 	
 	@OneToMany(mappedBy = "ricetta")

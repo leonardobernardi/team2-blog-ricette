@@ -1,5 +1,6 @@
 package org.generation.italy.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -55,7 +56,8 @@ public class RicettaController {
 	//Create
 		@GetMapping("/admin/ricetta/crea")
 		public String create(Model model) {
-			IngredienteList ingredientiForm = new IngredienteList();
+			List<Ingrediente> ingredientiList= new ArrayList<Ingrediente>(); 
+			IngredienteList ingredientiForm = new IngredienteList(ingredientiList);
 			for (int i = 0; i < 30; i++) {
 				ingredientiForm.addIngrediente(new Ingrediente());
 			}
@@ -66,14 +68,17 @@ public class RicettaController {
 		}
 
 		@PostMapping("/admin/ricetta/crea")
-		public String create(@Valid @ModelAttribute("ricetta") Ricetta formRicetta, BindingResult bindingResult, Model model) {
+		public String create(@Valid @ModelAttribute("ricetta") Ricetta formRicetta, 
+				BindingResult bindingResult,
+				@ModelAttribute ("ingredientiForm") IngredienteList ingredienteList,
+				Model model) {
 			if(bindingResult.hasErrors()) {
 				model.addAttribute("edit", false);
 				return "/ricetta/edit";
 			}
-			service.create(formRicetta);
+			service.create(formRicetta, ingredienteList);
 			
-			return "redirect:/home/index";
+			return "redirect:/";
 		}
 		
 		//Read

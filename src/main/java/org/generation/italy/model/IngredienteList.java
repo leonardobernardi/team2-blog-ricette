@@ -6,6 +6,12 @@ public class IngredienteList {
 
 	private List<Ingrediente> ingredienti;
 	
+	
+	public IngredienteList(List<Ingrediente> ingredienti) {
+		super();
+		this.ingredienti = ingredienti;
+	}
+
 	public void addIngrediente(Ingrediente ingrediente) {
 		this.ingredienti.add(ingrediente);
 	}

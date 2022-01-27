@@ -6,7 +6,9 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.generation.italy.model.Ingrediente;
+import org.generation.italy.model.IngredienteList;
 import org.generation.italy.model.Ricetta;
+import org.generation.italy.repository.IngredienteRepository;
 import org.generation.italy.repository.RicettaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -19,14 +21,31 @@ public class RicettaService {
 	@Autowired
 	private RicettaRepository repo;
 
+	@Autowired
+	private IngredienteRepository ingredienteRepo;
+	
 	// Create
-	public Ricetta create(Ricetta ricetta) {
+	public Ricetta create(Ricetta ricetta, IngredienteList ingredienteList) {
 		ricetta.setDataDiCreazione(LocalDateTime.now());
 		ricetta.setVisualizzazioni(0);
-
-		// ricetta.setIsVegan(isVegan(ricetta));
-		// ricetta.setIsVegetarian(isVegetarian(ricetta));
 		ricetta.setMiPiace(0);
+		repo.save(ricetta);
+		List<Ingrediente> ingList = new ArrayList<Ingrediente>();
+		for(Ingrediente ing : ingredienteList.getIngredienti()) {
+			if(ing!=null) {
+				if(ing.getNome()!=null || !ing.getNome().isEmpty() || !ing.getNome().isBlank()) {
+					if(ing.getQuantita()!=null || !ing.getQuantita().isEmpty() || !ing.getQuantita().isBlank()) {
+						ing.setRicetta(ricetta);
+						ingList.add(ing);
+						ingredienteRepo.save(ing);
+					}
+				}
+			}
+		}
+		ricetta.setIngrediente(ingList);
+		ricetta.setIsVegan(isVegan(ricetta));
+		ricetta.setIsVegetarian(isVegetarian(ricetta));
+		
 
 		return repo.save(ricetta);
 	}
@@ -43,14 +62,15 @@ public class RicettaService {
 	public boolean isVegan(Ricetta ricetta) {
 		if(ricetta != null) {
 			for(Ingrediente i : ricetta.getIngrediente()) {
-				if(!i.getIsVegan()) {
+				if(i.getIsVegan()) {
+					return true;
+				}else if(i.getIsVegan() != null || !i.getIsVegan()) {
 					return false;
 				}
 			}
-			return true;
-		} else {
-			return false;
-		}
+		} 
+		return false;
+		
 	}
 	
 	public boolean isVegetarian(Ricetta ricetta) {		
