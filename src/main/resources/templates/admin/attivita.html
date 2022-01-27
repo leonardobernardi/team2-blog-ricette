@@ -9,33 +9,33 @@
 <body>
     <nav th:replace="fragments/navbar :: navbar"></nav>
     <div class="container">
-        <div class="h3 text-center">
+        <h1 class="text-center">
             Riepilogo attivit&agrave;
-        </div>
+        </h1>
         <hr>
         <div class="row">
             <div class="col">
-                <div class="h5">Ricette aggiunte di ricente</div>
+                <div class="h5">Ricette aggiunte di recente</div>
                 <div th:each="ricetta : ${piuRecenti}">
-                    <a th:text="${ricetta.titolo}" th:href="@{|/ricetta/${ricetta.id}|}"
+                    <a th:text="|&#8226; ${ricetta.titolo}|" th:href="@{|/ricetta/${ricetta.id}|}"
                         class="text-decoration-none text-dark"></a>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <div class="h5">Ricette più visualizzate</div>
+                <div class="h5">Ricette pi&ugrave; visualizzate</div>
                 <div th:each="ricetta : ${piuViste}">
-                    <a th:text="${ricetta.titolo}" th:href="@{|/ricetta/${ricetta.id}|}"
+                    <a th:text="|&#8226; ${ricetta.titolo}|" th:href="@{|/ricetta/${ricetta.id}|}"
                         class="text-decoration-none text-dark"></a>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <div class="h5">Ricette più commentate</div>
+                <div class="h5">Ricette pi&ugrave; commentate</div>
                 <div th:each="ricetta : ${piuCommentate}">
-                    <a th:text="${ricetta.titolo}" th:href="@{|/ricetta/${ricetta.id}|}"
+                    <a th:text="|&#8226; ${ricetta.titolo}|" th:href="@{|/ricetta/${ricetta.id}|}"
                         class="text-decoration-none text-dark"></a>
                 </div>
             </div>

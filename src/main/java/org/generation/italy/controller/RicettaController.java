@@ -79,6 +79,7 @@ public class RicettaController {
 				Model model) {
 			if(bindingResult.hasErrors()) {
 				model.addAttribute("edit", false);
+				model.addAttribute("admin", true);
 				return "/ricetta/edit";
 			}
 			service.create(formRicetta, ingredienteList);

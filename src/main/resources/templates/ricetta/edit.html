@@ -39,9 +39,12 @@
                             </div>
                         </div>
                         <div class="col-6">
-                            <label class="form-label" for="livelloDiDifficolta">Livello di difficolt&agrave;</label>
-                            <input type="number" min="1" max="3" value="1" maxlength="1" class="form-control" id="livelloDiDifficolta"
-                                th:field="*{livelloDiDifficolta}" th:errorClass="is-invalid">
+                            <label class="form-label" for="livelloDiDifficolta">Difficolt&agrave;</label>
+                            <select id="livelloDiDifficolta" class="form-control"th:field="*{livelloDiDifficolta}">
+                                <option th:value="1" selected>Facile</option>
+                                <option th:value="2">Medio</option>
+                                <option th:value="3">Difficile</option>
+                            </select>
                             <div th:if="${#fields.hasErrors('livelloDiDifficolta')}" class="invalid-feedback">
                                 <ul>
                                     <li th:each="err : ${#fields.errors('livelloDiDifficolta')}" th:text="${err}"></li>
