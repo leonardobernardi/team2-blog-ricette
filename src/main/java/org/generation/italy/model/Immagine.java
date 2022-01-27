@@ -25,7 +25,7 @@ public class Immagine {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
+	} 
 
 	public byte[] getContent() {
 		return content;

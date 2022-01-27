@@ -3,6 +3,7 @@ package org.generation.italy.model;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -35,7 +36,7 @@ public class Ricetta {
 	@Min(value=1)
 	@Max(value=3)
 	private Integer livelloDiDifficolta;
-	
+
 	@NotNull
 	@NotEmpty
 	@Column(length=250)
@@ -50,6 +51,8 @@ public class Ricetta {
 	
 	private Integer visualizzazioni;	
 	
+	private Integer miPiace;
+	
 	@ManyToOne
 	private Categoria categoria;
 	
@@ -57,8 +60,8 @@ public class Ricetta {
 	private List<Immagine> immagini;
 	
 	
-	@OneToMany(mappedBy = "ricetta")
-	private List<IngredientiRicetta> ingredienti;
+	@OneToMany(mappedBy = "ricetta", cascade = {CascadeType.ALL})
+	private List<Ingrediente> ingrediente;
 	
 	@OneToMany(mappedBy = "ricetta")
 	private List<Commento> commenti;
@@ -68,7 +71,14 @@ public class Ricetta {
 	
 	
 
-	
+	public Integer getMiPiace() {
+		return miPiace;
+	}
+
+	public void setMiPiace(Integer miPiace) {
+		this.miPiace = miPiace;
+	}
+
 	public List<Immagine> getImmagini() {
 		return immagini;
 	}
@@ -165,13 +175,14 @@ public class Ricetta {
 		this.categoria = categoria;
 	}
 
-	public List<IngredientiRicetta> getIngredienti() {
-		return ingredienti;
+	public List<Ingrediente> getIngrediente() {
+		return ingrediente;
 	}
 
-	public void setIngredienti(List<IngredientiRicetta> ingredienti) {
-		this.ingredienti = ingredienti;
+	public void setIngrediente(List<Ingrediente> ingrediente) {
+		this.ingrediente = ingrediente;
 	}
+
 
 	public String getDescrizione() {
 		return descrizione;
@@ -180,7 +191,7 @@ public class Ricetta {
 	public void setDescrizione(String descrizione) {
 		this.descrizione = descrizione;
 	}
-	
+
 	
 	
 }
