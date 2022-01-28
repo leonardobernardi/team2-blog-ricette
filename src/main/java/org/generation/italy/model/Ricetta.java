@@ -67,8 +67,33 @@ public class Ricetta {
 	@OneToMany(mappedBy = "ricetta")
 	private List<Commento> commenti;
 	
-	private Boolean isVegan;
-	private Boolean isVegetarian;
+	// -- veg
+	public boolean isVegan() {
+
+				for (Ingrediente i : getIngrediente()) {
+					if (!i.getIsVegan()) {
+						return false;
+					}
+				}
+				return true;
+
+	}
+	
+	public boolean isVegetarian() {		
+		if(ricetta != null) {	
+			if(ricetta.getIngrediente().size()>0) {
+				for(Ingrediente i : ricetta.getIngrediente()) {
+					if(!i.getIsVegetarian()) {
+						return false;
+					}
+				}
+				return true;
+			}
+			
+		} 
+			return false;
+		
+	}
 	
 	
 
@@ -96,21 +121,22 @@ public class Ricetta {
 		this.commenti = commenti;
 	}
 
-	public Boolean getIsVegan() {
-		return isVegan;
-	}
-
-	public void setIsVegan(Boolean isVegan) {
-		this.isVegan = isVegan;
-	}
-
-	public Boolean getIsVegetarian() {
-		return isVegetarian;
-	}
-
-	public void setIsVegetarian(Boolean isVegetarian) {
-		this.isVegetarian = isVegetarian;
-	}
+	// delete - now a method
+//	public Boolean getIsVegan() {
+//		return isVegan;
+//	}
+//
+//	public void setIsVegan(Boolean isVegan) {
+//		this.isVegan = isVegan;
+//	}
+//
+//	public Boolean getIsVegetarian() {
+//		return isVegetarian;
+//	}
+//
+//	public void setIsVegetarian(Boolean isVegetarian) {
+//		this.isVegetarian = isVegetarian;
+//	}
 
 	public Integer getId() {
 		return id;

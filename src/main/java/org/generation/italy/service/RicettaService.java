@@ -90,36 +90,7 @@ public class RicettaService {
 		return repo.getById(id);
 	}
 
-	public boolean isVegan(Ricetta ricetta) {
-		if(ricetta != null) {
-			if (ricetta.getIngrediente().size()>0) {
-				for (Ingrediente i : ricetta.getIngrediente()) {
-					if (!i.getIsVegan()) {
-						return false;
-					}
-				}
-				return true;
-			}
-		} 
-		return false;
-		
-	}
-	
-	public boolean isVegetarian(Ricetta ricetta) {		
-		if(ricetta != null) {	
-			if(ricetta.getIngrediente().size()>0) {
-				for(Ingrediente i : ricetta.getIngrediente()) {
-					if(!i.getIsVegetarian()) {
-						return false;
-					}
-				}
-				return true;
-			}
-			
-		} 
-			return false;
-		
-	}
+
 	
 	public List<Ricetta> findByCategoria(Integer categoryId){
 		return repo.findByCategoriaContaining(categoryId);

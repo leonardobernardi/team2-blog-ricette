@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/%22%3E">
+
+<head>
+    <div th:replace="fragments/resources :: headTags"></div>
+    <title th:text="|${vecchiaRicetta.titolo}|"></title>
+</head>
+
+<body>
+    <nav th:replace="fragments/navbar :: navbar"></nav>
+    <div class="container text-center">
+        <div th:text="|Modifica ${vecchiaRicetta.titolo}|" class="h2"></div>
+        <form id="modificaRicettaForm" th:action="@{/admin/ricetta/modifica/{id}/(id=${vecchiaRicetta.id})}"
+            th:object="${vecchiaRicetta}" method="post">
+            <ul>
+                <li th:each="err : ${#fields.allErrors()}" th:text="${err}" class="text-danger"></li>
+            </ul>
+            <div class="container">
+                <div class="row">
+                    <!--Ricetta-->
+                    <div class="col-12">
+                        <div class="row gy-2">
+                            <div class="col-12">
+                                <label class="form-label" for="titolo">Titolo</label>
+                                <input type="text" class="form-control" id="titolo" th:field="*{titolo}"
+                                    th:errorClass="is-invalid">
+                                <div th:if="${#fields.hasErrors('titolo')}" class="invalid-feedback">
+                                    <ul>
+                                        <li th:each="err : ${#fields.errors('titolo')}" th:text="${err}"></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <label class="form-label" for="tempoDiPreparazione">Tempo di preparazione</label>
+                                <input type="text" class="form-control" id="tempoDiPreparazione"
+                                    th:field="*{tempoDiPreparazione}" th:errorClass="is-invalid">
+                                <div th:if="${#fields.hasErrors('tempoDiPreparazione')}" class="invalid-feedback">
+                                    <ul>
+                                        <li th:each="err : ${#fields.errors('tempoDiPreparazione')}" th:text="${err}">
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <label class="form-label" for="livelloDiDifficolta">Difficolt&agrave;</label>
+                                <select id="livelloDiDifficolta" class="form-control" th:field="*{livelloDiDifficolta}">
+                                    <option th:value="1" selected>Facile</option>
+                                    <option th:value="2">Medio</option>
+                                    <option th:value="3">Difficile</option>
+                                </select>
+                                <div th:if="${#fields.hasErrors('livelloDiDifficolta')}" class="invalid-feedback">
+                                    <ul>
+                                        <li th:each="err : ${#fields.errors('livelloDiDifficolta')}" th:text="${err}">
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <label class="form-label" for="categoria">Categoria</label>
+                                <select id="categoria" class="form-control" th:field="*{categoria}">
+                                    <option th:value="1" selected>Antipasto</option>
+                                    <option th:value="2">Primo</option>
+                                    <option th:value="3">Secondo</option>
+                                    <option th:value="4">Contorno</option>
+                                    <option th:value="5">Dolce</option>
+                                </select>
+                                <div th:if="${#fields.hasErrors('categoria')}" class="invalid-feedback">
+                                    <ul>
+                                        <li th:each="err : ${#fields.errors('categoria')}" th:text="${err}"></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label" for="descrizione">Descrizione</label>
+                                <textarea rows="3" cols="6" class="form-control" id="descrizione"
+                                    th:field="*{descrizione}" th:errorClass="is-invalid"></textarea>
+                                <div th:if="${#fields.hasErrors('descrizione')}" class="invalid-feedback">
+                                    <ul>
+                                        <li th:each="err : ${#fields.errors('descrizione')}" th:text="${err}"></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label" for="testoDellaRicetta">Testo della ricetta</label>
+                                <textarea rows="10" cols="6" class="form-control" id="testoDellaRicetta"
+                                    th:field="*{testoDellaRicetta}" th:errorClass="is-invalid"></textarea>
+                                <div th:if="${#fields.hasErrors('testoDellaRicetta')}" class="invalid-feedback">
+                                    <ul>
+                                        <li th:each="err : ${#fields.errors('testoDellaRicetta')}" th:text="${err}">
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Submit-->
+                        <div class="col-12">
+                            <button class="btn btn-success" type="submit"><i class="fas fa-check"></i> Salva</button>
+                            <a class="btn btn-success" th:href="@{/home/index}"><i class="fas fa-times"></i>
+                                Indietro</a>
+                        </div>
+
+
+
+                    </div>
+        </form>
+
+
+    </div>
+
+</body>
+
+</html>
