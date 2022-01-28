@@ -5,6 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class ImmagineForm {
 	
 	private Integer id;
+
 	private Ricetta ricetta;
 	private MultipartFile content;
 	
@@ -23,11 +24,12 @@ public class ImmagineForm {
 	public MultipartFile getContent() {
 		return content;
 	}
+
 	public void setContent(MultipartFile content) {
 		this.content = content;
 	}
 	
 	
-	
+
 
 }

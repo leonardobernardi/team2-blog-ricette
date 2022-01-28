@@ -177,23 +177,55 @@ public class RicettaController {
 		
 		
 		//Update
-		@GetMapping("/admin/ricetta/modifica/{id}")
-		public String edit(@PathVariable("id") Integer id, Model model) {
-			model.addAttribute("edit", true);
-			model.addAttribute("ricetta", service.getById(id));
-			model.addAttribute("admin", true);
-			return "ricetta/edit";
-		}
-
-		@PostMapping("/admin/ricetta/modifica/{id}")
-		public String doUpdate(@Valid @ModelAttribute("ricetta") Ricetta formRicetta, BindingResult bindingResult, Model model){
-			if(bindingResult.hasErrors()) {
-				model.addAttribute("edit", true);
-				return "ricetta/dettagli";
+//		@GetMapping("/admin/ricetta/modifica/{id}")
+//		public String edit(@PathVariable("id") Integer id, Model model) {
+//			model.addAttribute("edit", true);
+//			model.addAttribute("ricetta", service.getById(id));
+//			model.addAttribute("admin", true);
+//			return "ricetta/edit";
+//		}
+//
+//		@PostMapping("/admin/ricetta/modifica/{id}")
+//		public String doUpdate(@Valid @ModelAttribute("ricetta") Ricetta formRicetta, BindingResult bindingResult, Model model){
+//			if(bindingResult.hasErrors()) {
+//				model.addAttribute("edit", true);
+//				return "ricetta/dettagli";
+//			}
+//			service.update(formRicetta);
+//			return "redirect:/home/index";
+//		}
+		
+		//Update di ingredienti
+		@GetMapping("/admin/ricetta/modifica/{id}/ingredienti")
+		public String editIngredienti(@PathVariable("id") Integer id, Model model) {
+			List<Ingrediente> ingredientiList = new ArrayList<Ingrediente>();
+			IngredienteList ingredientiForm = new IngredienteList(ingredientiList);
+			for (int i = 0; i < 26; i++) {
+				ingredientiForm.addIngrediente(new Ingrediente());
 			}
-			service.update(formRicetta);
-			return "redirect:/home/index";
+			model.addAttribute("ingredientiForm", ingredientiForm);
+			model.addAttribute("ricetta", service.getById(id));
+			return "admin/edit-ingredienti";
 		}
+		
+		@PostMapping("/admin/ricetta/modifica/{id}/ingredienti")
+		public String doEditIngredienti (@ModelAttribute("ingredientiForm") 
+		IngredienteList ingredientiList, @PathVariable("id") Integer id, Model model) {
+			service.updateIngredienti(id, ingredientiList);
+			return "redirect:/ricetta/" + id;
+			
+		}
+		
+		//doEdit
+
+
+//		@GetMapping("/admin/ricetta/modifica/{id}")
+//		public String editRicetta (@PathVariable("id") Integer id, Model model) {
+//			model.addAttribute("nuovaRicetta", new Ricetta());
+//			return "/admin/ricetta/edit" + id;
+//		}
+		
+		
 		
 		//Delete 
 		@GetMapping("/admin/ricetta/cancella/{id}")
