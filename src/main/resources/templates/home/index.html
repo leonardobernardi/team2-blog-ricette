@@ -11,22 +11,25 @@
     <nav th:replace="fragments/navbar :: navbar"></nav>
     <div class="container">
         <h1 class="text-center">Blog ricette</h1>
+        <hr>
         <div class="row mb-4">
             <div th:each="ricetta : ${lista}" class="col-4">
                 <a th:href="@{|/ricetta/${ricetta.id}|}" class="text-decoration-none text-dark">
                     <div class="card shadow">
                         <div class="card-body">
-                            <div class="h5 card-title" th:text="${ricetta.titolo}"></div>
-                            <th:block th:switch="${ricetta.livelloDiDifficolta}">
-                                <span class="text-center bg-info text-light rounded p-1" th:case="'1'">
-                                    <i class="fas fa-utensil-spoon"></i> facile</span>
-                                <span class="text-center bg-info text-light rounded p-1" th:case="'2'">
-                                    <i class="fas fa-utensil-spoon"></i> medio</span>
-                                <span class="text-center bg-info text-light rounded p-1" th:case="'3'">
-                                    <i class="fas fa-utensil-spoon"></i> difficile</span>
-                            </th:block>
+                            <div class="d-flex justify-content-between">
+                                <span th:text="${ricetta.titolo}" class="h5 card-title"></span>
+                                <th:block th:switch="${ricetta.livelloDiDifficolta}">
+                                    <span class="text-center bg-info text-light rounded p-1" th:case="'1'">
+                                        <i class="fas fa-utensil-spoon"></i> facile</span>
+                                    <span class="text-center bg-info text-light rounded p-1" th:case="'2'">
+                                        <i class="fas fa-utensil-spoon"></i> medio</span>
+                                    <span class="text-center bg-info text-light rounded p-1" th:case="'3'">
+                                        <i class="fas fa-utensil-spoon"></i> difficile</span>
+                                </th:block>
+                            </div>
                             <div class="position-relative">
-                                <img src="" class="img-fluid" alt="">
+                                <img th:src="|${ricetta.id}/img|" class="img-fluid" alt="">
                                 <div class="text-center bg-success text-light px-1 position-bottom-left"
                                     th:if="${ricetta.isVegan == true}">
                                     <span><i class="fas fa-seedling"></i> vegano</span>

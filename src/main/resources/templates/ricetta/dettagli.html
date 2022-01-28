@@ -3,8 +3,7 @@
 
 <head>
     <div th:replace="fragments/resources :: headTags"></div>
-
-    <title th:text="${ricetta.titolo}">Ricetta</title>
+	<title th:text="${ricetta.titolo}">Ricetta</title>
 </head>
 
 <body class="bg-light">
@@ -24,7 +23,7 @@
             </div>
         </div>
         <hr>
-        <div class="row justify-content-start">
+        <div class="row justify-content-start">            
 
             <div class="col-4">
                 <h5>Ingredienti</h5>
@@ -34,10 +33,9 @@
                     </ul>
                 </div>
             </div>
-            <!--  <div class="col-3 p-2">
-                <img class="p-0" style="width:250px" th:src="${ingrediente.img}" alt="ingerdienteimg">
+            <div class="col-3 p-2" th:each=" img1: ${ricetta.immagini}">
+                <img class="p-0" style="width:250px" th:src="|/detail/${ricetta.id}/${img1.id}/img|" alt="ingredienteimg">
             </div>
-        -->
         </div>
         <hr>
         <div class="row justify-content-start">
@@ -76,7 +74,7 @@
                     <input type="text" th:field="*{testo}" class="form-control" id="commento" placeholder="commento">
                 </div>
                 <div class="row p-3">
-                    <button type="submit" class="btn btn-light">invia</button>
+                    <button type="submit" class="btn btn-light bg-success text-light">Invia</button>
                 </div>
             </div>
 
@@ -85,10 +83,9 @@
 
             <div th:if="${list.size() > 0}" class="row mt-5">
                 <h5>Commenti di altri utenti</h5>
-                <div th:each="item : ${list}" class="border rounded-2 p-3 m-2">
-                    <span th:text="${item.email.email}"></span>:
-                    <span th:text="${item.nome}"></span>
-                    <p th:text="${item.testo}"></p>
+                <div th:each="item : ${list}" class="border rounded-2 p-3 m-2" th:if="${item.email.isBanned == false}">
+                    <span th:text="${item.nome}" class="text-success"></span>
+                    <p th:text="${item.testo}" class="border border-2 p-2 rounded-2"></p>
                 </div>
             </div>
             <hr>
