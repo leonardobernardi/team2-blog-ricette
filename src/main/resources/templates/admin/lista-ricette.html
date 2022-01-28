@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <div th:replace="fragments/resources :: headTags"></div>
+    <title>Gestione ricette</title>
+</head>
+
+<body class="bg-light">
+    <nav th:replace="fragments/navbar :: navbar"></nav>
+    <h1 class="text-center">Gestione ricette</h1>
+    <hr>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div th:each="ricetta : ${lista}">
+                    <a th:text="|&#8226; ${ricetta.titolo}|" th:href="@{|/ricetta/${ricetta.id}|}"
+                        class="text-decoration-none text-dark"></a>
+                    <a class="text-decoration-none text-success" th:href="@{/}"><i class="fas fa-pencil-alt"></i></a>
+                    <a class="text-decoration-none text-success" th:href="@{'/admin/modifica/cancella/' + ${ricetta.id}}" onclick="return confirm('Sei sicuro?')"><i class="fas fa-trash-alt"></i></a>   
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:replace="fragments/resources :: scripts"></div>
+</body>

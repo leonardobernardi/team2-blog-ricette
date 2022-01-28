@@ -176,32 +176,31 @@ public class RicettaController {
 		}
 		
 		
-		//Update
-		@GetMapping("/admin/ricetta/modifica/{id}")
-		public String edit(@PathVariable("id") Integer id, Model model) {
-			model.addAttribute("edit", true);
-			model.addAttribute("ricetta", service.getById(id));
+		//Update -- ritorna lista di tutte le ricette 
+		@GetMapping("/admin/modifica")
+		public String edit(Model model) {
+			model.addAttribute("lista", service.findAllSortedByRecent());
 			model.addAttribute("admin", true);
-			return "ricetta/edit";
+			return "/admin/lista-ricette";
 		}
 
-		@PostMapping("/admin/ricetta/modifica/{id}")
-		public String doUpdate(@Valid @ModelAttribute("ricetta") Ricetta formRicetta, BindingResult bindingResult, Model model){
-			if(bindingResult.hasErrors()) {
-				model.addAttribute("edit", true);
-				return "ricetta/dettagli";
-			}
-			service.update(formRicetta);
-			return "redirect:/home/index";
-		}
+//		@PostMapping("/admin/ricetta/modifica/{id}")
+//		public String doUpdate(@Valid @ModelAttribute("ricetta") Ricetta formRicetta, BindingResult bindingResult, Model model){
+//			if(bindingResult.hasErrors()) {
+//				model.addAttribute("edit", true);
+//				return "ricetta/dettagli";
+//			}
+//			service.update(formRicetta);
+//			return "redirect:/home/index";
+//		}
 		
 		//Delete 
-		@GetMapping("/admin/ricetta/cancella/{id}")
+		@GetMapping("/admin/modifica/cancella/{id}")
 		public String delete(@PathVariable("id") Integer id) {
 			if(service.getById(id) == null) {
 				//messaggio d'errore
 			}
 			service.deleteById(id);
-			return "redirect:/home/index";
+			return "redirect:/admin/modifica";
 		}
 }

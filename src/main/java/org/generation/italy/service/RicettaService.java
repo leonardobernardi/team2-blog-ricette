@@ -5,12 +5,15 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+
+import org.generation.italy.model.Commento;
 import org.generation.italy.model.Immagine;
 import org.generation.italy.model.ImmagineForm;
 import org.generation.italy.model.ImmagineList;
 import org.generation.italy.model.Ingrediente;
 import org.generation.italy.model.IngredienteList;
 import org.generation.italy.model.Ricetta;
+import org.generation.italy.repository.CommentoRepository;
 import org.generation.italy.repository.ImmagineRepository;
 import org.generation.italy.repository.IngredienteRepository;
 import org.generation.italy.repository.RicettaRepository;
@@ -30,6 +33,9 @@ public class RicettaService {
 	
 	@Autowired
 	private ImmagineRepository imgRepo;
+	
+	@Autowired
+	private CommentoRepository comRepo;
 	
 	// Create
 	public Ricetta create(Ricetta ricetta, IngredienteList ingredienteList, ImmagineList immagineList) throws IOException {
@@ -211,6 +217,15 @@ public class RicettaService {
 	//Delete
 
 	public void deleteById(Integer id) {
+		Ricetta ricetta = repo.getById(id);
+		List<Immagine> imgList = ricetta.getImmagini();
+		for(Immagine img : imgList) {
+			imgRepo.delete(img);
+		}
+		List<Commento> comList = ricetta.getCommenti();
+		for(Commento com : comList) {
+			comRepo.delete(com);
+		}
 		repo.deleteById(id);
 	}
 
