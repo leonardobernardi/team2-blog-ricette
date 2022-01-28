@@ -216,6 +216,14 @@ public class RicettaController {
 			
 		}
 		
+		//doEdit
+
+
+//		@GetMapping("/admin/ricetta/modifica/{id}")
+//		public String editRicetta (@PathVariable("id") Integer id, Model model) {
+//			model.addAttribute("nuovaRicetta", new Ricetta());
+//			return "/admin/ricetta/edit" + id;
+//		}
 		
 		
 		
