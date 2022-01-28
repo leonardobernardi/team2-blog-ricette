@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <div th:replace="fragments/resources :: headTags"></div>
+    <title>Blog ricette</title>
+</head>
+
+<body>
+    <nav th:replace="fragments/navbar :: navbar"></nav>
+    <div class="container">
+        <h1 class="text-center">
+            Riepilogo attivit&agrave;
+        </h1>
+        <hr>
+        <div class="row">
+            <div class="col">
+                <div class="h5">Ricette aggiunte di recente</div>
+                <div th:each="ricetta : ${piuRecenti}">
+                    <a th:text="|&#8226; ${ricetta.titolo}|" th:href="@{|/ricetta/${ricetta.id}|}"
+                        class="text-decoration-none text-dark"></a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="h5">Ricette pi&ugrave; visualizzate</div>
+                <div th:each="ricetta : ${piuViste}">
+                    <a th:text="|&#8226; ${ricetta.titolo}|" th:href="@{|/ricetta/${ricetta.id}|}"
+                        class="text-decoration-none text-dark"></a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="h5">Ricette pi&ugrave; commentate</div>
+                <div th:each="ricetta : ${piuCommentate}">
+                    <a th:text="|&#8226; ${ricetta.titolo}|" th:href="@{|/ricetta/${ricetta.id}|}"
+                        class="text-decoration-none text-dark"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:replace="fragments/resources :: scripts"></div>
+</body>
+
+</html>

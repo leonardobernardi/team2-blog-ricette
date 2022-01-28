@@ -53,6 +53,7 @@ public class Ricetta {
 	
 	private Integer miPiace;
 	
+	
 	@ManyToOne
 	private Categoria categoria;
 	

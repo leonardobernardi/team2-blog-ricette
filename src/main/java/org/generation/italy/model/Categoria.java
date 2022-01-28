@@ -1,9 +1,12 @@
 package org.generation.italy.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -17,10 +20,21 @@ public class Categoria {
 	@NotEmpty
 	private String nome;
 	
+	@OneToMany(mappedBy= "categoria")
+	private List<Ricetta> ricetta;
 	//test modifica classe
 
+	
 	public Integer getId() {
 		return id;
+	}
+
+	public List<Ricetta> getRicetta() {
+		return ricetta;
+	}
+
+	public void setRicetta(List<Ricetta> ricetta) {
+		this.ricetta = ricetta;
 	}
 
 	public void setId(Integer id) {

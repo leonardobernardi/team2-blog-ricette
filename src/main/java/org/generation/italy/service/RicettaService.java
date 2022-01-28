@@ -1,13 +1,17 @@
 package org.generation.italy.service;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-
+import org.generation.italy.model.Immagine;
+import org.generation.italy.model.ImmagineForm;
+import org.generation.italy.model.ImmagineList;
 import org.generation.italy.model.Ingrediente;
 import org.generation.italy.model.IngredienteList;
 import org.generation.italy.model.Ricetta;
+import org.generation.italy.repository.ImmagineRepository;
 import org.generation.italy.repository.IngredienteRepository;
 import org.generation.italy.repository.RicettaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,17 +28,44 @@ public class RicettaService {
 	@Autowired
 	private IngredienteRepository ingredienteRepo;
 	
+	@Autowired
+	private ImmagineRepository imgRepo;
+	
 	// Create
-	public Ricetta create(Ricetta ricetta, IngredienteList ingredienteList) {
+	public Ricetta create(Ricetta ricetta, IngredienteList ingredienteList, ImmagineList immagineList) throws IOException {
 		ricetta.setDataDiCreazione(LocalDateTime.now());
 		ricetta.setVisualizzazioni(0);
 		ricetta.setMiPiace(0);
 		repo.save(ricetta);
+		List<ImmagineForm> imgFormList = new ArrayList<ImmagineForm>();		
+		List<Immagine> ricettaImmagine = new ArrayList<Immagine>();
+		for(ImmagineForm img : immagineList.getListaImmaginiForm()) {
+			if(img.getContent()!=null & img.getContent().getSize()!=0) {
+				imgFormList.add(img);				
+			}
+		}
+		for(ImmagineForm imgForm : imgFormList) {
+			byte[] contentSerialized = imgForm.getContent().getBytes();
+			Immagine newImmagine = new Immagine();
+			newImmagine.setContent(contentSerialized);
+			newImmagine.setRicetta(ricetta);
+			ricettaImmagine.add(newImmagine);
+			imgRepo.save(newImmagine);	
+		}
 		List<Ingrediente> ingList = new ArrayList<Ingrediente>();
 		for(Ingrediente ing : ingredienteList.getIngredienti()) {
 			if(ing!=null) {
-				if(ing.getNome()!=null || !ing.getNome().isEmpty() || !ing.getNome().isBlank()) {
-					if(ing.getQuantita()!=null || !ing.getQuantita().isEmpty() || !ing.getQuantita().isBlank()) {
+				if(ing.getNome()!=null && !ing.getNome().isEmpty()) {
+					if(ing.getQuantita()!=null && !ing.getQuantita().isEmpty()) {
+						if(ing.getIsVegan()==true) {
+							ing.setIsVegetarian(true);
+						}
+						if(ing.getIsVegan()==null) {
+							ing.setIsVegan(false);
+						}
+						if(ing.getIsVegetarian()==null) {
+							ing.setIsVegetarian(false);
+						}
 						ing.setRicetta(ricetta);
 						ingList.add(ing);
 						ingredienteRepo.save(ing);
@@ -42,11 +73,11 @@ public class RicettaService {
 				}
 			}
 		}
+		ricetta.setImmagini(ricettaImmagine);
 		ricetta.setIngrediente(ingList);
 		ricetta.setIsVegan(isVegan(ricetta));
 		ricetta.setIsVegetarian(isVegetarian(ricetta));
-		
-
+	
 		return repo.save(ricetta);
 	}
 
@@ -61,12 +92,13 @@ public class RicettaService {
 
 	public boolean isVegan(Ricetta ricetta) {
 		if(ricetta != null) {
-			for(Ingrediente i : ricetta.getIngrediente()) {
-				if(i.getIsVegan()) {
-					return true;
-				}else if(i.getIsVegan() != null || !i.getIsVegan()) {
-					return false;
+			if (ricetta.getIngrediente().size()>0) {
+				for (Ingrediente i : ricetta.getIngrediente()) {
+					if (!i.getIsVegan()) {
+						return false;
+					}
 				}
+				return true;
 			}
 		} 
 		return false;
@@ -74,16 +106,23 @@ public class RicettaService {
 	}
 	
 	public boolean isVegetarian(Ricetta ricetta) {		
-		if(ricetta != null) {			
-			for(Ingrediente i : ricetta.getIngrediente()) {
-				if(!i.getIsVegetarian()) {
-					return false;
+		if(ricetta != null) {	
+			if(ricetta.getIngrediente().size()>0) {
+				for(Ingrediente i : ricetta.getIngrediente()) {
+					if(!i.getIsVegetarian()) {
+						return false;
+					}
 				}
+				return true;
 			}
-			return true;
-		} else {
+			
+		} 
 			return false;
-		}
+		
+	}
+	
+	public List<Ricetta> findByCategoria(Integer categoryId){
+		return repo.findByCategoriaContaining(categoryId);
 	}
 
 	public List<Ricetta> findByTitolo(String keyword) {
@@ -175,4 +214,6 @@ public class RicettaService {
 		repo.deleteById(id);
 	}
 
+	
+	
 }
