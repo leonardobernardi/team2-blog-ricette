@@ -28,7 +28,7 @@
                                 </ul>
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-4">
                             <label class="form-label" for="tempoDiPreparazione">Tempo di preparazione</label>
                             <input type="text" class="form-control" id="tempoDiPreparazione"
                                 th:field="*{tempoDiPreparazione}" th:errorClass="is-invalid">
@@ -38,7 +38,7 @@
                                 </ul>
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-4">
                             <label class="form-label" for="livelloDiDifficolta">Difficolt&agrave;</label>
                             <select id="livelloDiDifficolta" class="form-control"th:field="*{livelloDiDifficolta}">
                                 <option th:value="1" selected>Facile</option>
@@ -48,6 +48,20 @@
                             <div th:if="${#fields.hasErrors('livelloDiDifficolta')}" class="invalid-feedback">
                                 <ul>
                                     <li th:each="err : ${#fields.errors('livelloDiDifficolta')}" th:text="${err}"></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <label class="form-label" for="categoria">Categoria</label>
+                            <select id="categoria" class="form-control"th:field="*{categoria}">
+                                <option th:value="1" selected>Antipasto</option>
+                                <option th:value="2">Primo</option>
+                                <option th:value="3">Secondo</option>
+                                <option th:value="3">Dolce</option>
+                            </select>
+                            <div th:if="${#fields.hasErrors('categoria')}" class="invalid-feedback">
+                                <ul>
+                                    <li th:each="err : ${#fields.errors('categoria')}" th:text="${err}"></li>
                                 </ul>
                             </div>
                         </div>

@@ -46,7 +46,7 @@ public class RicettaController {
 	
 	//Homepage
 	@GetMapping
-	public String mostRecent(Model model, @RequestParam(name="keyword", required=false) String keyword ) {
+	public String mostRecent(Model model, @RequestParam(name="keyword", required=false) String keyword) {
 		List<Ricetta> list;
 		if(keyword!=null && !keyword.isEmpty()) {
 			list = service.findByTitolo(keyword);

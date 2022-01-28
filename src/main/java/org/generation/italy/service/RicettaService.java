@@ -120,6 +120,10 @@ public class RicettaService {
 			return false;
 		
 	}
+	
+	public List<Ricetta> findByCategoria(Integer categoryId){
+		return repo.findByCategoriaContaining(categoryId);
+	}
 
 	public List<Ricetta> findByTitolo(String keyword) {
 		return repo.findByTitoloContainingIgnoreCaseOrderByDataDiCreazione(keyword);

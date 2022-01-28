@@ -12,4 +12,6 @@ public interface RicettaRepository extends JpaRepository<Ricetta, Integer>{
 	List<Ricetta> findLastSevenDays();
 	
 	List<Ricetta> findByTitoloContainingIgnoreCaseOrderByDataDiCreazione(String keyword);
+	
+	List<Ricetta> findByCategoriaContaining(Integer categoryId);
 }
