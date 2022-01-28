@@ -214,6 +214,48 @@ public class RicettaService {
 		return repo.save(ricetta);
 	}
 	
+	//prova - svuota ingr scartati nella modifica
+	public void cancellaIngrPrecedenti(Integer id) {
+		List<Ingrediente> listaIng = repo.getById(id).getIngrediente();
+		for(Ingrediente ing : listaIng) {
+			ingredienteRepo.delete(ing);
+		}
+		listaIng.clear();
+		repo.getById(id).setIngrediente(listaIng);
+		
+	}
+	
+	public Ricetta updateIngredienti(Integer id, IngredienteList ingredienteList) {
+		Ricetta ricetta = repo.getById(id);
+		cancellaIngrPrecedenti(id);
+		List<Ingrediente> ingList = new ArrayList<Ingrediente>();
+		for (Ingrediente ing: ingredienteList.getIngredienti()) {
+			if (ing != null) {
+				if (ing.getNome() != null && !ing.getNome().isEmpty()) {
+					if (ing.getQuantita() != null && !ing.getQuantita().isEmpty()) {
+						if (ing.getIsVegan() == true) {
+							ing.setIsVegetarian(true);
+						}
+						if (ing.getIsVegan() == null) {
+							ing.setIsVegan(false);
+						}
+						if (ing.getIsVegetarian() == null) {
+							ing.setIsVegetarian(false);
+						}
+						ing.setRicetta(ricetta);
+						ingList.add(ing);
+						ingredienteRepo.save(ing);
+					}
+				}
+			}
+		}
+		ricetta.setIngrediente(ingList);
+		ricetta.setIsVegan(isVegan(ricetta));
+		ricetta.setIsVegetarian(isVegetarian(ricetta));
+		return repo.save(ricetta);
+	}
+
+	
 	//Delete
 
 	public void deleteById(Integer id) {

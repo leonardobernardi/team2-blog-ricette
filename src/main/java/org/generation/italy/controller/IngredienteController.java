@@ -43,6 +43,14 @@ public class IngredienteController {
 		return "redirect:/admin/ingredienti";
 	}
 	
+	//read
+	
+	@GetMapping("/ingredienti/{id}")
+	public String detail(@PathVariable("id") Integer id, Model model) {
+		model.addAttribute("ingrediente", ingredienteService.getById(id));			
+		return "ingredienti/dettagli";
+	}
+	
 	// edit
 	
 	@GetMapping("/admin/ingredienti/modifica/{id}")
