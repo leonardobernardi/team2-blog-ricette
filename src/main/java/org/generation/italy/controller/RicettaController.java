@@ -121,11 +121,11 @@ public class RicettaController {
 			model.addAttribute("ricetta", service.getById(id));		
 			model.addAttribute("commento", new Commento());
 			model.addAttribute("list", service.getById(id).getCommenti());
-			if (!service.getById(id).getImmagini().isEmpty()) {
-				for (Immagine img : service.getById(id).getImmagini()) {
-					model.addAttribute("img" + service.getById(id).getImmagini().indexOf(img), img);
-				} 
-			}
+//			if (!service.getById(id).getImmagini().isEmpty()) {
+//				for (Immagine img : service.getById(id).getImmagini()) {
+//					model.addAttribute("img" + service.getById(id).getImmagini().indexOf(img), img);
+//				} 
+//			}
 			model.addAttribute("ingredienti", service.getById(id).getIngrediente());
 			return "ricetta/dettagli";
 		}
@@ -164,11 +164,6 @@ public class RicettaController {
 		
 			Immagine imgOfId = imgService.getById(id, imgId);
 			byte[] imgContent = imgOfId.getContent();
-//			List<byte[]> imgContentList = new ArrayList<byte[]>();
-//			for(Immagine img : imgList) {
-//				imgContentList.add(img.getContent());
-//			}
-//			byte[] imgOfIndex = imgService.getById(id, imgList).getContent();
 			
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(org.springframework.http.MediaType.IMAGE_JPEG);
@@ -177,7 +172,7 @@ public class RicettaController {
 		
 		
 		//Update
-		@GetMapping("/admin/ricetta/modifica/{id}")
+		@GetMapping("/admin/modifica")
 		public String edit(@PathVariable("id") Integer id, Model model) {
 			model.addAttribute("edit", true);
 			model.addAttribute("ricetta", service.getById(id));
@@ -185,23 +180,48 @@ public class RicettaController {
 			return "ricetta/edit";
 		}
 
-		@PostMapping("/admin/ricetta/modifica/{id}")
-		public String doUpdate(@Valid @ModelAttribute("ricetta") Ricetta formRicetta, BindingResult bindingResult, Model model){
-			if(bindingResult.hasErrors()) {
-				model.addAttribute("edit", true);
-				return "ricetta/dettagli";
+//		@PostMapping("/admin/ricetta/modifica/{id}")
+//		public String doUpdate(@Valid @ModelAttribute("ricetta") Ricetta formRicetta, BindingResult bindingResult, Model model){
+//			if(bindingResult.hasErrors()) {
+//				model.addAttribute("edit", true);
+//				return "ricetta/dettagli";
+//			}
+//			service.update(formRicetta);
+//			return "redirect:/home/index";
+//		}
+		
+		@GetMapping("/admin/ricetta/modifica/{id}/immagini")
+		public String editImg(@PathVariable("id") Integer id, Model model) {
+			List<ImmagineForm> immaginiList = new ArrayList<ImmagineForm>();
+			ImmagineList immaginiForm = new ImmagineList(immaginiList);
+			for (int i = 0; i < 5; i++) {
+				immaginiForm.addImmagine(new ImmagineForm());
 			}
-			service.update(formRicetta);
-			return "redirect:/home/index";
+			model.addAttribute("ricetta", service.getById(id));
+			model.addAttribute("immaginiForm", immaginiForm);
+			return "admin/edit-immagini";
 		}
 		
+		@PostMapping("/admin/ricetta/modifica/{id}/immagini")
+		public String doEditImg(@ModelAttribute ("immaginiForm") ImmagineList immagineList,
+				@PathVariable("id") Integer id, Model model) {
+			try {
+				service.updateImmagini(id, immagineList);
+			} catch (IOException e) {				
+				e.printStackTrace();
+			}
+			
+			return "redirect:/ricetta/" + id;
+		}
+		
+		
 		//Delete 
-		@GetMapping("/admin/ricetta/cancella/{id}")
+		@GetMapping("/admin/modifica/cancella/{id}")
 		public String delete(@PathVariable("id") Integer id) {
 			if(service.getById(id) == null) {
 				//messaggio d'errore
 			}
 			service.deleteById(id);
-			return "redirect:/home/index";
+			return "redirect:/admin/modifica";
 		}
 }

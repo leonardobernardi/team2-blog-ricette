@@ -208,10 +208,42 @@ public class RicettaService {
 		return repo.save(ricetta);
 	}
 	
+	public Ricetta updateImmagini(Integer id, ImmagineList immagineList ) throws IOException {
+		Ricetta ricetta = repo.getById(id);
+		svuotaImmagini(id);
+		List<ImmagineForm> imgFormList = new ArrayList<ImmagineForm>();		
+		List<Immagine> ricettaImmagine = new ArrayList<Immagine>();
+		for(ImmagineForm img : immagineList.getListaImmaginiForm()) {
+			if(img.getContent()!=null & img.getContent().getSize()!=0) {
+				imgFormList.add(img);				
+			}
+		}
+		for(ImmagineForm imgForm : imgFormList) {
+			byte[] contentSerialized = imgForm.getContent().getBytes();
+			Immagine newImmagine = new Immagine();
+			newImmagine.setContent(contentSerialized);
+			newImmagine.setRicetta(ricetta);
+			ricettaImmagine.add(newImmagine);
+			imgRepo.save(newImmagine);	
+		}
+		ricetta.setImmagini(ricettaImmagine);
+		return repo.save(ricetta);			
+	}
+	
+	
 	//Delete
 
 	public void deleteById(Integer id) {
 		repo.deleteById(id);
+	}
+	
+	public void svuotaImmagini(Integer id) {
+		List<Immagine> list = repo.getById(id).getImmagini();
+		for(Immagine img : list) {
+			imgRepo.delete(img);
+		}
+		list.clear();
+		repo.getById(id).setImmagini(list);
 	}
 
 	
