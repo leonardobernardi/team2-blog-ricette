@@ -171,13 +171,16 @@ public class RicettaController {
 		}
 		
 		
+
 		//Update
+	
+		
 		@GetMapping("/admin/modifica")
-		public String edit(@PathVariable("id") Integer id, Model model) {
-			model.addAttribute("edit", true);
-			model.addAttribute("ricetta", service.getById(id));
+		public String edit(Model model) {
+			model.addAttribute("lista", service.findAllSortedByRecent());
+
 			model.addAttribute("admin", true);
-			return "ricetta/edit";
+			return "/admin/lista-ricette";
 		}
 
 //		@PostMapping("/admin/ricetta/modifica/{id}")
@@ -189,6 +192,7 @@ public class RicettaController {
 //			service.update(formRicetta);
 //			return "redirect:/home/index";
 //		}
+
 		
 		@GetMapping("/admin/ricetta/modifica/{id}/immagini")
 		public String editImg(@PathVariable("id") Integer id, Model model) {
@@ -213,6 +217,41 @@ public class RicettaController {
 			
 			return "redirect:/ricetta/" + id;
 		}
+
+
+		
+		//Update di ingredienti
+		@GetMapping("/admin/ricetta/modifica/{id}/ingredienti")
+		public String editIngredienti(@PathVariable("id") Integer id, Model model) {
+			List<Ingrediente> ingredientiList = new ArrayList<Ingrediente>();
+			IngredienteList ingredientiForm = new IngredienteList(ingredientiList);
+			for (int i = 0; i < 26; i++) {
+				ingredientiForm.addIngrediente(new Ingrediente());
+			}
+			model.addAttribute("ingredientiForm", ingredientiForm);
+			model.addAttribute("ricetta", service.getById(id));
+			return "admin/edit-ingredienti";
+		}
+		
+		@PostMapping("/admin/ricetta/modifica/{id}/ingredienti")
+		public String doEditIngredienti (@ModelAttribute("ingredientiForm") 
+		IngredienteList ingredientiList, @PathVariable("id") Integer id, Model model) {
+			service.updateIngredienti(id, ingredientiList);
+			return "redirect:/ricetta/" + id;
+			
+		}
+
+		
+		//doEdit
+
+
+//		@GetMapping("/admin/ricetta/modifica/{id}")
+//		public String editRicetta (@PathVariable("id") Integer id, Model model) {
+//			model.addAttribute("nuovaRicetta", new Ricetta());
+//			return "/admin/ricetta/edit" + id;
+//		}
+		
+
 		
 		
 		//Delete 

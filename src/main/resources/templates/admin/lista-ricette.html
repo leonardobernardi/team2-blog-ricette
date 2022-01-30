@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <div th:replace="fragments/resources :: headTags"></div>
+    <title>Gestione ricette</title>
+</head>
+
+<body class="bg-light">
+    <nav th:replace="fragments/navbar :: navbar"></nav>
+    <h1 class="text-center">Gestione ricette</h1>
+    <hr>
+    <div class="container">
+        <div class="row">
+                <div class="fs-4 col-6" th:each="ricetta : ${lista}">
+                    <a th:text="|&#8226; ${ricetta.titolo}|" th:href="@{|/ricetta/${ricetta.id}|}"
+                        class="text-decoration-none text-dark"></a>
+                    <a class="text-decoration-none text-success m-1" th:href="@{/}"><i class="fas fa-pencil-alt" data-bs-toggle="tooltip" data-bs-placement="top" title="Modifica testo ricetta"></i></a>
+                    <a class="text-decoration-none text-success m-1" th:href="@{|/admin/ricetta/modifica/${ricetta.id}/ingredienti|}"><i class="fas fa-list-ul" data-bs-toggle="tooltip" data-bs-placement="top" title="Modifica ingredienti"></i></a>
+                    <a class="text-decoration-none text-success m-1" th:href="@{/}"><i class="far fa-images" data-bs-toggle="tooltip" data-bs-placement="top" title="Modifica immagini"></i></a>
+                    <a class="text-decoration-none text-success m-1" th:href="@{|/admin/modifica/cancella/${ricetta.id}|}" onclick="return confirm('Sei sicuro?')" data-bs-toggle="tooltip" data-bs-placement="top" title="Elimina"><i class="fas fa-trash-alt"></i></a>   
+                </div>
+        </div>
+    </div>
+    <div th:replace="fragments/resources :: scripts"></div>
+</body>

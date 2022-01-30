@@ -1,153 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <div th:replace="fragments/resources :: headTags"></div>
-    <title>Nuova ricetta</title>
+    <title>Modifica ingredienti</title>
 </head>
+
 <body class="bg-light">
     <nav th:replace="fragments/navbar :: navbar"></nav>
-    <h1 class="text-center">Crea nuova ricetta</h1>
+    <h1 class="text-center">Modifica ingredienti</h1>
     <hr>
-    <form id="ricetta-form" th:object="${ricetta}"
-        th:action="${edit} ? @{/admin/ricetta/modifica/{id}(id=${ricetta.id})} : @{/admin/ricetta/crea}" method="post" enctype="multipart/form-data">
-        <ul>
-            <li th:each="err : ${#fields.allErrors()}" th:text="${err}" class="text-danger"></li>
-        </ul>
-        <div class="container">
+    <div class="container">
+        <form id="ingredienti-form" th:action="@{/admin/ricetta/modifica/{id}/ingredienti(id=${ricetta.id})}" th:object="${ingredientiForm}" method="post">
             <div class="row">
-                <!--Ricetta-->
-                <div class="col-6">
-                    <div class="row gy-2">
-                        <div class="col-12">
-                            <label class="form-label" for="titolo">Titolo</label>
-                            <input type="text" class="form-control" id="titolo" th:field="*{titolo}"
-                                th:errorClass="is-invalid">
-                            <div th:if="${#fields.hasErrors('titolo')}" class="invalid-feedback">
-                                <ul>
-                                    <li th:each="err : ${#fields.errors('titolo')}" th:text="${err}"></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <label class="form-label" for="tempoDiPreparazione">Tempo di preparazione</label>
-                            <input type="text" class="form-control" id="tempoDiPreparazione"
-                                th:field="*{tempoDiPreparazione}" th:errorClass="is-invalid">
-                            <div th:if="${#fields.hasErrors('tempoDiPreparazione')}" class="invalid-feedback">
-                                <ul>
-                                    <li th:each="err : ${#fields.errors('tempoDiPreparazione')}" th:text="${err}"></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <label class="form-label" for="livelloDiDifficolta">Difficolt&agrave;</label>
-                            <select id="livelloDiDifficolta" class="form-control"th:field="*{livelloDiDifficolta}">
-                                <option th:value="1" selected>Facile</option>
-                                <option th:value="2">Medio</option>
-                                <option th:value="3">Difficile</option>
-                            </select>
-                            <div th:if="${#fields.hasErrors('livelloDiDifficolta')}" class="invalid-feedback">
-                                <ul>
-                                    <li th:each="err : ${#fields.errors('livelloDiDifficolta')}" th:text="${err}"></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <label class="form-label" for="categoria">Categoria</label>
-                            <select id="categoria" class="form-control"th:field="*{categoria}">
-                                <option th:value="1" selected>Antipasto</option>
-                                <option th:value="2">Primo</option>
-                                <option th:value="3">Secondo</option>
-                                <option th:value="4">Contorno</option>
-                                <option th:value="5">Dolce</option>
-                            </select>
-                            <div th:if="${#fields.hasErrors('categoria')}" class="invalid-feedback">
-                                <ul>
-                                    <li th:each="err : ${#fields.errors('categoria')}" th:text="${err}"></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <label class="form-label" for="descrizione">Descrizione</label>
-                            <textarea rows="3" cols="6" class="form-control" id="descrizione" th:field="*{descrizione}"
-                                th:errorClass="is-invalid"></textarea>
-                            <div th:if="${#fields.hasErrors('descrizione')}" class="invalid-feedback">
-                                <ul>
-                                    <li th:each="err : ${#fields.errors('descrizione')}" th:text="${err}"></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <label class="form-label" for="testoDellaRicetta">Testo della ricetta</label>
-                            <textarea rows="10" cols="6" class="form-control" id="testoDellaRicetta"
-                                th:field="*{testoDellaRicetta}" th:errorClass="is-invalid"></textarea>
-                            <div th:if="${#fields.hasErrors('testoDellaRicetta')}" class="invalid-feedback">
-                                <ul>
-                                    <li th:each="err : ${#fields.errors('testoDellaRicetta')}" th:text="${err}"></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <!--Immagini-->
-                    <div class="row" th:object="${immaginiForm}">
-                        <!--Singola Immagine-->                        
-                            <div class="row">
-                                <label for="content" class="form-label">Carica Immagine</label>
-                                <input type="file" class="form-control" name="content" th:field="*{listaImmaginiForm[0].content}">
-                            </div>    
-                            <div class="row">
-                                <button class="btn btn-success w-auto m-2" id="imgBtn1" type="button" th:onclick="addImg(1)"><i
-                                        class="fas fa-plus"></i> Aggiungi nuova immagine</button>
-                            </div>
-                            <!--Singola Immagine-->                        
-                            <div class="row d-none" id="img1">
-                                <label for="content" class="form-label">Carica Immagine</label>
-                                <input type="file" class="form-control" name="content" th:field="*{listaImmaginiForm[1].content}">
-                            </div>    
-                            <div class="row">
-                                <button class="d-none btn btn-success w-auto m-2" id="imgBtn2" type="button" th:onclick="addImg(2)"><i
-                                        class="fas fa-plus"></i> Aggiungi nuova immagine</button>
-                            </div>
-                              <!--Singola Immagine-->                        
-                              <div class="row d-none" id="img2">
-                                <label for="content" class="form-label">Carica Immagine</label>
-                                <input type="file" class="form-control" name="content" th:field="*{listaImmaginiForm[2].content}">
-                            </div>    
-                            <div class="row">
-                                <button class="d-none btn btn-success w-auto m-2" id="imgBtn3" type="button" th:onclick="addImg(3)"><i
-                                        class="fas fa-plus"></i> Aggiungi nuova immagine</button>
-                            </div> 
-                              <!--Singola Immagine-->                        
-                              <div class="row d-none" id="img3">
-                                <label for="content" class="form-label">Carica Immagine</label>
-                                <input type="file" class="form-control" name="content" th:field="*{listaImmaginiForm[3].content}">
-                            </div>    
-                            <div class="row">
-                                <button class="d-none btn btn-success w-auto m-2" id="imgBtn4" type="button" th:onclick="addImg(4)"><i
-                                        class="fas fa-plus"></i> Aggiungi nuova immagine</button>
-                            </div> 
-                              <!--Singola Immagine-->                        
-                              <div class="row d-none" id="img4">
-                                <label for="content" class="form-label">Carica Immagine</label>
-                                <input type="file" class="form-control" name="content" th:field="*{listaImmaginiForm[4].content}">
-                            </div>    
-                            <div class="row">
-                                <button class="d-none btn btn-success w-auto m-2" id="imgBtn5" type="button" th:onclick="addImg(5)"><i
-                                        class="fas fa-plus"></i> Aggiungi nuova immagine</button>
-                                        <div id="imgAlert" class="alert alert-warning w-auto m-2 d-none">Numero massimo immagini
-                                            raggiunto
-                                        </div>
-                            </div>                  
-                    </div>
-
-                        <!--Submit-->
-                        <div class="col-12">
-                            <button class="btn btn-success" type="submit"><i class="fas fa-check"></i> Salva</button>
-                            <a class="btn btn-success" th:href="@{/home/index}"><i class="fas fa-times"></i>
-                                Indietro</a>
-                        </div>
-
-                    
-                </div>
                 <!--Ingredienti-->
                 <div class="col-6" th:object="${ingredientiForm}">
                     <!--Singolo Ingrediente-->
@@ -978,11 +843,20 @@
                             raggiunto
                         </div>
                     </div>
-                </div>                
+                </div>
+                <div class="col-12">
+                    <button class="btn btn-success" type="submit">
+                        <i class="fas fa-check"></i>Salva
+                    </button>
+                    <a class="btn btn-success" th:href="@{/admin/modifica}">
+                        <i class="fas fa-times"></i>Indietro
+                    </a>
+                </div>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
     <script type="text/javascript" th:src="@{/js/mainEdit.js}"></script>
     <div th:replace="fragments/resources :: scripts"></div>
 </body>
+
 </html>
