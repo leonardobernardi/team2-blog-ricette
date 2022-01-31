@@ -14,6 +14,7 @@ import org.generation.italy.model.ImmagineList;
 import org.generation.italy.model.Ingrediente;
 import org.generation.italy.model.IngredienteList;
 import org.generation.italy.model.Ricetta;
+import org.generation.italy.repository.EmailRepository;
 import org.generation.italy.service.CategoriaService;
 import org.generation.italy.service.CommentoService;
 import org.generation.italy.service.ImmagineService;
@@ -46,7 +47,11 @@ public class RicettaController {
 	@Autowired
 	private ImmagineService imgService;
 	
-	@Autowired CategoriaService catService;
+	@Autowired 
+	private CategoriaService catService;
+	
+	@Autowired
+	private EmailRepository emailRepo;
 	
 	//Homepage
 	@GetMapping
@@ -165,10 +170,14 @@ public class RicettaController {
 				Model model, RedirectAttributes redirectAttributes) {
 			redirectAttributes.addAttribute("categorie", catService.findAll());
 			
-			if(bindingResult.hasErrors()) {
-				model.addAttribute("edit", false);
+			if(formCommento.getEmail() != null) {
+				if(emailRepo.findByEmailContaining(formCommento.getEmail().getEmail()).getIsBanned() == false) {
+					redirectAttributes.addAttribute("banned", true);
+				} else {
+					commentoService.create(formCommento, id);
+				}
 			} 
-			commentoService.create(formCommento, id);
+			
 			redirectAttributes.addAttribute("commento", new Commento());
 			return "redirect:/ricetta/"+id;
 		}
