@@ -1,8 +1,5 @@
 package org.generation.italy.controller;
 
-import java.util.List;
-
-import org.generation.italy.model.Email;
 import org.generation.italy.service.CategoriaService;
 import org.generation.italy.service.CommentoService;
 import org.generation.italy.service.EmailService;

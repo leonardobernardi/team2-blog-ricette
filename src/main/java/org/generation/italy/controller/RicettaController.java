@@ -39,6 +39,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class RicettaController {
 
 	@Autowired
+	private EmailRepository emailRepo;
+	
+	@Autowired
 	private RicettaService service;
 	
 	@Autowired
@@ -170,14 +173,17 @@ public class RicettaController {
 				Model model, RedirectAttributes redirectAttributes) {
 			redirectAttributes.addAttribute("categorie", catService.findAll());
 			
-			if(formCommento.getEmail() != null) {
-				if(emailRepo.findByEmailContaining(formCommento.getEmail().getEmail()).getIsBanned() == false) {
-					redirectAttributes.addAttribute("banned", true);
-				} else {
+			if(formCommento.getEmail()!=null) {
+				if(emailRepo.findByEmailContaining(formCommento.getEmail().getEmail())!=null) {
+					if(emailRepo.findByEmailContaining(formCommento.getEmail().getEmail()).getIsBanned()==true){
+						redirectAttributes.addFlashAttribute("banned", true);
+					}else {
+						commentoService.create(formCommento, id);
+					}	
+				}else {
 					commentoService.create(formCommento, id);
 				}
-			} 
-			
+			} 			
 			redirectAttributes.addAttribute("commento", new Commento());
 			return "redirect:/ricetta/"+id;
 		}
