@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("/admin/")
+@RequestMapping("/admin/commenti")
 public class CommentoController {
 
 	@Autowired
@@ -38,8 +38,6 @@ public class CommentoController {
 		return "/admin/lista-commenti";
 	}
 	
-	@GetMapping("commenti/elimina/{id}")
-	public String deleteCommentoById(@PathVariable("id") Integer id) {
 	@GetMapping("/elimina/{id}")
 	public String deleteCommentoById(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
 		redirectAttributes.addAttribute("categorie", catService.findAll());
