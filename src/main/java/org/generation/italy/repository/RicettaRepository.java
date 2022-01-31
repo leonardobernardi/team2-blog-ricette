@@ -15,5 +15,4 @@ public interface RicettaRepository extends JpaRepository<Ricetta, Integer>{
 	
 	List<Ricetta> findByCategoria_idIs(Integer categoryId);
 	
-	
 }

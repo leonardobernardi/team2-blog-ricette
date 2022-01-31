@@ -113,6 +113,25 @@ public class RicettaController {
 		
 		//Read
 		
+		
+		@GetMapping("/ricerca-avanzata")
+		public String advancedSearchResults(@RequestParam(name="titolo", required=false) String titolo,
+				@RequestParam(name="categoriaId", required=false) String categoriaId,
+				@RequestParam(name="livelloDiDifficolta", required=false) String livelloDiDifficolta,
+				@RequestParam(name="isVegan", required=false) Boolean isVegan,
+				@RequestParam(name="isVegetarian", required=false) Boolean isVegetarian, Model model) {
+			if(titolo==null && categoriaId == null && livelloDiDifficolta == null && isVegan == null && isVegetarian == null) {
+				model.addAttribute("search", false);			
+			}else{
+				
+				model.addAttribute("search", true);
+				model.addAttribute("lista",
+						service.advancedSearch(titolo, categoriaId, livelloDiDifficolta, isVegan, isVegetarian));
+			}
+			model.addAttribute("categorie", catService.findAll());
+			return "advanced-search";
+		}
+		
 		@GetMapping("/admin")
 		public String admin(Model model) {
 			model.addAttribute("categorie", catService.findAll());
