@@ -80,5 +80,7 @@ public class IngredienteController {
 		ingredienteService.deleteById(id);
 		return "redirect:/admin/ingredienti";
 	}
+	
+	
 
 }

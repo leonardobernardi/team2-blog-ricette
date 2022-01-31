@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="fragments/resources :: headTags"></div>
+    <title th:text="mail_bannate"></title>
+</head>
+
+<body class="bg-light">
+    <div class="container-fluid">
+        <h1>Elenco mail bannate</h1>
+        <div th:if="${lista.size() > 0}">
+            <div th:each="email : ${lista}">
+                
+                    <span th:text="${email.email}"></span>
+                    <a class="text-decoration-none text-success m-1" th:href="@{|/admin/email/${email.id}|}"
+                        onclick="return confirm('Sei sicuro?')" data-bs-toggle="tooltip" data-bs-placement="top"
+                        title="Elimina"><i class="fas fa-trash-alt"></i></a>
+
+                
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
