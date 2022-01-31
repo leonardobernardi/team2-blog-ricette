@@ -296,8 +296,12 @@ public class RicettaService {
 	
 	public void svuotaIngredienti(Ricetta ricetta) {		
 		List<Ingrediente> list = ricetta.getIngrediente();
-		for(Ingrediente ing1 : list) {			
-			ingredienteRepo.delete(ing1);
+		for(Ingrediente ing : list) {
+			ing.setRicetta(null);
+			ingredienteRepo.save(ing);
+		}
+		for(Ingrediente ing : list) {			
+			ingredienteRepo.delete(ing);
 			}
 		list.clear();
 		ricetta.setIngrediente(list);
