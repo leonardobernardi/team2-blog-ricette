@@ -13,5 +13,7 @@ public interface RicettaRepository extends JpaRepository<Ricetta, Integer>{
 	
 	List<Ricetta> findByTitoloContainingIgnoreCaseOrderByDataDiCreazione(String keyword);
 	
-	List<Ricetta> findByCategoriaContaining(Integer categoryId);
+	List<Ricetta> findByCategoria_idIs(Integer categoryId);
+	
+	
 }

@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.generation.italy.model.Categoria;
 import org.generation.italy.model.Commento;
 import org.generation.italy.model.Immagine;
 import org.generation.italy.model.ImmagineForm;
@@ -13,6 +14,7 @@ import org.generation.italy.model.ImmagineList;
 import org.generation.italy.model.Ingrediente;
 import org.generation.italy.model.IngredienteList;
 import org.generation.italy.model.Ricetta;
+import org.generation.italy.service.CategoriaService;
 import org.generation.italy.service.CommentoService;
 import org.generation.italy.service.ImmagineService;
 import org.generation.italy.service.RicettaService;
@@ -44,10 +46,13 @@ public class RicettaController {
 	@Autowired
 	private ImmagineService imgService;
 	
+	@Autowired CategoriaService catService;
+	
 	//Homepage
 	@GetMapping
 	public String mostRecent(Model model, @RequestParam(name="keyword", required=false) String keyword) {
 		List<Ricetta> list;
+		model.addAttribute("categorie", catService.findAll());
 		if(keyword!=null && !keyword.isEmpty()) {
 			list = service.findByTitolo(keyword);
 		}else {
@@ -144,6 +149,17 @@ public class RicettaController {
 			return "redirect:/ricetta/"+id;
 		}
 		
+		@GetMapping("/categoria/{id}")
+		public String getPerCategoria(@PathVariable("id") Integer id, Model model) {
+			List<Ricetta> list;
+			List<Categoria> listaCategorie;
+			listaCategorie = catService.findAll();
+			model.addAttribute("categorie", listaCategorie);
+			list = service.findByCategoria(id);
+			model.addAttribute("lista", list);
+			model.addAttribute("categoriaNome", catService.getById(id));
+			return "/categorie/indexCategorie";
+		}
 		
 		@RequestMapping(value = "/{id}/img", produces = org.springframework.http.MediaType.IMAGE_JPEG_VALUE )
 		public ResponseEntity<byte[]> getImgContent(@PathVariable Integer id){

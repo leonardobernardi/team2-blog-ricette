@@ -128,7 +128,7 @@ public class RicettaService {
 	}
 	
 	public List<Ricetta> findByCategoria(Integer categoryId){
-		return repo.findByCategoriaContaining(categoryId);
+		return repo.findByCategoria_idIs(categoryId);
 	}
 
 	public List<Ricetta> findByTitolo(String keyword) {

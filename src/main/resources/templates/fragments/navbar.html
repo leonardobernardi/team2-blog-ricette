@@ -14,11 +14,7 @@
 					Categorie
 				  </a>
 				  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-					<li><a class="dropdown-item" href="#">Antipasti</a></li>
-					<li><a class="dropdown-item" href="#">Primi</a></li>
-					<li><a class="dropdown-item" href="#">Secondi</a></li>
-					<li><a class="dropdown-item" href="#">Contorni</a></li>
-					<li><a class="dropdown-item" href="#">Dolci</a></li>
+					<li th:each="cat : ${categorie}"><a class="dropdown-item" th:href="@{|/categoria/${cat.id}|}" th:text="${cat.nome}"></a></li>
 				  </ul>
 				</li>
 				<li class="nav-item dropdown" th:if="${admin}">
@@ -36,7 +32,7 @@
 			  <form th:action="@{/}" method="get">
 				<div class="input-group">
 					<input name="keyword" th:value="${keyword}" class="form-control" type="search" placeholder="Trova ricetta" aria-label="Search">
-					<button class="btn btn-light" type="submit"><i class="fas fa-search"></i></button>
+					<button class="btn btn-light bg-white" type="submit"><i class="fas fa-search"></i></button>
 				</div>
 				</form>
 			</div>
