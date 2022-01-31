@@ -13,7 +13,7 @@
             <div th:each="email : ${lista}">
                 
                     <span th:text="${email.email}"></span>
-                    <a class="text-decoration-none text-success m-1" th:href="@{|/admin/email/${email.id}|}"
+                    <a class="text-decoration-none text-success m-1" th:href="@{|/admin/commenti/email/${email.id}|}"
                         onclick="return confirm('Sei sicuro?')" data-bs-toggle="tooltip" data-bs-placement="top"
                         title="Elimina"><i class="fas fa-trash-alt"></i></a>
 
