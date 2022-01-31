@@ -57,8 +57,10 @@ public class CommentoService {
 	}
 
 	
-
 	public void deleteCommentoById(Integer id) {
 		repo.deleteById(id);
 	}
+
+
+
 }
