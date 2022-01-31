@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <div th:replace="fragments/resources :: headTags"></div>
+    <title>Modifica Immagini</title>
+  </head>
+  <body class="bg-light">
+    <nav th:replace="fragments/navbar :: navbar"></nav>
+    <h1 class="text-center" th:text="${ricetta.titolo}"></h1>
+
+    <hr />
+    <div class="container">
+      <h2>Carica le nuove immagini</h2>
+      <form
+        id="img-form"
+        th:object="${immaginiForm}"
+        th:action="@{/admin/ricetta/modifica/{id}/immagini(id=${ricetta.id})}"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        <div class="row">
+          <!--Immagini-->
+          <div class="row mx-1" th:object="${immaginiForm}">
+            <!--Singola Immagine-->
+            <div class="row">
+              <label for="content" class="form-label"></label>
+              <input
+                type="file"
+                class="form-control"
+                name="content"
+                th:field="*{listaImmaginiForm[0].content}"
+              />
+            </div>
+            <div class="row">
+              <button
+                class="btn btn-success w-auto m-2"
+                id="imgBtn1"
+                type="button"
+                th:onclick="addImg(1)"
+              >
+                <i class="fas fa-plus"></i> Aggiungi nuova immagine
+              </button>
+            </div>
+            <!--Singola Immagine-->
+            <div class="row d-none" id="img1">
+              <label for="content" class="form-label"></label>
+              <input
+                type="file"
+                class="form-control"
+                name="content"
+                th:field="*{listaImmaginiForm[1].content}"
+              />
+            </div>
+            <div class="row">
+              <button
+                class="d-none btn btn-success w-auto m-2"
+                id="imgBtn2"
+                type="button"
+                th:onclick="addImg(2)"
+              >
+                <i class="fas fa-plus"></i> Aggiungi nuova immagine
+              </button>
+            </div>
+            <!--Singola Immagine-->
+            <div class="row d-none" id="img2">
+              <label for="content" class="form-label"></label>
+              <input
+                type="file"
+                class="form-control"
+                name="content"
+                th:field="*{listaImmaginiForm[2].content}"
+              />
+            </div>
+            <div class="row">
+              <button
+                class="d-none btn btn-success w-auto m-2"
+                id="imgBtn3"
+                type="button"
+                th:onclick="addImg(3)"
+              >
+                <i class="fas fa-plus"></i> Aggiungi nuova immagine
+              </button>
+            </div>
+            <!--Singola Immagine-->
+            <div class="row d-none" id="img3">
+              <label for="content" class="form-label"></label>
+              <input
+                type="file"
+                class="form-control"
+                name="content"
+                th:field="*{listaImmaginiForm[3].content}"
+              />
+            </div>
+            <div class="row">
+              <button
+                class="d-none btn btn-success w-auto m-2"
+                id="imgBtn4"
+                type="button"
+                th:onclick="addImg(4)"
+              >
+                <i class="fas fa-plus"></i> Aggiungi nuova immagine
+              </button>
+            </div>
+            <!--Singola Immagine-->
+            <div class="row d-none" id="img4">
+              <label for="content" class="form-label"></label>
+              <input
+                type="file"
+                class="form-control"
+                name="content"
+                th:field="*{listaImmaginiForm[4].content}"
+              />
+            </div>
+            <div class="row">
+              <button
+                class="d-none btn btn-success w-auto m-2"
+                id="imgBtn5"
+                type="button"
+                th:onclick="addImg(5)"
+              >
+                <i class="fas fa-plus"></i> Aggiungi nuova immagine
+              </button>
+              <div id="imgAlert" class="alert alert-warning w-auto m-2 d-none">
+                Numero massimo immagini raggiunto
+              </div>
+            </div>
+          </div>
+
+          <!--Submit-->
+          <div class="col-12">
+            <button class="btn btn-success" type="submit">
+              <i class="fas fa-check"></i> Salva
+            </button>
+            <a class="btn btn-success" th:href="@{/admin/modifica}"
+              ><i class="fas fa-times"></i> Indietro</a
+            >
+          </div>
+        </div>
+      </form>
+    </div>
+    <script type="text/javascript" th:src="@{/js/mainEdit.js}"></script>
+    <div th:replace="fragments/resources :: scripts"></div>
+  </body>
+</html>

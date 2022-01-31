@@ -2,10 +2,13 @@ package org.generation.italy.service;
 
 import java.util.List;
 
+import javax.persistence.OrderBy;
+
 //import java.time.LocalDateTime;
 
 import org.generation.italy.model.Commento;
 import org.generation.italy.model.Email;
+import org.generation.italy.model.Immagine;
 import org.generation.italy.model.Ricetta;
 //import org.generation.italy.model.Ingrediente;
 //import org.generation.italy.model.Ricetta;
@@ -13,6 +16,7 @@ import org.generation.italy.repository.CommentoRepository;
 import org.generation.italy.repository.EmailRepository;
 import org.generation.italy.repository.RicettaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -48,5 +52,14 @@ public class CommentoService {
 		commento.setId(commenti.size()+2);
 		return repo.save(commento);
 	}
+	
+	public List<Commento> findAll(){
+		return repo.findAll(Sort.by("ricetta"));
+	}
 
+	
+
+	public void deleteCommentoById(Integer id) {
+		repo.deleteById(id);
+	}
 }
