@@ -1,8 +1,11 @@
 package org.generation.italy.controller;
 
+import java.util.List;
 
+import org.generation.italy.model.Email;
 import org.generation.italy.service.CategoriaService;
 import org.generation.italy.service.CommentoService;
+import org.generation.italy.service.EmailService;
 import org.generation.italy.service.RicettaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,10 +23,13 @@ public class CommentoController {
 	private CommentoService service;
 	
 	@Autowired
-	private RicettaService ricettaService;
+	private EmailService emailService;
 	
-	@Autowired
-	private CategoriaService catService;
+	  @Autowired
+	  private RicettaService ricettaService;
+
+	  @Autowired 
+	  private CategoriaService catService;
 	
 	@GetMapping
 	public String gestioneCommenti(Model model){
@@ -39,4 +45,15 @@ public class CommentoController {
 	return "redirect:/admin/commenti";
 	}
 	
+	@GetMapping("email")
+	public String editEmail(Model model) {
+		model.addAttribute("lista", emailService.findIsBan());
+		return "/admin/mail-ban";
+	}
+	
+	@GetMapping("email/{id}")
+	public String unBan(@PathVariable("id") Integer id) {
+		emailService.unBan(id);
+		return "redirect:/admin/email";	
+	}
 }
