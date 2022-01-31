@@ -7,9 +7,35 @@
 </head>
 
 <body class="bg-light">
-	<nav th:replace="fragments/navbar :: navbar"></nav>
+    <nav th:replace="fragments/navbar :: navbar"></nav>
     <h1 class="text-center">Commenti</h1>
     <hr>
-<div th:replace="fragments/resources :: scripts"></div>
+    <div class="container">
+        <div th:if="${lista.size() > 0}" class="row mt-5">
+            <div th:each="ricetta : ${lista}" th:if="${ricetta.commenti.size() > 0}">
+                <div class="row">
+                    <span class="h4" th:text="${ricetta.titolo}"></span>
+                       <div th:each="commento : ${ricetta.commenti}">
+                            <a class="text-decoration-none text-success m-1"
+                                th:href="@{|/admin/commenti/elimina/${commento.id}|}"
+                                onclick="return confirm('Sei sicuro?')" data-bs-toggle="tooltip" data-bs-placement="top"
+                                title="Elimina"><i class="fas fa-trash-alt"></i></a>
+                            <ul>
+
+                                <li>
+                                    <p th:text="|email: ${commento.email.email}|"></p>
+                                    <p th:text="|nome: ${commento.nome}|"></p>
+                                    <p th:text="|testo: ${commento.testo}|"></p>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div th:replace="fragments/resources :: scripts"></div>
 </body>
+
 </html>
