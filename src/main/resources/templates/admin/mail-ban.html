@@ -11,16 +11,14 @@
         <h1>Elenco mail bannate</h1>
         <div th:if="${lista.size() > 0}">
             <div th:each="email : ${lista}">
-                
-                    <span th:text="${email.email}"></span>
+                <span th:text="${email.email}"></span>
                     <a class="text-decoration-none text-success m-1" th:href="@{|/admin/email/${email.id}|}"
                         onclick="return confirm('Sei sicuro?')" data-bs-toggle="tooltip" data-bs-placement="top"
-                        title="Elimina"><i class="fas fa-trash-alt"></i></a>
-
-                
+                        title="Rimuovi ban"><i class="fas fa-user"></i></a>
             </div>
         </div>
     </div>
+    <div th:replace="fragments/resources :: scripts"></div>
 </body>
 
 </html>
