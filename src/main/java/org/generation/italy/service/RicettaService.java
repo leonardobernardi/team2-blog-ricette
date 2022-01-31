@@ -205,6 +205,7 @@ public class RicettaService {
 		return repo.save(ricetta);
 	}
 
+	
 	public Ricetta visualizzazioniPiuUno(Ricetta ricetta) {
 		ricetta.setVisualizzazioni(ricetta.getVisualizzazioni() + 1);
 		return repo.save(ricetta);
@@ -217,7 +218,7 @@ public class RicettaService {
 	
 	public Ricetta updateImmagini(Integer id, ImmagineList immagineList ) throws IOException {
 		Ricetta ricetta = repo.getById(id);
-		svuotaImmagini(id);
+		svuotaImmagini(ricetta);
 		List<ImmagineForm> imgFormList = new ArrayList<ImmagineForm>();		
 		List<Immagine> ricettaImmagine = new ArrayList<Immagine>();
 		for(ImmagineForm img : immagineList.getListaImmaginiForm()) {
@@ -238,19 +239,10 @@ public class RicettaService {
 	}
 	
 
-	public void cancellaIngrPrecedenti(Integer id) {
-		List<Ingrediente> listaIng = repo.getById(id).getIngrediente();
-		for(Ingrediente ing : listaIng) {
-			ingredienteRepo.delete(ing);
-		}
-		listaIng.clear();
-		repo.getById(id).setIngrediente(listaIng);
-		
-	}
 	
 	public Ricetta updateIngredienti(Integer id, IngredienteList ingredienteList) {
 		Ricetta ricetta = repo.getById(id);
-		cancellaIngrPrecedenti(id);
+		svuotaIngredienti(ricetta);
 		List<Ingrediente> ingList = new ArrayList<Ingrediente>();
 		for (Ingrediente ing: ingredienteList.getIngredienti()) {
 			if (ing != null) {
@@ -309,13 +301,26 @@ public class RicettaService {
 		repo.deleteById(id);
 	}
 	
-	public void svuotaImmagini(Integer id) {
-		List<Immagine> list = repo.getById(id).getImmagini();
+	public void svuotaImmagini(Ricetta ricetta) {
+		List<Immagine> list = ricetta.getImmagini();
 		for(Immagine img : list) {
 			imgRepo.delete(img);
 		}
 		list.clear();
-		repo.getById(id).setImmagini(list);
+		ricetta.setImmagini(list);
+	}
+	
+	public void svuotaIngredienti(Ricetta ricetta) {		
+		List<Ingrediente> list = ricetta.getIngrediente();
+		for(Ingrediente ing : list) {
+			ing.setRicetta(null);
+			ingredienteRepo.save(ing);
+		}
+		for(Ingrediente ing : list) {			
+			ingredienteRepo.delete(ing);
+			}
+		list.clear();
+		ricetta.setIngrediente(list);
 	}
 
 	
