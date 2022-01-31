@@ -26,7 +26,7 @@ public class CommentoController {
 		return "/admin/lista-commenti";
 	}
 	
-	@GetMapping("/admin/commenti/elimina/{id}")
+	@GetMapping("/elimina/{id}")
 	public String deleteCommentoById(@PathVariable("id") Integer id) {
 		service.deleteCommentoById(id);
 	return "redirect:/admin/commenti";
