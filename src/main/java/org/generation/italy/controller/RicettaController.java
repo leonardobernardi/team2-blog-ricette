@@ -201,7 +201,6 @@ public class RicettaController {
 		public String edit(Model model) {
 			model.addAttribute("categorie", catService.findAll());
 			model.addAttribute("lista", service.findAllSortedByRecent());
-
 			model.addAttribute("admin", true);
 			return "/admin/lista-ricette";
 		}
