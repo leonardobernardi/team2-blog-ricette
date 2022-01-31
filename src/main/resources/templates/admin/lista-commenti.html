@@ -12,7 +12,8 @@
     <hr>
     <div class="container">
         <div th:if="${lista.size() > 0}" class="row mt-5">
-        	<span><a th:href="@{/admin/commenti/email}" class="btn btn-success">Elenco email bannate</a></span>
+        	<span class="text-center"><a th:href="@{/admin/commenti/email}" class="btn btn-success mb-4">Elenco email bannate</a></span>
+        	
             <div th:each="ricetta : ${lista}" th:if="${ricetta.commenti.size() > 0}">
                 <div class="row">
                     <span class="h4" th:text="${ricetta.titolo}"></span>
@@ -21,12 +22,11 @@
                                 <li th:classAppend="${commento.email.isBanned} ? text-danger">
                                     <span th:text="${commento.email.email}"></span> 
                                     
-                    <!-- BAN -->       <a class="text-decoration-none text-success m-1"
-	                                	th:href="@{|/admin/commenti/elimina/${commento.id}|}"
+                  			    	<a class="text-decoration-none text-success m-1"
+	                                	th:href="@{|/admin/commenti/ban/${commento.email.id}|}"
 	                                	onclick="return confirm('Sei sicuro?')" data-bs-toggle="tooltip" data-bs-placement="top"
 	                                	title="Ban"><i class="fas fa-ban"></i></a>
 	                                	
-	                              <!-- BAN -->  	
                                     <div th:text="|Nome: ${commento.nome}|"></div>
                                     <p th:text="|Testo: ${commento.testo}|"></p>
                                     <a class="text-decoration-none text-success m-1"

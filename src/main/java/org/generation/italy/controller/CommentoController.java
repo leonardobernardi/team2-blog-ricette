@@ -47,17 +47,17 @@ public class CommentoController {
 		return "redirect:/admin/commenti";
 	}
 	
-	@GetMapping("email")
+	@GetMapping("/email")
 	public String editEmail(Model model) {
 		model.addAttribute("admin", true);
 		model.addAttribute("lista", emailService.findIsBan());
 		return "/admin/mail-ban";
 	}
 	
-	@GetMapping("email/{id}")
-	public String revertBan(@PathVariable("id") Integer id){
+	@GetMapping("ban/{id}")
+	public String revertBan(@PathVariable("id") Integer id, Model model){
 		model.addAttribute("admin", true);
 		emailService.revertBan(id);
-		return "redirect:/admin/commenti/email";
+		return "redirect:/admin/commenti";
 	}
 }
