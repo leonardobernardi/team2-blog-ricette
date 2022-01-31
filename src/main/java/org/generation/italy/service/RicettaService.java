@@ -96,6 +96,7 @@ public class RicettaService {
 		return repo.getById(id);
 	}
 
+	// for later
 	public boolean isVegan(Ricetta ricetta) {
 		if(ricetta != null) {
 			if (ricetta.getIngrediente().size()>0) {
@@ -108,9 +109,9 @@ public class RicettaService {
 			}
 		} 
 		return false;
-		
+
 	}
-	
+
 	public boolean isVegetarian(Ricetta ricetta) {		
 		if(ricetta != null) {	
 			if(ricetta.getIngrediente().size()>0) {
@@ -121,14 +122,14 @@ public class RicettaService {
 				}
 				return true;
 			}
-			
+
 		} 
 			return false;
-		
+
 	}
 	
 	public List<Ricetta> findByCategoria(Integer categoryId){
-		return repo.findByCategoriaContaining(categoryId);
+		return repo.findByCategoria_idIs(categoryId);
 	}
 
 	public List<Ricetta> findByTitolo(String keyword) {
@@ -269,6 +270,21 @@ public class RicettaService {
 		return repo.save(ricetta);
 	}
 
+	
+	//Update vecchia ricetta
+	public Ricetta updateRicetta(Ricetta ricetta, Integer id) {
+		Ricetta ricettaDaModificare = repo.getById(id);
+		ricettaDaModificare.setTitolo(ricetta.getTitolo());
+		ricettaDaModificare.setTempoDiPreparazione(ricetta.getTempoDiPreparazione());
+		ricettaDaModificare.setLivelloDiDifficolta(ricetta.getLivelloDiDifficolta());
+		ricettaDaModificare.setDescrizione(ricetta.getDescrizione());
+		ricettaDaModificare.setTestoDellaRicetta(ricetta.getTestoDellaRicetta());
+		ricettaDaModificare.setDataDiCreazione(repo.getById(id).getDataDiCreazione());
+		ricettaDaModificare.setVisualizzazioni(repo.getById(id).getVisualizzazioni());
+		ricettaDaModificare.setMiPiace(repo.getById(id).getMiPiace());
+		return repo.save(ricettaDaModificare);
+	}
+	
 	
 	//Delete
 

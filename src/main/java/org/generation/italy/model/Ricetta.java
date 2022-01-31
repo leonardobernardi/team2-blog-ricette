@@ -70,6 +70,34 @@ public class Ricetta {
 	private Boolean isVegan;
 	private Boolean isVegetarian;
 	
+//	// -- veg -- ret
+//	public boolean isVegan() {
+//
+//				for (Ingrediente i : getIngrediente()) {
+//					if (!i.getIsVegan()) {
+//						return false;
+//					}
+//				}
+//				return true;
+//
+//	}
+//	
+//	public boolean isVegetarian() {		
+//		if(ricetta != null) {	
+//			if(ricetta.getIngrediente().size()>0) {
+//				for(Ingrediente i : ricetta.getIngrediente()) {
+//					if(!i.getIsVegetarian()) {
+//						return false;
+//					}
+//				}
+//				return true;
+//			}
+//			
+//		} 
+//			return false;
+//		
+//	}
+	
 	
 
 	public Integer getMiPiace() {
@@ -95,7 +123,10 @@ public class Ricetta {
 	public void setCommenti(List<Commento> commenti) {
 		this.commenti = commenti;
 	}
+	
+	
 
+//	 delete - now a method
 	public Boolean getIsVegan() {
 		return isVegan;
 	}
