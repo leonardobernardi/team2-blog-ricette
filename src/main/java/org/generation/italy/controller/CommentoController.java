@@ -3,6 +3,7 @@ package org.generation.italy.controller;
 import java.util.List;
 
 import org.generation.italy.model.Email;
+import org.generation.italy.service.CategoriaService;
 import org.generation.italy.service.CommentoService;
 import org.generation.italy.service.EmailService;
 import org.generation.italy.service.RicettaService;
@@ -12,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/admin/")
@@ -25,19 +27,22 @@ public class CommentoController {
 	
 	  @Autowired
 	  private RicettaService ricettaService;
+
+	  @Autowired 
+	  private CategoriaService catService;
 	
 	@GetMapping
 	public String gestioneCommenti(Model model){
 		model.addAttribute("lista", ricettaService.findAllSortedByRecent());
+		model.addAttribute("categorie", catService.findAll());
 		return "/admin/lista-commenti";
 	}
 	
-<<<<<<< Updated upstream
-	@GetMapping("/admin/commenti/elimina/{id}")
-=======
 	@GetMapping("commenti/elimina/{id}")
->>>>>>> Stashed changes
 	public String deleteCommentoById(@PathVariable("id") Integer id) {
+	@GetMapping("/elimina/{id}")
+	public String deleteCommentoById(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
+		redirectAttributes.addAttribute("categorie", catService.findAll());
 		service.deleteCommentoById(id);
 	return "redirect:/admin/commenti";
 	}
