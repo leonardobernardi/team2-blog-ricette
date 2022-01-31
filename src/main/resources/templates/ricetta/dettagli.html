@@ -3,43 +3,57 @@
 
 <head>
     <div th:replace="fragments/resources :: headTags"></div>
-	<title th:text="${ricetta.titolo}"></title>
+    <title th:text="${ricetta.titolo}"></title>
 </head>
 
-<body class="bg-light">
+<body class="bg-light justify-content-center">
     <div th:replace="fragments/navbar :: navbar"></div>
-    <div class="container flex ">
+    <div class="container">
         <div class="flex-row justify-content-center">
             <h1 th:text="${ricetta.titolo}" class="text-center"></h1>
-            <span>la ricetta è stata visualizzata:</span>
-            <span th:text="${ricetta.visualizzazioni}"></span>
-            <span>volte</span>
         </div>
-        <div class="row justify-content-start">
-            <h5>Descrizione</h5>
-            <div class="col p-2">
-
-                <p th:text="${ricetta.descrizione}"></p>
+        <div class="row">
+            <div class="col p-0 ">
+                <img style="width: 100%; height: 100%;" th:src="|/${ricetta.id}/img|" alt="img2">
+            </div>
+            <div class="col p-2 border border-2">
+                <p> <span><i class="far fa-eye"></i></span>
+                    <span th:text="${ricetta.visualizzazioni}"></span>
+                </p>
+                <p>
+                    <span>Tempo di Preparazione: </span>
+                    <span th:text="${ricetta.tempoDiPreparazione}"></span>
+                </p>
+                <p>
+                    <span>Difficoltà: </span>
+                    <th:block th:switch="${ricetta.livelloDiDifficolta}">
+                        <span th:case="'1'">facile</span>
+                        <span th:case="'2'">medio</span>
+                        <span th:case="'3'">difficile</span>
+                    </th:block>
+                </p>
+                <p>
+                    <span>Descrizione: </span>
+                    <br>
+                    <span th:text="${ricetta.descrizione}"></span>
+                </p>
             </div>
         </div>
-        <hr>
-        <div class="row justify-content-start">            
-
-            <div class="col-4">
-                <h5>Ingredienti</h5>
+        <div class="row">
+            <div class="col p-2 border border-2">
+                <div class="h5">Ingredienti</div>
                 <div th:if="${ingredienti.size() > 0}">
                     <ul th:each="item : ${ingredienti}">
                         <li><span th:text="${item.nome}"></span>: <span th:text="${item.quantita}"></span></li>
                     </ul>
                 </div>
             </div>
-            <div class="col-3 p-2" th:each=" img1: ${ricetta.immagini}">
-                <img class="p-0" style="width:250px" th:src="|/detail/${ricetta.id}/${img1.id}/img|" alt="ingredienteimg">
-            </div>
         </div>
-        <hr>
+        <br>
         <div class="row justify-content-start">
             <h5>Procedimento</h5>
+
+            <div class="row"></div>
             <div class="col-8 p-2">
                 <p th:text="${ricetta.testoDellaRicetta}"></p>
             </div>
@@ -49,7 +63,7 @@
         </div>
     </div>
     <div class="container" id="commento">
-        <h5 class="text-center">Lascia un commento</h5>
+        <h5>Lascia un commento</h5>
 
 
 
@@ -59,7 +73,7 @@
                     <li th:each="error : ${#fields.errors}"></li>
                 </ul>
             </div>
-            <div class="col border rounded-3 border-2 p-2">
+            <div class="col-6 border rounded-3 border-2 p-2">
                 <div class="row p-3">
                     <label for="email" class="form-label">Email</label>
                     <input type="email" th:field="*{email.email}" class="form-control" id="email"
@@ -89,5 +103,16 @@
                 </div>
             </div>
             <hr>
+	</div>
+	</div>
+	<div th:replace="fragments/resources :: scripts"></div>
+	</body>   
 
 </html>
+
+<!--<div class="col-6" th:each=" img1: ${ricetta.immagini}">
+            <img class="p-0" style="width:250px" th:src="|/detail/${ricetta.id}/${img1.id}/img|" alt="ingredienteimg">
+            titti gli elementi della array di foto
+        </div>
+    -->
+<!--th:src="|/${ricetta.id}/img|";  il primo elemento dell'array di foto-->

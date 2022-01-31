@@ -3,6 +3,7 @@
 
 <head>
     <div th:replace="fragments/resources :: headTags"></div>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
     <title th:text="${categoriaNome.nome}"></title>
 </head>
 
@@ -28,7 +29,7 @@
                                 </th:block>
                             </div>
                             <div class="position-relative">
-                                <img th:src="|/${ricetta.id}/img|" class="img-fluid" alt="">
+                                <img th:src="|/${ricetta.id}/img|" class="img-fluid" alt="img">
                                 <div class="text-center bg-success text-light px-1 position-bottom-left"
                                     th:if="${ricetta.isVegan == true}">
                                     <span><i class="fas fa-seedling"></i> vegano</span>
