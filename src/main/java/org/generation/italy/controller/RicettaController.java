@@ -258,17 +258,43 @@ public class RicettaController {
 		}
 
 		
-		//doEdit
-
-
+//		//doEdit -wip
 //		@GetMapping("/admin/ricetta/modifica/{id}")
 //		public String editRicetta (@PathVariable("id") Integer id, Model model) {
-//			model.addAttribute("nuovaRicetta", new Ricetta());
-//			return "/admin/ricetta/edit" + id;
+////			model.addAttribute("nuovaRicetta", new Ricetta());
+//			model.addAttribute("vecchiaRicetta", service.getById(id));
+//			return "/admin/edit-ricetta";
+//		}
+//		
+//		@PostMapping("/admin/ricetta/modifica/{id}")
+//		public String doEditRicetta (@Valid @ModelAttribute("vecchiaRicetta") 
+//		Ricetta formRicetta, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+//			if (bindingResult.hasErrors()) {
+//				return "/admin/edit-ricetta";
+//			}
+//			service.update(formRicetta);
+//			return "redirect:/home/index";
 //		}
 		
 
 		
+		//doEdit2 
+		@GetMapping("/admin/ricetta/modifica/{id}")
+		public String editRicetta (@PathVariable("id") Integer id, Model model) {
+		model.addAttribute("ricettaDaModificare", service.getById(id));
+		return "/admin/edit-ricetta";
+		}
+		
+		@PostMapping("/admin/ricetta/modifica/{id}")
+		public String doEditRicetta (@Valid @ModelAttribute("ricettaDaModificare") 
+		Ricetta formRicetta, @PathVariable("id") Integer id, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+			if (bindingResult.hasErrors()) {
+				return "/admin/edit-ricetta";
+			}
+			service.updateRicetta(formRicetta, id);
+			return "redirect:/ricetta/" + id;
+		}
+
 		
 		//Delete 
 		@GetMapping("/admin/modifica/cancella/{id}")
