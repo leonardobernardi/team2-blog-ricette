@@ -70,6 +70,7 @@ public class RicettaController {
 	//Create
 		@GetMapping("/admin/ricetta/crea")
 		public String create(Model model) {
+			model.addAttribute("categorie", catService.findAll());
 			List<Ingrediente> ingredientiList= new ArrayList<Ingrediente>(); 
 			List<ImmagineForm> immaginiList = new ArrayList<ImmagineForm>();
 			ImmagineList immaginiForm = new ImmagineList(immaginiList);
@@ -93,7 +94,8 @@ public class RicettaController {
 				BindingResult bindingResult,
 				@ModelAttribute ("ingredientiForm") IngredienteList ingredienteList,
 				@ModelAttribute ("immaginiForm") ImmagineList immagineList,
-				Model model) {
+				Model model, RedirectAttributes redirectAttributes) {
+			redirectAttributes.addAttribute("categorie", catService.findAll());
 			if(bindingResult.hasErrors()) {
 				model.addAttribute("edit", false);
 				model.addAttribute("admin", true);
@@ -113,6 +115,7 @@ public class RicettaController {
 		
 		@GetMapping("/admin")
 		public String admin(Model model) {
+			model.addAttribute("categorie", catService.findAll());
 			model.addAttribute("piuRecenti", service.findLastSevenDays());
 			model.addAttribute("piuViste", service.findMostViewed());
 			model.addAttribute("piuCommentate", service.findMostCommented());
@@ -122,6 +125,7 @@ public class RicettaController {
 		
 		@GetMapping("/ricetta/{id}")
 		public String detail(@PathVariable("id") Integer id, Model model) {
+			model.addAttribute("categorie", catService.findAll());
 			service.visualizzazioniPiuUno(service.getById(id));
 			model.addAttribute("ricetta", service.getById(id));		
 			model.addAttribute("commento", new Commento());
@@ -140,6 +144,7 @@ public class RicettaController {
 		public String addComment(@PathVariable("id") Integer id,
 				@Valid @ModelAttribute("commento") Commento formCommento, BindingResult bindingResult,
 				Model model, RedirectAttributes redirectAttributes) {
+			redirectAttributes.addAttribute("categorie", catService.findAll());
 			
 			if(bindingResult.hasErrors()) {
 				model.addAttribute("edit", false);
@@ -151,6 +156,7 @@ public class RicettaController {
 		
 		@GetMapping("/categoria/{id}")
 		public String getPerCategoria(@PathVariable("id") Integer id, Model model) {
+			model.addAttribute("categorie", catService.findAll());
 			List<Ricetta> list;
 			List<Categoria> listaCategorie;
 			listaCategorie = catService.findAll();
@@ -193,6 +199,7 @@ public class RicettaController {
 		
 		@GetMapping("/admin/modifica")
 		public String edit(Model model) {
+			model.addAttribute("categorie", catService.findAll());
 			model.addAttribute("lista", service.findAllSortedByRecent());
 
 			model.addAttribute("admin", true);
@@ -212,6 +219,7 @@ public class RicettaController {
 		
 		@GetMapping("/admin/ricetta/modifica/{id}/immagini")
 		public String editImg(@PathVariable("id") Integer id, Model model) {
+			model.addAttribute("categorie", catService.findAll());
 			List<ImmagineForm> immaginiList = new ArrayList<ImmagineForm>();
 			ImmagineList immaginiForm = new ImmagineList(immaginiList);
 			for (int i = 0; i < 5; i++) {
@@ -224,7 +232,8 @@ public class RicettaController {
 		
 		@PostMapping("/admin/ricetta/modifica/{id}/immagini")
 		public String doEditImg(@ModelAttribute ("immaginiForm") ImmagineList immagineList,
-				@PathVariable("id") Integer id, Model model) {
+				@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
+			redirectAttributes.addAttribute("categorie", catService.findAll());
 			try {
 				service.updateImmagini(id, immagineList);
 			} catch (IOException e) {				
@@ -239,6 +248,7 @@ public class RicettaController {
 		//Update di ingredienti
 		@GetMapping("/admin/ricetta/modifica/{id}/ingredienti")
 		public String editIngredienti(@PathVariable("id") Integer id, Model model) {
+			model.addAttribute("categorie", catService.findAll());
 			List<Ingrediente> ingredientiList = new ArrayList<Ingrediente>();
 			IngredienteList ingredientiForm = new IngredienteList(ingredientiList);
 			for (int i = 0; i < 26; i++) {
@@ -251,7 +261,8 @@ public class RicettaController {
 		
 		@PostMapping("/admin/ricetta/modifica/{id}/ingredienti")
 		public String doEditIngredienti (@ModelAttribute("ingredientiForm") 
-		IngredienteList ingredientiList, @PathVariable("id") Integer id, Model model) {
+		IngredienteList ingredientiList, @PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
+			redirectAttributes.addAttribute("categorie", catService.findAll());
 			service.updateIngredienti(id, ingredientiList);
 			return "redirect:/ricetta/" + id;
 			
@@ -281,13 +292,15 @@ public class RicettaController {
 		//doEdit2 
 		@GetMapping("/admin/ricetta/modifica/{id}")
 		public String editRicetta (@PathVariable("id") Integer id, Model model) {
-		model.addAttribute("ricettaDaModificare", service.getById(id));
-		return "/admin/edit-ricetta";
+			model.addAttribute("categorie", catService.findAll());
+			model.addAttribute("ricettaDaModificare", service.getById(id));
+			return "/admin/edit-ricetta";
 		}
 		
 		@PostMapping("/admin/ricetta/modifica/{id}")
 		public String doEditRicetta (@Valid @ModelAttribute("ricettaDaModificare") 
 		Ricetta formRicetta, @PathVariable("id") Integer id, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+			redirectAttributes.addAttribute("categorie", catService.findAll());
 			if (bindingResult.hasErrors()) {
 				return "/admin/edit-ricetta";
 			}
@@ -298,7 +311,8 @@ public class RicettaController {
 		
 		//Delete 
 		@GetMapping("/admin/modifica/cancella/{id}")
-		public String delete(@PathVariable("id") Integer id) {
+		public String delete(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
+			redirectAttributes.addAttribute("categorie", catService.findAll());
 			if(service.getById(id) == null) {
 				//messaggio d'errore
 			}
