@@ -3,15 +3,15 @@
 
 <head>
     <div th:replace="fragments/resources :: headTags"></div>
-    <title th:text="|${vecchiaRicetta.titolo}|"></title>
+    <title th:text="|${ricettaDaModificare.titolo}|"></title>
 </head>
 
 <body>
     <nav th:replace="fragments/navbar :: navbar"></nav>
     <div class="container text-center">
-        <div th:text="|Modifica ${vecchiaRicetta.titolo}|" class="h2"></div>
-        <form id="modificaRicettaForm" th:action="@{/admin/ricetta/modifica/{id}/(id=${vecchiaRicetta.id})}"
-            th:object="${vecchiaRicetta}" method="post">
+        <div th:text="|Modifica ${ricettaDaModificare.titolo}|" class="h2"></div>
+        <form id="modificaRicettaForm" th:action="@{/admin/ricetta/modifica/{id}/(id=${ricettaDaModificare.id})}"
+            th:object="${ricettaDaModificare}" method="post">
             <ul>
                 <li th:each="err : ${#fields.allErrors()}" th:text="${err}" class="text-danger"></li>
             </ul>
