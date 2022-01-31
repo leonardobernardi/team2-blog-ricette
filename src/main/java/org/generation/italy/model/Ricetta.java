@@ -53,7 +53,7 @@ public class Ricetta {
 	
 	private Integer miPiace;
 	
-	
+	@NotNull
 	@ManyToOne
 	private Categoria categoria;
 	
@@ -69,6 +69,11 @@ public class Ricetta {
 	
 	private Boolean isVegan;
 	private Boolean isVegetarian;
+	
+	public boolean isVegan() {
+		return getIngrediente().stream()
+				.allMatch(i -> i.getIsVegan());
+	}
 	
 //	// -- veg -- ret
 //	public boolean isVegan() {
