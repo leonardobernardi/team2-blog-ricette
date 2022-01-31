@@ -2,6 +2,8 @@ package org.generation.italy.service;
 
 import java.util.List;
 
+import javax.print.attribute.SetOfIntegerSyntax;
+
 import org.generation.italy.model.Email;
 import org.generation.italy.repository.EmailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +23,25 @@ public class EmailService {
 
 	public Email unBan(Integer id) {
 		Email newEmail;
-		newEmail=repo.findAllById(id);
-		Boolean ban = false;
-		newEmail.setIsBanned(ban);
+		newEmail = repo.findAllById(id);
+		newEmail.setIsBanned(false);
 		return repo.save(newEmail);
 	}
+
+	public Email ban(Integer id) {
+		Email newEmail;
+		newEmail = repo.findAllById(id);
+		newEmail.setIsBanned(true);
+		return repo.save(newEmail);
+	}
+
+	public Email revertBan(Integer id) {
+		Email email;
+		email=repo.getById(id);
+		if (email.getIsBanned()==true) {
+			email.setIsBanned(false);
+			}else email.setIsBanned(true);
+		return repo.save(email);
+	}
+
 }

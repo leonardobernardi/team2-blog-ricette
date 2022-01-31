@@ -55,9 +55,9 @@ public class CommentoController {
 	}
 	
 	@GetMapping("email/{id}")
-	public String unBan(@PathVariable("id") Integer id, Model model) {
+	public String revertBan(@PathVariable("id") Integer id){
 		model.addAttribute("admin", true);
-		emailService.unBan(id);
-		return "redirect:/admin/email";	
+		emailService.revertBan(id);
+		return "redirect:/admin/commenti/email";
 	}
 }
