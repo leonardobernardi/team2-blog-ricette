@@ -7,11 +7,16 @@
 </head>
 
 <body class="bg-light justify-content-center">
-    <div th:replace="fragments/navbar :: navbar"></div>
-    <div class="container">
+    <div th:replace="fragments/navbar :: navbar"></div>    
+    <div class="container mt-3">
+        
         <div class="flex-row justify-content-center">
             <h1 th:text="${ricetta.titolo}" class="text-center"></h1>
         </div>
+        <div class="alert alert-danger" role="alert" th:if="${banned}">
+            Il tuo account &egrave; bannato, non puoi pubblicare commenti
+        </div>
+       
         <div class="row">
             <div class="col p-0 ">
                 <img style="width: 100%; height: 100%;" th:src="|/${ricetta.id}/img|" alt="img2">
@@ -62,6 +67,7 @@
             </div>
         </div>
     </div>
+    
     <div class="container" id="commento">
         <h5>Lascia un commento</h5>
 
@@ -93,8 +99,8 @@
             </div>
 
         </form>
-        <div class="col">
-
+        
+        <div class="col">            
             <div th:if="${list.size() > 0}" class="row mt-5">
                 <h5>Commenti di altri utenti</h5>
                 <div th:each="item : ${list}" class="border rounded-2 p-3 m-2" th:if="${item.email.isBanned == false}">

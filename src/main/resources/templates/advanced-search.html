@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <div th:replace="fragments/resources :: headTags"></div>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <title>Ricerca avanzata</title>
+  </head>
+  <body class="bg-light">
+    <nav th:replace="fragments/navbar :: navbar"></nav>
+    <div class="container my-2 mt-3">
+      <h1>Ricerca Avanzata</h1>
+      <hr>
+      <div th:unless="${search}">
+        <form th:action="@{/ricerca-avanzata}" method="get">
+            <label for="titolo" class="form-lavel">Titolo</label>
+          <input
+            name="titolo"
+            th:value="${titolo}"
+            class="form-control"
+            type="search"
+            placeholder="Titolo"
+            aria-label="Search"
+          />
+          <label class="form-label" for="categoria">Categoria</label>
+          <select
+            name="categoriaId"
+            id="categoria"
+            class="form-control"
+            th:value="${categoriaId}"
+          >
+          <option th:value="0" selected></option>
+            <option th:value="1">Antipasto</option>
+            <option th:value="2">Primo</option>
+            <option th:value="3">Secondo</option>
+            <option th:value="4">Contorno</option>    
+            <option th:value="5">Dolce</option>    
+          </select>
+
+          <label class="form-label" for="livelloDiDifficolta"
+            >Difficolt&agrave;</label
+          >
+          <select
+            name="livelloDiDifficolta"
+            id="livelloDiDifficolta"
+            class="form-control"
+            th:value="${livelloDiDifficolta}"
+          >
+          <option th:value="0" selected></option>
+            <option th:value="1">Facile</option>
+            <option th:value="2">Medio</option>
+            <option th:value="3">Difficile</option>
+          </select>
+        </select>
+
+        <label class="form-label" for="isVegan"
+          >Vegano</label
+        >
+        <select
+          name="isVegan"
+          id="isVegan"
+          class="form-control"
+          th:value="${isVegan}"
+        >
+        <option th:value="null" selected></option>
+          <option th:value="true">Si</option>
+          <option th:value="false">No</option>
+        </select>
+
+        <label class="form-label" for="isVegetarian"
+          >Vegetariano</label
+        >
+        <select
+          name="isVegetarian"
+          id="isVegetarian"
+          class="form-control"
+          th:value="${isVegetarian}"
+        >
+        <option th:value="null" selected></option>
+          <option th:value="true">Si</option>
+          <option th:value="false">No</option>
+        </select>
+
+          <button class="btn btn-light bg-success mt-1" type="submit">
+            <span class="text-light"><i class="fas fa-search"></i> Cerca</span>
+          </button>
+        </form>
+      </div>
+
+      <!--Risultati-->
+      <div th:if="${search}">
+        <div class="row mb-4">
+          <div th:each="ricetta : ${lista}" class="col-4">
+            <a
+              th:href="@{|/ricetta/${ricetta.id}|}"
+              class="text-decoration-none text-dark"
+            >
+              <div class="card shadow">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between">
+                    <span
+                      th:text="${ricetta.titolo}"
+                      class="h5 card-title"
+                    ></span>
+                    <th:block th:switch="${ricetta.livelloDiDifficolta}">
+                      <span
+                        class="text-center bg-info text-light rounded p-1"
+                        th:case="'1'"
+                      >
+                        <i class="fas fa-utensil-spoon"></i> facile</span
+                      >
+                      <span
+                        class="text-center bg-info text-light rounded p-1"
+                        th:case="'2'"
+                      >
+                        <i class="fas fa-utensil-spoon"></i> medio</span
+                      >
+                      <span
+                        class="text-center bg-info text-light rounded p-1"
+                        th:case="'3'"
+                      >
+                        <i class="fas fa-utensil-spoon"></i> difficile</span
+                      >
+                    </th:block>
+                  </div>
+                  <div class="position-relative">
+                    <img
+                      th:src="|${ricetta.id}/img|"
+                      class="img-fluid"
+                      alt="img"
+                    />
+                    <div
+                      class="text-center bg-success text-light px-1 position-bottom-left"
+                      th:if="${ricetta.isVegan == true}"
+                    >
+                      <span><i class="fas fa-seedling"></i> vegano</span>
+                    </div>
+                    <div
+                      class="text-center bg-success text-light px-1 position-bottom-left"
+                      th:if="${ricetta.isVegan == false and ricetta.isVegetarian == true}"
+                    >
+                      <span><i class="fas fa-leaf"></i> vegetariano</span>
+                    </div>
+                  </div>
+                  <p class="card-text" th:text="${ricetta.descrizione}"></p>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div th:replace="fragments/resources :: scripts"></div>
+  </body>
+</html>
