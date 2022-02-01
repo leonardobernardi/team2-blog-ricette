@@ -103,7 +103,7 @@ public class RicettaService {
 	}
 	
 	public List<Ricetta> findAllSortedByRecent() {
-		return repo.findAll(Sort.by(Direction.DESC, "dataDiCreazione"));
+		return repo.findAll(Sort.by(Direction.ASC, "dataDiCreazione"));
 	}
 
 	public Ricetta getById(Integer id) {
@@ -183,6 +183,7 @@ public class RicettaService {
 			piuCommentate.add(list.get(i));
 			i++;
 		}
+		piuCommentate.sort(compareByComments);
 		return piuCommentate;
 	}
 

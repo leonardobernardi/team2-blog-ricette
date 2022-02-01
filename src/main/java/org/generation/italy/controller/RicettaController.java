@@ -101,6 +101,7 @@ public class RicettaController {
 				@ModelAttribute ("immaginiForm") ImmagineList immagineList,
 				Model model, RedirectAttributes redirectAttributes) {
 			redirectAttributes.addAttribute("categorie", catService.findAll());
+			redirectAttributes.addAttribute("admin", true);
 			model.addAttribute("admin", true);
 			if(bindingResult.hasErrors()) {
 				model.addAttribute("edit", false);
@@ -114,7 +115,7 @@ public class RicettaController {
 				e.printStackTrace();
 			}
 			
-			return "redirect:/";
+			return "redirect:/admin/modifica";
 		}
 		
 		//Read
