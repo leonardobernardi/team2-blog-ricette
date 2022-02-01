@@ -18,6 +18,7 @@ import org.generation.italy.repository.EmailRepository;
 import org.generation.italy.service.CategoriaService;
 import org.generation.italy.service.CommentoService;
 import org.generation.italy.service.ImmagineService;
+import org.generation.italy.service.IngredienteService;
 import org.generation.italy.service.RicettaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -26,6 +27,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,6 +36,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+@CrossOrigin
 @Controller
 @RequestMapping("/")
 public class RicettaController {
@@ -52,6 +55,9 @@ public class RicettaController {
 	
 	@Autowired 
 	private CategoriaService catService;
+	
+	@Autowired
+	private IngredienteService ingService;
 	
 	//Homepage
 	@GetMapping
@@ -200,6 +206,7 @@ public class RicettaController {
 			return "/categorie/indexCategorie";
 		}
 		
+	
 		@RequestMapping(value = "/{id}/img", produces = org.springframework.http.MediaType.IMAGE_JPEG_VALUE )
 		public ResponseEntity<byte[]> getImgContent(@PathVariable Integer id){
 			byte[] imgContent;
@@ -214,10 +221,11 @@ public class RicettaController {
 			return new ResponseEntity<byte[]>(imgContent, headers, HttpStatus.OK);
 		}
 		
-		@RequestMapping(value = "detail/{id}/{imgId}/img", produces = org.springframework.http.MediaType.IMAGE_JPEG_VALUE )
-		public ResponseEntity<byte[]> getImgContentList(@PathVariable Integer id, @PathVariable Integer imgId){
+	
+		@RequestMapping(value = "detail/{imgId}/img", produces = org.springframework.http.MediaType.IMAGE_JPEG_VALUE )
+		public ResponseEntity<byte[]> getImgContentList(@PathVariable Integer imgId){
 		
-			Immagine imgOfId = imgService.getById(id, imgId);
+			Immagine imgOfId = imgService.getById(imgId);
 			byte[] imgContent = imgOfId.getContent();
 			
 			HttpHeaders headers = new HttpHeaders();
@@ -274,7 +282,7 @@ public class RicettaController {
 				e.printStackTrace();
 			}
 			
-			return "redirect:/ricetta/" + id;
+			return "redirect:/admin/ricetta/modifica/" + id + "/immagini";
 		}
 
 
@@ -298,7 +306,7 @@ public class RicettaController {
 		IngredienteList ingredientiList, @PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
 			redirectAttributes.addAttribute("categorie", catService.findAll());
 			service.updateIngredienti(id, ingredientiList);
-			return "redirect:/ricetta/" + id;
+			 return "redirect:/admin/ricetta/modifica/" + id + "/ingredienti";
 			
 		}
 
@@ -355,5 +363,21 @@ public class RicettaController {
 			}
 			service.deleteById(id);
 			return "redirect:/admin/modifica";
+		}
+		
+		@GetMapping("/admin/ricetta/modifica/ingrediente/cancella/{id}")
+		public String deleteIng(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
+			redirectAttributes.addAttribute("categorie", catService.findAll());		
+			Integer rId = ingService.getById(id).getRicetta().getId();
+			ingService.deleteById(id);
+			return "redirect:/admin/ricetta/modifica/" + rId + "/ingredienti";
+		}
+		
+		@GetMapping("/admin/ricetta/modifica/immagine/cancella/{id}")
+		public String deleteImg(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
+			redirectAttributes.addAttribute("categorie", catService.findAll());		
+			Integer rId = imgService.getById(id).getRicetta().getId();
+			imgService.repo.deleteById(id);
+			return "redirect:/admin/ricetta/modifica/" + rId + "/immagini";
 		}
 }

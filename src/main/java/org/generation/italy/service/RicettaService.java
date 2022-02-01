@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.generation.italy.model.Categoria;
 import org.generation.italy.model.Commento;
 import org.generation.italy.model.Immagine;
 import org.generation.italy.model.ImmagineForm;
@@ -25,6 +26,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class RicettaService {
+	
+	@Autowired 
+	private CategoriaService catService;
 
 	@Autowired
 	private RicettaRepository repo;
@@ -234,9 +238,8 @@ public class RicettaService {
 	
 	public Ricetta updateImmagini(Integer id, ImmagineList immagineList ) throws IOException {
 		Ricetta ricetta = repo.getById(id);
-		svuotaImmagini(ricetta);
 		List<ImmagineForm> imgFormList = new ArrayList<ImmagineForm>();		
-		List<Immagine> ricettaImmagine = new ArrayList<Immagine>();
+		List<Immagine> ricettaImmagine = ricetta.getImmagini();
 		for(ImmagineForm img : immagineList.getListaImmaginiForm()) {
 			if(img.getContent()!=null & img.getContent().getSize()!=0) {
 				imgFormList.add(img);				
@@ -258,8 +261,8 @@ public class RicettaService {
 	
 	public Ricetta updateIngredienti(Integer id, IngredienteList ingredienteList) {
 		Ricetta ricetta = repo.getById(id);
-		svuotaIngredienti(ricetta);
-		List<Ingrediente> ingList = new ArrayList<Ingrediente>();
+		List<Ingrediente> ingList = ricetta.getIngrediente();
+		
 		for (Ingrediente ing: ingredienteList.getIngredienti()) {
 			if (ing != null) {
 				if (ing.getNome() != null && !ing.getNome().isEmpty()) {
@@ -280,6 +283,8 @@ public class RicettaService {
 				}
 			}
 		}
+		
+		
 		ricetta.setIngrediente(ingList);
 		ricetta.setIsVegan(isVegan(ricetta));
 		ricetta.setIsVegetarian(isVegetarian(ricetta));
@@ -290,8 +295,19 @@ public class RicettaService {
 	//Update vecchia ricetta
 	public Ricetta updateRicetta(Ricetta ricetta, Integer id) {
 		Ricetta ricettaDaModificare = repo.getById(id);
-		ricettaDaModificare.setTitolo(ricetta.getTitolo());
-		ricettaDaModificare.setCategoria(ricetta.getCategoria());
+		Categoria vecchiaCategoria = ricettaDaModificare.getCategoria();
+		Categoria nuovaCategoria = ricetta.getCategoria();
+
+		List<Ricetta> vecchiaCLista = vecchiaCategoria.getRicetta();
+		vecchiaCLista.remove(ricettaDaModificare);
+		ricettaDaModificare.setCategoria(nuovaCategoria);
+		vecchiaCategoria.setRicetta(vecchiaCLista);
+		catService.repo.save(vecchiaCategoria);
+				List<Ricetta> nuovaCLista = nuovaCategoria.getRicetta();
+		nuovaCLista.add(ricettaDaModificare);
+		ricettaDaModificare.setCategoria(nuovaCategoria);
+		catService.repo.save(nuovaCategoria);
+		ricettaDaModificare.setTitolo(ricetta.getTitolo());			
 		ricettaDaModificare.setTempoDiPreparazione(ricetta.getTempoDiPreparazione());
 		ricettaDaModificare.setLivelloDiDifficolta(ricetta.getLivelloDiDifficolta());
 		ricettaDaModificare.setDescrizione(ricetta.getDescrizione());

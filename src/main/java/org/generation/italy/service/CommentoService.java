@@ -43,13 +43,13 @@ public class CommentoService {
 		emailRepo.save(nuovaEmail);
 		commento.setEmail(nuovaEmail);
 		}
-		
-		
 		Ricetta ricetta = ricettaRepo.getById(id);
-		commento.setRicetta(ricetta);
-		List<Commento> commenti = repo.findAll();
-		commento.setId(commenti.size()+2);
-		return repo.save(commento);
+		Commento nuovoCommento = new Commento();
+		nuovoCommento.setEmail(commento.getEmail());
+		nuovoCommento.setNome(commento.getNome());
+		nuovoCommento.setTesto(commento.getTesto());
+		nuovoCommento.setRicetta(ricetta);
+		return repo.save(nuovoCommento);
 	}
 	
 	public List<Commento> findAll(){
