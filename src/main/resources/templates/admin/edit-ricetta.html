@@ -8,8 +8,9 @@
 
 <body>
     <nav th:replace="fragments/navbar :: navbar"></nav>
-    <div class="container text-center">
+    <div class="container text-center mt-3">
         <div th:text="|Modifica ${ricettaDaModificare.titolo}|" class="h2"></div>
+        <hr>
         <form id="modificaRicettaForm" th:action="@{/admin/ricetta/modifica/{id}/(id=${ricettaDaModificare.id})}"
             th:object="${ricettaDaModificare}" method="post">
             <ul>

@@ -7,8 +7,9 @@
   </head>
   <body class="bg-light">
     <nav th:replace="fragments/navbar :: navbar"></nav>
-    <div class="container my-2">
+    <div class="container my-2 mt-3">
       <h1>Ricerca Avanzata</h1>
+      <hr>
       <div th:unless="${search}">
         <form th:action="@{/ricerca-avanzata}" method="get">
             <label for="titolo" class="form-lavel">Titolo</label>
@@ -79,8 +80,8 @@
           <option th:value="false">No</option>
         </select>
 
-          <button class="btn btn-light bg-success" type="submit">
-            <span class="text-light">Cerca <i class="fas fa-search"></i></span>
+          <button class="btn btn-light bg-success mt-1" type="submit">
+            <span class="text-light"><i class="fas fa-search"></i> Cerca</span>
           </button>
         </form>
       </div>

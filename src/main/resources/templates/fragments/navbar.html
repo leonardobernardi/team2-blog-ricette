@@ -33,8 +33,10 @@
 				<div class="input-group">
 					<input name="keyword" th:value="${keyword}" class="form-control" type="search" placeholder="Trova ricetta" aria-label="Search">
 					<button class="btn btn-light bg-white" type="submit"><i class="fas fa-search"></i></button>
-					<a th:href="@{/ricerca-avanzata}">Ricerca avanzata</a>
+					<a class="btn btn-light text-decoration-none text-dark" th:href="@{/ricerca-avanzata}" data-bs-toggle="tooltip" data-bs-placement="left"
+                        title="Ricerca avanzata"><i class="fas fa-filter"></i></a>
 				</div>
+				
 				</form>
 			</div>
 		</div>
