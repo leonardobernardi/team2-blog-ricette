@@ -32,33 +32,20 @@ function addImg(i){
 
 
 
-  // COSTANTI
-const url = 'http://localhost:8080/api/todo';
-const miPiace = document.getElementById('likeBtn');
 
 
-axios
-.get(url)
-.then((response) => {
-  console.log(response);
-  createList(response.data);
-})
-.catch((error) => {
-  console.log(error);
-});
-function postIncreaseLike() {
-    let value = increaseLike.value;
-    console.log(value);
-}
-
-function increaseLike(){
-	var clicks;
-    clicks += 1;
-    document.getElementById("clicks").innerHTML = clicks;
-}
-
-miPiace.addEventListener('click', increaseLike);
-
-
-
-
+  function increaseLike(url){
+    axios
+    .get(url)
+    .then((response) =>{
+      document.getElementById('clicks').innerHTML = response.data;
+    })
+    .catch((error)=>{
+      console.log(error);
+    })
+  }
+ 
+  
+  
+ 
+  

@@ -22,28 +22,32 @@ public class CommentoController {
 	@Autowired
 	private EmailService emailService;
 	
-	  @Autowired
-	  private RicettaService ricettaService;
+	@Autowired
+	private RicettaService ricettaService;
 
-	  @Autowired 
-	  private CategoriaService catService;
+	@Autowired 
+	private CategoriaService catService;
 	
 	@GetMapping
 	public String gestioneCommenti(Model model){
+		model.addAttribute("admin", true);
 		model.addAttribute("lista", ricettaService.findAllSortedByRecent());
-		model.addAttribute("categorie", catService.findAll());
+//		model.addAttribute("categorie", catService.findAll());
 		return "/admin/lista-commenti";
 	}
 	
 	@GetMapping("/elimina/{id}")
-	public String deleteCommentoById(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
-		redirectAttributes.addAttribute("categorie", catService.findAll());
+	public String deleteCommentoById(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes, Model model) {
+		model.addAttribute("admin", true);
+//		redirectAttributes.addAttribute("categorie", catService.findAll());
 		service.deleteCommentoById(id);
 	return "redirect:/admin/commenti";
 	}
 	
 	@GetMapping("email")
 	public String editEmail(Model model) {
+//		model.addAttribute("categorie", catService.findAll());
+		model.addAttribute("admin", true);
 		model.addAttribute("lista", emailService.findIsBan());
 		return "/admin/mail-ban";
 	}
@@ -52,7 +56,8 @@ public class CommentoController {
 
 	public String revertBan(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes){
 		model.addAttribute("admin", true);
-		redirectAttributes.addAttribute("categorie", catService.findAll());
+//		redirectAttributes.addAttribute("categorie", catService.findAll());
+		emailService.revertBan(id);
 		return "redirect:/admin/commenti";
 				}
 }

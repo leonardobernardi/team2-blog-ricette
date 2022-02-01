@@ -1,6 +1,6 @@
 package org.generation.italy.controller;
 
-import java.util.List;
+ import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.generation.italy.model.Ricetta;
@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -41,18 +40,20 @@ public class RicettaRestController {
 	}
 	
 	
-	@PutMapping("/{id}")
+	@GetMapping("/mipiace/{id}")
 	public ResponseEntity<Integer> update(@PathVariable Integer id){
+		Ricetta ricetta = service.getById(id);
 		try {
-			service.miPiace(service.getById(id));
-			return new ResponseEntity<Integer>(service.getById(id).getMiPiace(), HttpStatus.OK);
+			service.miPiace(ricetta);
+			return new ResponseEntity<Integer>(ricetta.getMiPiace(), HttpStatus.OK);
 		} catch (NoSuchElementException e) {
 			// TODO: handle exception
-			return new ResponseEntity<Integer>(service.getById(id).getMiPiace(), HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Integer>(ricetta.getMiPiace(), HttpStatus.NOT_FOUND);
 		}catch (Exception e) {
 			// TODO: handle exception
-			return new ResponseEntity<Integer>(service.getById(id).getMiPiace(), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<Integer>(ricetta.getMiPiace(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
 
 }

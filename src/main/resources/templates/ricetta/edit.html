@@ -6,14 +6,17 @@
 </head>
 <body class="bg-light">
     <nav th:replace="fragments/navbar :: navbar"></nav>
+    <div class="container mt-3">
     <h1 class="text-center">Crea nuova ricetta</h1>
     <hr>
     <form id="ricetta-form" th:object="${ricetta}"
-        th:action="${edit} ? @{/admin/ricetta/modifica/{id}(id=${ricetta.id})} : @{/admin/ricetta/crea}" method="post" enctype="multipart/form-data">
+        th:action="${edit} ? @{/admin/ricetta/modifica/{id}(id=${ricetta.id})} : @{/admin/ricetta/crea}" 
+        method="post" 
+        enctype="multipart/form-data">
         <ul>
             <li th:each="err : ${#fields.allErrors()}" th:text="${err}" class="text-danger"></li>
         </ul>
-        <div class="container mt-3">
+        
             <div class="row">
                 <!--Ricetta-->
                 <div class="col-6">
@@ -142,7 +145,7 @@
                         <!--Submit-->
                         <div class="col-12">
                             <button class="btn btn-success" type="submit"><i class="fas fa-check"></i> Salva</button>
-                            <a class="btn btn-success" th:href="@{/home/index}"><i class="fas fa-times"></i>
+                            <a class="btn btn-success" th:href="@{/admin/modifica}"><i class="fas fa-times"></i>
                                 Indietro</a>
                         </div>
 
