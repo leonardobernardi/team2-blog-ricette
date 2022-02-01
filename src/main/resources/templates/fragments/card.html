@@ -7,14 +7,14 @@
             <th:block th:switch="${ricetta.livelloDiDifficolta}">
                 <span class="text-center bg-info text-light rounded p-1" th:case="'1'">
                     <i class="fas fa-utensil-spoon"></i> facile</span>
-                <span class="text-center bg-info text-light rounded p-1" th:case="'2'">
+                <span class="text-center bg-warning text-light rounded p-1" th:case="'2'">
                     <i class="fas fa-utensil-spoon"></i> medio</span>
-                <span class="text-center bg-info text-light rounded p-1" th:case="'3'">
+                <span class="text-center bg-danger text-light rounded p-1" th:case="'3'">
                     <i class="fas fa-utensil-spoon"></i> difficile</span>
             </th:block>
         </div>
         <div class="position-relative">
-            <img th:src="@{|/${ricetta.id}/img|}" class="img-fluid" alt="img">
+            <img th:src="@{|/${ricetta.id}/img|}" class="img-fluid" alt="img" th:if="${ricetta.immagini.size > 0}">
             <div class="text-center bg-success text-light px-1 position-bottom-left" th:if="${ricetta.isVegan == true}">
                 <span><i class="fas fa-seedling"></i> vegano</span>
             </div>
