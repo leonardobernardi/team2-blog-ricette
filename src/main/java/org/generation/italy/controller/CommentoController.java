@@ -1,8 +1,5 @@
 package org.generation.italy.controller;
 
-import java.util.List;
-
-import org.generation.italy.model.Email;
 import org.generation.italy.service.CategoriaService;
 import org.generation.italy.service.CommentoService;
 import org.generation.italy.service.EmailService;
@@ -33,31 +30,30 @@ public class CommentoController {
 	
 	@GetMapping
 	public String gestioneCommenti(Model model){
-		model.addAttribute("admin", true);
 		model.addAttribute("lista", ricettaService.findAllSortedByRecent());
 		model.addAttribute("categorie", catService.findAll());
 		return "/admin/lista-commenti";
 	}
 	
 	@GetMapping("/elimina/{id}")
-	public String deleteCommentoById(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes, Model model) {
-		model.addAttribute("admin", true);
+	public String deleteCommentoById(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
 		redirectAttributes.addAttribute("categorie", catService.findAll());
 		service.deleteCommentoById(id);
-		return "redirect:/admin/commenti";
+	return "redirect:/admin/commenti";
 	}
 	
-	@GetMapping("/email")
+	@GetMapping("email")
 	public String editEmail(Model model) {
-		model.addAttribute("admin", true);
 		model.addAttribute("lista", emailService.findIsBan());
 		return "/admin/mail-ban";
 	}
 	
-	@GetMapping("ban/{id}")
-	public String revertBan(@PathVariable("id") Integer id, Model model){
-		model.addAttribute("admin", true);
+	@GetMapping("email/{id}")
+	public String revertBan(@PathVariable("id") Integer id)
+	{
 		emailService.revertBan(id);
-		return "redirect:/admin/commenti";
+		return "redirect:/admin/commenti/email";
 	}
+	
+	
 }
