@@ -37,12 +37,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/")
 public class RicettaController {
-
-	@Autowired
-	private EmailRepository emailRepo;
 	
 	@Autowired
 	private RicettaService service;
+	
+	@Autowired
+	private EmailRepository emailRepo;
 	
 	@Autowired
 	private CommentoService commentoService;
@@ -50,7 +50,8 @@ public class RicettaController {
 	@Autowired
 	private ImmagineService imgService;
 	
-	@Autowired CategoriaService catService;
+	@Autowired 
+	private CategoriaService catService;
 	
 	//Homepage
 	@GetMapping
@@ -231,7 +232,6 @@ public class RicettaController {
 		public String edit(Model model) {
 			model.addAttribute("categorie", catService.findAll());
 			model.addAttribute("lista", service.findAllSortedByRecent());
-
 			model.addAttribute("admin", true);
 			return "/admin/lista-ricette";
 		}

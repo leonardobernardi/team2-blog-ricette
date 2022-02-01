@@ -8,9 +8,9 @@
 
 <body class="bg-light">
     <nav th:replace="fragments/navbar :: navbar"></nav>
+    <div class="container mt-3">
     <h1 class="text-center">Gestione commenti</h1>
     <hr>
-    <div class="container">
         <div th:if="${lista.size() > 0}" class="row mt-5">
         	<span class="text-center"><a th:href="@{/admin/commenti/email}" class="btn btn-success mb-4">Elenco email bannate</a></span>
         	
@@ -22,10 +22,14 @@
                                 <li th:classAppend="${commento.email.isBanned} ? text-danger">
                                     <span th:text="${commento.email.email}"></span> 
                                     
-                  			    	<a class="text-decoration-none text-success m-1"
+                  			    	<a th:if="${commento.email.isBanned == false}" class="text-decoration-none text-success m-1"
 	                                	th:href="@{|/admin/commenti/ban/${commento.email.id}|}"
 	                                	onclick="return confirm('Sei sicuro?')" data-bs-toggle="tooltip" data-bs-placement="top"
 	                                	title="Ban"><i class="fas fa-ban"></i></a>
+	                                <a th:if="${commento.email.isBanned == true}" class="text-decoration-none text-success m-1"
+	                                	th:href="@{|/admin/commenti/ban/${commento.email.id}|}"
+	                                	onclick="return confirm('Sei sicuro?')" data-bs-toggle="tooltip" data-bs-placement="top"
+	                                	title="Rimuovi ban"><i class="fas fa-user"></i></a>	
 	                                	
                                     <div th:text="|Nome: ${commento.nome}|"></div>
                                     <p th:text="|Testo: ${commento.testo}|"></p>

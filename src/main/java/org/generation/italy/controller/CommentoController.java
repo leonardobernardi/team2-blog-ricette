@@ -30,31 +30,29 @@ public class CommentoController {
 	
 	@GetMapping
 	public String gestioneCommenti(Model model){
-		model.addAttribute("admin", true);
 		model.addAttribute("lista", ricettaService.findAllSortedByRecent());
 		model.addAttribute("categorie", catService.findAll());
 		return "/admin/lista-commenti";
 	}
 	
 	@GetMapping("/elimina/{id}")
-	public String deleteCommentoById(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes, Model model) {
-		model.addAttribute("admin", true);
+	public String deleteCommentoById(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
 		redirectAttributes.addAttribute("categorie", catService.findAll());
 		service.deleteCommentoById(id);
-		return "redirect:/admin/commenti";
+	return "redirect:/admin/commenti";
 	}
 	
-	@GetMapping("/email")
+	@GetMapping("email")
 	public String editEmail(Model model) {
-		model.addAttribute("admin", true);
 		model.addAttribute("lista", emailService.findIsBan());
 		return "/admin/mail-ban";
 	}
 	
-	@GetMapping("ban/{id}")
-	public String revertBan(@PathVariable("id") Integer id, Model model){
+	
+
+	public String revertBan(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes){
 		model.addAttribute("admin", true);
-		emailService.revertBan(id);
+		redirectAttributes.addAttribute("categorie", catService.findAll());
 		return "redirect:/admin/commenti";
-	}
+				}
 }

@@ -9,9 +9,9 @@
 
 <body class="bg-light justify-content-center">
     <div th:replace="fragments/navbar :: navbar"></div>    
-    <div class="container">
-        <div id="getId" th:attr="data-el_id=${ricetta.id}"
-        style="display: none;"></div>
+
+
+    <div class="container mt-3">
 
         <div class="flex-row justify-content-center">
             <h1 th:text="${ricetta.titolo}" class="text-center"></h1>
