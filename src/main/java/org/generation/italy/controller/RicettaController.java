@@ -53,8 +53,6 @@ public class RicettaController {
 	@Autowired 
 	private CategoriaService catService;
 	
-	@Autowired
-	private EmailRepository emailRepo;
 	
 	//Homepage
 	@GetMapping
@@ -104,6 +102,7 @@ public class RicettaController {
 				@ModelAttribute ("immaginiForm") ImmagineList immagineList,
 				Model model, RedirectAttributes redirectAttributes) {
 			redirectAttributes.addAttribute("categorie", catService.findAll());
+			model.addAttribute("admin", true);
 			if(bindingResult.hasErrors()) {
 				model.addAttribute("edit", false);
 				model.addAttribute("admin", true);
@@ -252,6 +251,7 @@ public class RicettaController {
 		
 		@GetMapping("/admin/ricetta/modifica/{id}/immagini")
 		public String editImg(@PathVariable("id") Integer id, Model model) {
+			model.addAttribute("admin", true);
 			model.addAttribute("categorie", catService.findAll());
 			List<ImmagineForm> immaginiList = new ArrayList<ImmagineForm>();
 			ImmagineList immaginiForm = new ImmagineList(immaginiList);
@@ -267,6 +267,7 @@ public class RicettaController {
 		public String doEditImg(@ModelAttribute ("immaginiForm") ImmagineList immagineList,
 				@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
 			redirectAttributes.addAttribute("categorie", catService.findAll());
+			redirectAttributes.addAttribute("admin", true);
 			try {
 				service.updateImmagini(id, immagineList);
 			} catch (IOException e) {				
@@ -327,6 +328,7 @@ public class RicettaController {
 		public String editRicetta (@PathVariable("id") Integer id, Model model) {
 			model.addAttribute("categorie", catService.findAll());
 			model.addAttribute("ricettaDaModificare", service.getById(id));
+			model.addAttribute("admin", true);
 			return "/admin/edit-ricetta";
 		}
 		
@@ -334,6 +336,7 @@ public class RicettaController {
 		public String doEditRicetta (@Valid @ModelAttribute("ricettaDaModificare") 
 		Ricetta formRicetta, @PathVariable("id") Integer id, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
 			redirectAttributes.addAttribute("categorie", catService.findAll());
+			redirectAttributes.addAttribute("admin", true);
 			if (bindingResult.hasErrors()) {
 				return "/admin/edit-ricetta";
 			}
@@ -346,6 +349,7 @@ public class RicettaController {
 		@GetMapping("/admin/modifica/cancella/{id}")
 		public String delete(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
 			redirectAttributes.addAttribute("categorie", catService.findAll());
+			redirectAttributes.addAttribute("admin", true);
 			if(service.getById(id) == null) {
 				//messaggio d'errore
 			}
