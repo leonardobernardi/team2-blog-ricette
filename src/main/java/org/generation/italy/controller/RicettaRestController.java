@@ -42,17 +42,16 @@ public class RicettaRestController {
 	
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Ricetta> update(@PathVariable Integer id){
-		Ricetta ricetta = service.getById(id);
+	public ResponseEntity<Integer> update(@PathVariable Integer id){
 		try {
-			service.miPiace(ricetta);
-			return new ResponseEntity<Ricetta>(ricetta, HttpStatus.OK);
+			service.miPiace(service.getById(id));
+			return new ResponseEntity<Integer>(service.getById(id).getMiPiace(), HttpStatus.OK);
 		} catch (NoSuchElementException e) {
 			// TODO: handle exception
-			return new ResponseEntity<Ricetta>(ricetta, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Integer>(service.getById(id).getMiPiace(), HttpStatus.NOT_FOUND);
 		}catch (Exception e) {
 			// TODO: handle exception
-			return new ResponseEntity<Ricetta>(ricetta, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<Integer>(service.getById(id).getMiPiace(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
