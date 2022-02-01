@@ -48,11 +48,11 @@ public class CommentoController {
 		return "/admin/mail-ban";
 	}
 	
-	@GetMapping("email/{id}")
-	public String revertBan(@PathVariable("id") Integer id)
-	{
+	
 
 	public String revertBan(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes){
 		model.addAttribute("admin", true);
 		redirectAttributes.addAttribute("categorie", catService.findAll());
+		return "redirect:/admin/commenti";
+				}
 }
