@@ -2,9 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    
     <div th:replace="fragments/resources :: headTags"></div>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title th:text="${ricetta.titolo}"></title>
 </head>
 
@@ -102,7 +100,7 @@
 
         </form>
         
-
+        <div class="col">            
             <div th:if="${list.size() > 0}" class="row mt-5">
                 <h5>Commenti di altri utenti</h5>
                 <div th:each="item : ${list}" class="border rounded-2 p-3 m-2" th:if="${item.email.isBanned == false}">
@@ -113,7 +111,6 @@
             <hr>
 	</div>
 	</div>
-    <script type="text/javascript" th:src="@{/js/mainEdit.js}"></script>
 	<div th:replace="fragments/resources :: scripts"></div>
 	</body>   
 
