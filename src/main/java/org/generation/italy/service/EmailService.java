@@ -18,19 +18,6 @@ public class EmailService {
 		return lista;
 	}
 
-	public Email unBan(Integer id) {
-		Email newEmail;
-		newEmail = repo.findAllById(id);
-		newEmail.setIsBanned(false);
-		return repo.save(newEmail);
-	}
-
-	public Email ban(Integer id) {
-		Email newEmail;
-		newEmail = repo.findAllById(id);
-		newEmail.setIsBanned(true);
-		return repo.save(newEmail);
-	}
 
 	public Email revertBan(Integer id) {
 		Email email;

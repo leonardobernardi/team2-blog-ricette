@@ -215,6 +215,7 @@ public class RicettaService {
 		ricetta.setVisualizzazioni(visualizzazioni);
 		ricetta.setIsVegan(isVegan(ricetta));
 		ricetta.setIsVegetarian(isVegetarian(ricetta));
+		
 		ricetta.setMiPiace(repo.getById(ricetta.getId()).getMiPiace());
 		return repo.save(ricetta);
 	}
@@ -289,6 +290,7 @@ public class RicettaService {
 	public Ricetta updateRicetta(Ricetta ricetta, Integer id) {
 		Ricetta ricettaDaModificare = repo.getById(id);
 		ricettaDaModificare.setTitolo(ricetta.getTitolo());
+		ricettaDaModificare.setCategoria(ricetta.getCategoria());
 		ricettaDaModificare.setTempoDiPreparazione(ricetta.getTempoDiPreparazione());
 		ricettaDaModificare.setLivelloDiDifficolta(ricetta.getLivelloDiDifficolta());
 		ricettaDaModificare.setDescrizione(ricetta.getDescrizione());

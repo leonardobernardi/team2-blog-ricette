@@ -37,12 +37,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/")
 public class RicettaController {
-
-	@Autowired
-	private EmailRepository emailRepo;
 	
 	@Autowired
 	private RicettaService service;
+	
+	@Autowired
+	private EmailRepository emailRepo;
 	
 	@Autowired
 	private CommentoService commentoService;
@@ -52,9 +52,6 @@ public class RicettaController {
 	
 	@Autowired 
 	private CategoriaService catService;
-	
-	@Autowired
-	private EmailRepository emailRepo;
 	
 	//Homepage
 	@GetMapping
