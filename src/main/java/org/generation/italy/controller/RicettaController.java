@@ -18,6 +18,7 @@ import org.generation.italy.repository.EmailRepository;
 import org.generation.italy.service.CategoriaService;
 import org.generation.italy.service.CommentoService;
 import org.generation.italy.service.ImmagineService;
+import org.generation.italy.service.IngredienteService;
 import org.generation.italy.service.RicettaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -54,6 +55,9 @@ public class RicettaController {
 	
 	@Autowired 
 	private CategoriaService catService;
+	
+	@Autowired
+	private IngredienteService ingService;
 	
 	//Homepage
 	@GetMapping
@@ -298,7 +302,7 @@ public class RicettaController {
 		IngredienteList ingredientiList, @PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
 			redirectAttributes.addAttribute("categorie", catService.findAll());
 			service.updateIngredienti(id, ingredientiList);
-			return "redirect:/ricetta/" + id;
+			 return "redirect:/admin/ricetta/modifica/" + id + "/ingredienti";
 			
 		}
 
@@ -352,5 +356,13 @@ public class RicettaController {
 			}
 			service.deleteById(id);
 			return "redirect:/admin/modifica";
+		}
+		
+		@GetMapping("/admin/ricetta/modifica/ingrediente/cancella/{id}")
+		public String deleteIng(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
+			redirectAttributes.addAttribute("categorie", catService.findAll());		
+			Integer rId = ingService.getById(id).getRicetta().getId();
+			ingService.deleteById(id);
+			return "redirect:/admin/ricetta/modifica/" + rId + "/ingredienti";
 		}
 }

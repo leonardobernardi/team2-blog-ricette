@@ -261,8 +261,8 @@ public class RicettaService {
 	
 	public Ricetta updateIngredienti(Integer id, IngredienteList ingredienteList) {
 		Ricetta ricetta = repo.getById(id);
-		svuotaIngredienti(ricetta);
-		List<Ingrediente> ingList = new ArrayList<Ingrediente>();
+		List<Ingrediente> ingList = ricetta.getIngrediente();
+		
 		for (Ingrediente ing: ingredienteList.getIngredienti()) {
 			if (ing != null) {
 				if (ing.getNome() != null && !ing.getNome().isEmpty()) {
@@ -283,6 +283,8 @@ public class RicettaService {
 				}
 			}
 		}
+		
+		
 		ricetta.setIngrediente(ingList);
 		ricetta.setIsVegan(isVegan(ricetta));
 		ricetta.setIsVegetarian(isVegetarian(ricetta));
