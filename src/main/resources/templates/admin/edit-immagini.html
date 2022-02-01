@@ -10,8 +10,22 @@
 
     <hr/>
     <div class="container mt-3">
-      <h2>Carica le nuove immagini</h2>
-      <form
+      <h2 class="text-center">Carica le nuove immagini</h2>
+      <div class="row">
+        <div class="col-6">
+          <div th:each=" img: ${ricetta.immagini}">
+            <div class="row">
+              <div class="col-10">
+                <img style="width: 100%; height: 100%;" th:src="@{|/detail/${img.id}/img|}" alt="img2">
+              </div>
+              <div class="col-12">
+                <a class="text-decoration-none text-success m-1" th:href="@{|/admin/ricetta/modifica/immagine/cancella/${img.id}|}" onclick="return confirm('Sei sicuro?')" data-bs-toggle="tooltip" data-bs-placement="top" title="Elimina immagine"><i class="fas fa-trash-alt"></i></a> 
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <form
         id="img-form"
         th:object="${immaginiForm}"
         th:action="@{/admin/ricetta/modifica/{id}/immagini(id=${ricetta.id})}"
@@ -137,6 +151,9 @@
           </div>
         </div>
       </form>
+        </div>
+      </div>
+      
     </div>
     <script type="text/javascript" th:src="@{/js/mainEdit.js}"></script>
     <div th:replace="fragments/resources :: scripts"></div>

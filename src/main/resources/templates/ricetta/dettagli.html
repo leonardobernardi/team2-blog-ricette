@@ -3,6 +3,7 @@
 
 <head>
     <div th:replace="fragments/resources :: headTags"></div>
+     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title th:text="${ricetta.titolo}"></title>
 </head>
 
@@ -55,6 +56,10 @@
             <div class="col-6 p-2 border border-2">
                 <p> <span><i class="far fa-eye"></i></span>
                     <span th:text="${ricetta.visualizzazioni}"></span>
+                </p>
+                <p>
+                	<span th:if="${ricetta.isVegan == true}">Ricetta vegana</span>
+                	<span th:if="${ricetta.isVegan == false and ricetta.isVegetarian == true}">Ricetta vegetariana</span>
                 </p>
                 <p>
                     <span>Tempo di Preparazione: </span>
@@ -133,17 +138,18 @@
 
         <div class="col">
             <div th:if="${list.size() > 0}" class="row mt-5">
-                <h5>Commenti di altri utenti</h5>
+                <div class="h5">Commenti</div>
                 <div th:each="item : ${list}" class="border rounded-2 p-3 m-2" th:if="${item.email.isBanned == false}">
                     <span th:text="${item.nome}" class="text-success"></span>
                     <p th:text="${item.testo}" class="border border-2 p-2 rounded-2"></p>
                 </div>
             </div>
             <hr>
-        </div>
-    </div>
-    <div th:replace="fragments/resources :: scripts"></div>
-</body>
+		</div>
+	</div>
+	<div th:replace="fragments/resources :: scripts"></div>
+    <script type="text/javascript" th:src="@{/js/mainEdit.js}"></script>
+	</body>   
 
 </html>
 

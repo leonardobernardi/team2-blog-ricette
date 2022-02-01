@@ -29,3 +29,23 @@ function addImg(i){
 		document.getElementById('imgAlert').className = 'alert alert-warning w-auto m-2';
 	}
 }
+
+
+
+
+
+  function increaseLike(url){
+    axios
+    .get(url)
+    .then((response) =>{
+      document.getElementById('clicks').innerHTML = response.data;
+    })
+    .catch((error)=>{
+      console.log(error);
+    })
+  }
+ 
+  
+  
+ 
+  

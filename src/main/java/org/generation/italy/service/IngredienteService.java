@@ -2,6 +2,7 @@ package org.generation.italy.service;
 
 import java.util.List;
 import org.generation.italy.model.Ingrediente;
+import org.generation.italy.model.Ricetta;
 import org.generation.italy.repository.IngredienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -13,8 +14,6 @@ public class IngredienteService {
 	
 	@Autowired
 	private IngredienteRepository repository;
-	
-	
 	
 	//create
 	public Ingrediente create(Ingrediente ingrediente) {
@@ -42,7 +41,14 @@ public class IngredienteService {
 	
 	//delete
 	public void deleteById(Integer id) {
-		repository.deleteById(id);
+		Ingrediente ing = repository.getById(id);
+		Ricetta r = ing.getRicetta();
+		List<Ingrediente> list = r.getIngrediente();
+		ing.setRicetta(null);
+		list.remove(ing);
+		r.setIngrediente(list);
+		repository.delete(ing);
+		
 	}
 
 }
