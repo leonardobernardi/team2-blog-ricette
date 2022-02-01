@@ -237,9 +237,8 @@ public class RicettaService {
 	
 	public Ricetta updateImmagini(Integer id, ImmagineList immagineList ) throws IOException {
 		Ricetta ricetta = repo.getById(id);
-		svuotaImmagini(ricetta);
 		List<ImmagineForm> imgFormList = new ArrayList<ImmagineForm>();		
-		List<Immagine> ricettaImmagine = new ArrayList<Immagine>();
+		List<Immagine> ricettaImmagine = ricetta.getImmagini();
 		for(ImmagineForm img : immagineList.getListaImmaginiForm()) {
 			if(img.getContent()!=null & img.getContent().getSize()!=0) {
 				imgFormList.add(img);				

@@ -220,10 +220,10 @@ public class RicettaController {
 		}
 		
 	
-		@RequestMapping(value = "detail/{id}/{imgId}/img", produces = org.springframework.http.MediaType.IMAGE_JPEG_VALUE )
-		public ResponseEntity<byte[]> getImgContentList(@PathVariable Integer id, @PathVariable Integer imgId){
+		@RequestMapping(value = "detail/{imgId}/img", produces = org.springframework.http.MediaType.IMAGE_JPEG_VALUE )
+		public ResponseEntity<byte[]> getImgContentList(@PathVariable Integer imgId){
 		
-			Immagine imgOfId = imgService.getById(id, imgId);
+			Immagine imgOfId = imgService.getById(imgId);
 			byte[] imgContent = imgOfId.getContent();
 			
 			HttpHeaders headers = new HttpHeaders();
@@ -278,7 +278,7 @@ public class RicettaController {
 				e.printStackTrace();
 			}
 			
-			return "redirect:/ricetta/" + id;
+			return "redirect:/admin/ricetta/modifica/" + id + "/immagini";
 		}
 
 
@@ -364,5 +364,13 @@ public class RicettaController {
 			Integer rId = ingService.getById(id).getRicetta().getId();
 			ingService.deleteById(id);
 			return "redirect:/admin/ricetta/modifica/" + rId + "/ingredienti";
+		}
+		
+		@GetMapping("/admin/ricetta/modifica/immagine/cancella/{id}")
+		public String deleteImg(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
+			redirectAttributes.addAttribute("categorie", catService.findAll());		
+			Integer rId = imgService.getById(id).getRicetta().getId();
+			imgService.repo.deleteById(id);
+			return "redirect:/admin/ricetta/modifica/" + rId + "/immagini";
 		}
 }
