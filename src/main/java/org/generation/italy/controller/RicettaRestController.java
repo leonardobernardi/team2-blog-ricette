@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -41,19 +40,20 @@ public class RicettaRestController {
 	}
 	
 	
-	@PutMapping("/{id}")
-	public ResponseEntity<Ricetta> update(@PathVariable Integer id){
+	@GetMapping("/mipiace/{id}")
+	public ResponseEntity<Integer> update(@PathVariable Integer id){
 		Ricetta ricetta = service.getById(id);
 		try {
 			service.miPiace(ricetta);
-			return new ResponseEntity<Ricetta>(ricetta, HttpStatus.OK);
+			return new ResponseEntity<Integer>(ricetta.getMiPiace(), HttpStatus.OK);
 		} catch (NoSuchElementException e) {
 			// TODO: handle exception
-			return new ResponseEntity<Ricetta>(ricetta, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Integer>(ricetta.getMiPiace(), HttpStatus.NOT_FOUND);
 		}catch (Exception e) {
 			// TODO: handle exception
-			return new ResponseEntity<Ricetta>(ricetta, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<Integer>(ricetta.getMiPiace(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
 
 }

@@ -41,10 +41,10 @@ public class CommentoController {
 		model.addAttribute("admin", true);
 //		redirectAttributes.addAttribute("categorie", catService.findAll());
 		service.deleteCommentoById(id);
-		return "redirect:/admin/commenti";
+	return "redirect:/admin/commenti";
 	}
 	
-	@GetMapping("/email")
+	@GetMapping("email")
 	public String editEmail(Model model) {
 //		model.addAttribute("categorie", catService.findAll());
 		model.addAttribute("admin", true);
@@ -52,11 +52,12 @@ public class CommentoController {
 		return "/admin/mail-ban";
 	}
 	
-	@GetMapping("ban/{id}")
+	
+
 	public String revertBan(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes){
 		model.addAttribute("admin", true);
 //		redirectAttributes.addAttribute("categorie", catService.findAll());
 		emailService.revertBan(id);
 		return "redirect:/admin/commenti";
-	}
+				}
 }
