@@ -25,11 +25,11 @@ public class Ricetta {
 	private Integer id;
 	
 	@NotNull
-	@NotEmpty
+	@NotEmpty(message="È necessario inserire un titolo")
 	private String titolo;
 	
 	@NotNull
-	@NotEmpty
+	@NotEmpty(message="È necessario inserire il tempo di preparazione")
 	private String tempoDiPreparazione;
 	
 	@NotNull
@@ -38,12 +38,12 @@ public class Ricetta {
 	private Integer livelloDiDifficolta;
 
 	@NotNull
-	@NotEmpty
+	@NotEmpty(message="È necessario inserire una descrizione")
 	@Column(length=250)
 	private String descrizione;
 	
 	@NotNull
-	@NotEmpty
+	@NotEmpty(message="È necessario inserire il testo della ricetta")
 	@Lob
 	private String testoDellaRicetta;
 	

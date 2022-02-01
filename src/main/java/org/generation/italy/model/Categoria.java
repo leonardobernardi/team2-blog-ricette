@@ -17,7 +17,7 @@ public class Categoria {
 	private Integer id;
 	
 	@NotNull
-	@NotEmpty
+	@NotEmpty(message="È necessario inserire una categoria")
 	private String nome;
 	
 	@OneToMany(mappedBy= "categoria")
