@@ -14,6 +14,7 @@
             </th:block>
         </div>
         <div class="position-relative">
+        	<img class="img-fluid" th:if="${ricetta.immagini.size == 0}" src="https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png?w=640"></img>
             <img th:src="@{|/${ricetta.id}/img|}" class="img-fluid" alt="img" th:if="${ricetta.immagini.size > 0}">
             <div class="text-center bg-success text-light px-1 position-bottom-left" th:if="${ricetta.isVegan == true}">
                 <span><i class="fas fa-seedling"></i> vegano</span>

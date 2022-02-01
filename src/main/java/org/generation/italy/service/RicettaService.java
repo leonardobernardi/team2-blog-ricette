@@ -3,6 +3,7 @@ package org.generation.italy.service;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -155,7 +156,9 @@ public class RicettaService {
 	}
 
 	public List<Ricetta> findLastSevenDays() {
-		return repo.findLastSevenDays();
+		List<Ricetta> list = repo.findLastSevenDays();
+		Collections.reverse(list);
+		return list;
 	}
 	
 	public List<Ricetta> findMostViewed(){
@@ -182,12 +185,13 @@ public class RicettaService {
 		List<Ricetta> list = repo.findAll();
 		List<Ricetta> piuCommentate = new ArrayList<Ricetta>();
 		list.sort(compareByComments);
-		int i = 0;
-		while (i < 6 && i < list.size()) {
-			piuCommentate.add(list.get(i));
+		int i = 1;
+		while (i < 7 && i < list.size()) {
+			piuCommentate.add(list.get(list.size()-i));
 			i++;
 		}
-		piuCommentate.sort(compareByComments);
+
+		
 		return piuCommentate;
 	}
 
