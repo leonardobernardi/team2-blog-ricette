@@ -7,21 +7,52 @@
 </head>
 
 <body class="bg-light justify-content-center">
-    <div th:replace="fragments/navbar :: navbar"></div>    
+    <div th:replace="fragments/navbar :: navbar"></div>
     <div class="container mt-3">
-        
+
         <div class="flex-row justify-content-center">
             <h1 th:text="${ricetta.titolo}" class="text-center"></h1>
         </div>
         <div class="alert alert-danger" role="alert" th:if="${banned}">
             Il tuo account &egrave; bannato, non puoi pubblicare commenti
         </div>
-       
+
         <div class="row">
-            <div class="col p-0 ">
-                <img style="width: 100%; height: 100%;" th:src="|/${ricetta.id}/img|" alt="img2">
+            <div class="col-6 p-0 ">
+
+
+                <div id="immaginiList" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#immaginiList" data-bs-slide-to="1"
+                            class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#immaginiList" data-bs-slide-to="2"
+                            aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#immaginiList" data-bs-slide-to="3"
+                            aria-label="Slide 3"></button>
+                    </div>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img style="width: 100%; height: 100%;" th:src="|/${ricetta.id}/img|">
+                        </div>
+                        <div th:each="item : ${ricetta.immagini}">
+                            <div class="carousel-item">
+                                <img style="width: 100%; height: 100%;" th:src="|/${ricetta.id}/img|">
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#immaginiList"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#immaginiList"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
             </div>
-            <div class="col p-2 border border-2">
+            <div class="col-6 p-2 border border-2">
                 <p> <span><i class="far fa-eye"></i></span>
                     <span th:text="${ricetta.visualizzazioni}"></span>
                 </p>
@@ -67,7 +98,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="container" id="commento">
         <h5>Lascia un commento</h5>
 
@@ -99,8 +130,8 @@
             </div>
 
         </form>
-        
-        <div class="col">            
+
+        <div class="col">
             <div th:if="${list.size() > 0}" class="row mt-5">
                 <h5>Commenti di altri utenti</h5>
                 <div th:each="item : ${list}" class="border rounded-2 p-3 m-2" th:if="${item.email.isBanned == false}">
@@ -109,10 +140,10 @@
                 </div>
             </div>
             <hr>
-	</div>
-	</div>
-	<div th:replace="fragments/resources :: scripts"></div>
-	</body>   
+        </div>
+    </div>
+    <div th:replace="fragments/resources :: scripts"></div>
+</body>
 
 </html>
 
