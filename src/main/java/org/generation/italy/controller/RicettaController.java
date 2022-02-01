@@ -14,6 +14,7 @@ import org.generation.italy.model.ImmagineList;
 import org.generation.italy.model.Ingrediente;
 import org.generation.italy.model.IngredienteList;
 import org.generation.italy.model.Ricetta;
+import org.generation.italy.repository.EmailRepository;
 import org.generation.italy.service.CategoriaService;
 import org.generation.italy.service.CommentoService;
 import org.generation.italy.service.ImmagineService;
@@ -38,6 +39,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class RicettaController {
 
 	@Autowired
+	private EmailRepository emailRepo;
+	
+	@Autowired
 	private RicettaService service;
 	
 	@Autowired
@@ -46,7 +50,11 @@ public class RicettaController {
 	@Autowired
 	private ImmagineService imgService;
 	
-	@Autowired CategoriaService catService;
+	@Autowired 
+	private CategoriaService catService;
+	
+	@Autowired
+	private EmailRepository emailRepo;
 	
 	//Homepage
 	@GetMapping
@@ -113,6 +121,25 @@ public class RicettaController {
 		
 		//Read
 		
+		
+		@GetMapping("/ricerca-avanzata")
+		public String advancedSearchResults(@RequestParam(name="titolo", required=false) String titolo,
+				@RequestParam(name="categoriaId", required=false) String categoriaId,
+				@RequestParam(name="livelloDiDifficolta", required=false) String livelloDiDifficolta,
+				@RequestParam(name="isVegan", required=false) Boolean isVegan,
+				@RequestParam(name="isVegetarian", required=false) Boolean isVegetarian, Model model) {
+			if(titolo==null && categoriaId == null && livelloDiDifficolta == null && isVegan == null && isVegetarian == null) {
+				model.addAttribute("search", false);			
+			}else{
+				
+				model.addAttribute("search", true);
+				model.addAttribute("lista",
+						service.advancedSearch(titolo, categoriaId, livelloDiDifficolta, isVegan, isVegetarian));
+			}
+			model.addAttribute("categorie", catService.findAll());
+			return "advanced-search";
+		}
+		
 		@GetMapping("/admin")
 		public String admin(Model model) {
 			model.addAttribute("categorie", catService.findAll());
@@ -146,10 +173,17 @@ public class RicettaController {
 				Model model, RedirectAttributes redirectAttributes) {
 			redirectAttributes.addAttribute("categorie", catService.findAll());
 			
-			if(bindingResult.hasErrors()) {
-				model.addAttribute("edit", false);
-			} 
-			commentoService.create(formCommento, id);
+			if(formCommento.getEmail()!=null) {
+				if(emailRepo.findByEmailContaining(formCommento.getEmail().getEmail())!=null) {
+					if(emailRepo.findByEmailContaining(formCommento.getEmail().getEmail()).getIsBanned()==true){
+						redirectAttributes.addFlashAttribute("banned", true);
+					}else {
+						commentoService.create(formCommento, id);
+					}	
+				}else {
+					commentoService.create(formCommento, id);
+				}
+			} 			
 			redirectAttributes.addAttribute("commento", new Commento());
 			return "redirect:/ricetta/"+id;
 		}
@@ -201,7 +235,6 @@ public class RicettaController {
 		public String edit(Model model) {
 			model.addAttribute("categorie", catService.findAll());
 			model.addAttribute("lista", service.findAllSortedByRecent());
-
 			model.addAttribute("admin", true);
 			return "/admin/lista-ricette";
 		}

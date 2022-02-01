@@ -2,13 +2,12 @@ package org.generation.italy.service;
 
 import java.util.List;
 
-import javax.persistence.OrderBy;
+
 
 //import java.time.LocalDateTime;
 
 import org.generation.italy.model.Commento;
 import org.generation.italy.model.Email;
-import org.generation.italy.model.Immagine;
 import org.generation.italy.model.Ricetta;
 //import org.generation.italy.model.Ingrediente;
 //import org.generation.italy.model.Ricetta;
@@ -58,8 +57,10 @@ public class CommentoService {
 	}
 
 	
-
 	public void deleteCommentoById(Integer id) {
 		repo.deleteById(id);
 	}
+
+
+
 }

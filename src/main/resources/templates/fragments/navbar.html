@@ -25,7 +25,7 @@
 					<li><a class="dropdown-item" th:href="@{/admin/ricetta/crea}">Crea</a></li>
 					<li><a class="dropdown-item" th:href="@{/admin/modifica}">Gestione ricette</a></li>
 					<li><a class="dropdown-item" th:href="@{/admin}">Attivit&agrave;</a></li>
-					<li><a class="dropdown-item" href="#">Commenti</a></li>
+					<li><a class="dropdown-item" th:href="@{/admin/commenti}">Commenti</a></li>
 				  </ul>
 				</li>
 			  </ul>
@@ -33,7 +33,10 @@
 				<div class="input-group">
 					<input name="keyword" th:value="${keyword}" class="form-control" type="search" placeholder="Trova ricetta" aria-label="Search">
 					<button class="btn btn-light bg-white" type="submit"><i class="fas fa-search"></i></button>
+					<a class="btn btn-light text-decoration-none text-dark" th:href="@{/ricerca-avanzata}" data-bs-toggle="tooltip" data-bs-placement="left"
+                        title="Ricerca avanzata"><i class="fas fa-filter"></i></a>
 				</div>
+				
 				</form>
 			</div>
 		</div>

@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.generation.italy.model.Commento;
 import org.generation.italy.model.Immagine;
@@ -88,8 +89,21 @@ public class RicettaService {
 	}
 
 	// Read
+	
+	public List<Ricetta> advancedSearch(String titolo, String categoriaId, String livelloDiDifficolta, Boolean isVegan, Boolean isVegetarian){
+		List<Ricetta> list = repo.findByTitoloContainingIgnoreCaseOrderByDataDiCreazione(titolo);
+		List<Ricetta> filtrate = list.stream()
+			.filter(e -> e.getLivelloDiDifficolta() == Integer.parseInt(livelloDiDifficolta) || Integer.parseInt(livelloDiDifficolta) == 0)
+			.filter(e -> e.getCategoria().getId() == Integer.parseInt(categoriaId) || Integer.parseInt(categoriaId) == 0)
+			.filter(e -> e.getIsVegan() == isVegan || isVegan == null)
+			.filter(e -> e.getIsVegetarian() == isVegetarian || isVegetarian == null)
+			.collect(Collectors.toList());
+		return filtrate;
+			
+	}
+	
 	public List<Ricetta> findAllSortedByRecent() {
-		return repo.findAll(Sort.by("dataDiCreazione"));
+		return repo.findAll(Sort.by(Direction.DESC, "dataDiCreazione"));
 	}
 
 	public Ricetta getById(Integer id) {
