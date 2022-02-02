@@ -39,6 +39,15 @@
                 </a>
             </div>
         </div>
+        <hr>
+        <div class="row">
+            <div class="h3">Ricette pi&ugrave; popolari</div>
+            <div class="col-6 fs-4" th:each="ricetta : ${piuCommentate}">
+                <a target="_blank" th:text="|&#8226; ${ricetta.titolo} ${ricetta.commenti.size()}|" th:href="@{|/ricetta/${ricetta.id}|}"
+                        class="text-decoration-none text-dark">
+                </a>
+            </div>
+        </div>
     </div>
     <div th:replace="fragments/resources :: scripts"></div>
 </body>
