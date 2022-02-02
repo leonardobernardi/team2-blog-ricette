@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface RicettaRepository extends JpaRepository<Ricetta, Integer>{
 
-	@Query(value="select * from ricetta r WHERE data_di_creazione >= DATE(NOW()) - INTERVAL 7 DAY", nativeQuery = true)
+	@Query(value="select * from ricetta r WHERE data_di_creazione >= DATE(NOW()) - INTERVAL 7 DAY order by data_di_creazione", nativeQuery = true)
 	List<Ricetta> findLastSevenDays();
 	
 	List<Ricetta> findByTitoloContainingIgnoreCaseOrderByDataDiCreazione(String keyword);
