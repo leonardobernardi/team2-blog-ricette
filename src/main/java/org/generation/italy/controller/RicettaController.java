@@ -349,7 +349,7 @@ public class RicettaController {
 				return "/admin/edit-ricetta";
 			}
 			service.updateRicetta(formRicetta, id);
-			return "redirect:/ricetta/" + id;
+			return "redirect:/admin/modifica";
 		}
 
 		

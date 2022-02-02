@@ -15,7 +15,7 @@
         <div th:if="${lista.size() > 0}">
             <div th:each="email : ${lista}">
                     <span th:text="|&#8226; ${email.email}|"></span>
-                    <a class="text-decoration-none text-success m-1" th:href="@{|/admin/commenti/ban/${email.id}|}"
+                    <a class="text-decoration-none text-primary m-1" th:href="@{|/admin/commenti/ban/${email.id}|}"
                         onclick="return confirm('Sei sicuro?')" data-bs-toggle="tooltip" data-bs-placement="top"
                         title="Rimuovi ban"><i class="fas fa-user"></i></a>
             </div>  
