@@ -29,6 +29,9 @@
                     <span th:text="${ricetta.visualizzazioni}"></span>
                 </p>
                 <p>
+                	<span th:text="${ricetta.categoria.nome}"></span>
+                </p>
+                <p>
                 	<span th:if="${ricetta.isVegan == true}">Ricetta vegana</span>
                 	<span th:if="${ricetta.isVegan == false and ricetta.isVegetarian == true}">Ricetta vegetariana</span>
                 </p>

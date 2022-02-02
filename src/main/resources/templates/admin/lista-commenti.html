@@ -9,43 +9,47 @@
 <body class="bg-light">
     <nav th:replace="fragments/navbar :: navbar"></nav>
     <div class="container mt-3">
-    <h1 class="text-center">Gestione commenti</h1>
-    <hr>
-        <div th:if="${lista.size() > 0}" class="row mt-5">
-        	<span class="text-center"><a th:href="@{/admin/commenti/email}" class="btn btn-success mb-4">Elenco email bannate</a></span>
-        	
-            <div th:each="ricetta : ${lista}" th:if="${ricetta.commenti.size() > 0}">
-                <div class="row">
-                    <span class="h4" th:text="${ricetta.titolo}"></span>
-                       <div th:each="commento : ${ricetta.commenti}"> 
-                            <ul>
-                                <li th:classAppend="${commento.email.isBanned} ? text-danger">
-                                    <span th:text="${commento.email.email}"></span> 
-                                    
-                  			    	<a th:if="${commento.email.isBanned == false}" class="text-decoration-none text-success m-1"
-	                                	th:href="@{|/admin/commenti/ban/${commento.email.id}|}"
-	                                	onclick="return confirm('Sei sicuro?')" data-bs-toggle="tooltip" data-bs-placement="top"
-	                                	title="Ban"><i class="fas fa-ban"></i></a>
-	                                <a th:if="${commento.email.isBanned == true}" class="text-decoration-none text-success m-1"
-	                                	th:href="@{|/admin/commenti/ban/${commento.email.id}|}"
-	                                	onclick="return confirm('Sei sicuro?')" data-bs-toggle="tooltip" data-bs-placement="top"
-	                                	title="Rimuovi ban"><i class="fas fa-user"></i></a>	
-	                                	
-                                    <div th:text="|Nome: ${commento.nome}|"></div>
-                                    <p th:text="|Testo: ${commento.testo}|"></p>
-                                    <a class="text-decoration-none text-success m-1"
-		                                th:href="@{|/admin/commenti/elimina/${commento.id}|}"
-		                                onclick="return confirm('Sei sicuro?')" data-bs-toggle="tooltip" data-bs-placement="top"
-		                                title="Elimina"><i class="fas fa-trash-alt"></i></a>
-                                </li>
-                                <hr>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div> 
-        </div>
+        <h1 class="text-center">Gestione commenti</h1>
+        <hr>
+        <table class="table" th:each="ricetta : ${lista}" th:if="${ricetta.commenti.size() > 0}">
+            <thead>
+                <div class="h4" th:text="${ricetta.titolo}"></div>
+                <tr>
+                    <th>Email</th>
+                    <th></th>
+                    <th>Nome</th>
+                    <th>Commento</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="commento : ${ricetta.commenti}" th:classAppend="${commento.email.isBanned} ? table-danger">
+                    <td th:text="${commento.email.email}" class="col-3"></td>
+                    <td th:if="${commento.email.isBanned == false}" class="col-1"><a class="text-decoration-none text-dark m-1"
+	                    th:href="@{|/admin/commenti/ban/${commento.email.id}|}"
+	                    onclick="return confirm('Sei sicuro?')" data-bs-toggle="tooltip" data-bs-placement="top"
+	                    title="Ban"><i class="fas fa-ban"></i></a></td>
+                    <td th:if="${commento.email.isBanned == true}" class="col-1"><a class="text-decoration-none text-dark m-1"
+                        th:href="@{|/admin/commenti/ban/${commento.email.id}|}"
+                        onclick="return confirm('Sei sicuro?')" data-bs-toggle="tooltip" data-bs-placement="top"
+                        title="Rimuovi ban"><i class="fas fa-user"></i></a></td>
+                    <td th:text=${commento.nome} class="col-2"></td>
+                    <td th:text=${commento.testo} class="col-5"></td>
+                    <td class="col-1"><a class="text-decoration-none text-dark m-1"
+                        th:href="@{|/admin/commenti/elimina/${commento.id}|}"
+                        onclick="return confirm('Sei sicuro?')" data-bs-toggle="tooltip" data-bs-placement="top"
+                        title="Elimina"><i class="fas fa-trash-alt"></i></a></td>
+                </tr>
+            </tbody>
+        </table>
+    
+    </div>
         <div th:replace="fragments/resources :: scripts"></div>
 </body>
 
 </html>
+
+
+
+
+
