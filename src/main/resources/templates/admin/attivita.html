@@ -3,7 +3,7 @@
 
 <head>
     <div th:replace="fragments/resources :: headTags"></div>
-    <title>Blog ricette</title>
+    <title>Riepilogo attivit&agrave;</title>
 </head>
 
 <body>
@@ -16,7 +16,7 @@
         <div class="row">
             <div class="h3">Ricette aggiunte di recente</div>
             <div class="col-6 fs-4" th:each="ricetta : ${piuRecenti}">
-                <a th:text="|&#8226; ${ricetta.titolo} ${ricetta.dataDiCreazione}|" th:href="@{|/ricetta/${ricetta.id}|}"
+                <a target="_blank" th:text="|&#8226; ${ricetta.titolo} ${ricetta.dataDiCreazione}|" th:href="@{|/ricetta/${ricetta.id}|}"
                         class="text-decoration-none text-dark">
                 </a>
             </div>
@@ -25,7 +25,7 @@
         <div class="row">
             <div class="h3">Ricette pi&ugrave; visualizzate</div>
             <div class="col-6 fs-4" th:each="ricetta : ${piuViste}">
-                <a th:text="|&#8226; ${ricetta.titolo} ${ricetta.visualizzazioni}|" th:href="@{|/ricetta/${ricetta.id}|}"
+                <a target="_blank" th:text="|&#8226; ${ricetta.titolo} ${ricetta.visualizzazioni}|" th:href="@{|/ricetta/${ricetta.id}|}"
                         class="text-decoration-none text-dark">
                 </a>
             </div>
@@ -34,7 +34,16 @@
         <div class="row">
             <div class="h3">Ricette pi&ugrave; commentate</div>
             <div class="col-6 fs-4" th:each="ricetta : ${piuCommentate}">
-                <a th:text="|&#8226; ${ricetta.titolo} ${ricetta.commenti.size()}|" th:href="@{|/ricetta/${ricetta.id}|}"
+                <a target="_blank" th:text="|&#8226; ${ricetta.titolo} ${ricetta.commenti.size()}|" th:href="@{|/ricetta/${ricetta.id}|}"
+                        class="text-decoration-none text-dark">
+                </a>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="h3">Ricette pi&ugrave; popolari</div>
+            <div class="col-6 fs-4" th:each="ricetta : ${piuCommentate}">
+                <a target="_blank" th:text="|&#8226; ${ricetta.titolo} ${ricetta.commenti.size()}|" th:href="@{|/ricetta/${ricetta.id}|}"
                         class="text-decoration-none text-dark">
                 </a>
             </div>
@@ -46,11 +55,9 @@
 </html>
 
 
-
-
 <div class="row">
     <div class="fs-4 col-6" th:each="ricetta : ${lista}">
-        <a th:text="|&#8226; ${ricetta.titolo}|" th:href="@{|/ricetta/${ricetta.id}|}"
+        <a target="_blank"th:text="|&#8226; ${ricetta.titolo}|" th:href="@{|/ricetta/${ricetta.id}|}"
             class="text-decoration-none text-dark"></a>
         <a class="text-decoration-none text-success m-1" th:href="@{|/admin/ricetta/modifica/${ricetta.id}|}"><i class="fas fa-pencil-alt" data-bs-toggle="tooltip" data-bs-placement="top" title="Modifica testo ricetta"></i></a>
         <a class="text-decoration-none text-success m-1" th:href="@{|/admin/ricetta/modifica/${ricetta.id}/ingredienti|}"><i class="fas fa-list-ul" data-bs-toggle="tooltip" data-bs-placement="top" title="Modifica ingredienti"></i></a>

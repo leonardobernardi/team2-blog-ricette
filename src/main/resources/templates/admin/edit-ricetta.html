@@ -8,8 +8,8 @@
 
 <body>
     <nav th:replace="fragments/navbar :: navbar"></nav>
-    <div class="container text-center mt-3">
-        <div th:text="|Modifica ${ricettaDaModificare.titolo}|" class="h2"></div>
+    <div class="container mt-3">
+        <div class="h2 text-center" th:text="|Modifica ${ricettaDaModificare.titolo}|" ></div>
         <hr>
         <form id="modificaRicettaForm" th:action="@{/admin/ricetta/modifica/{id}/(id=${ricettaDaModificare.id})}"
             th:object="${ricettaDaModificare}" method="post">
@@ -21,7 +21,7 @@
                     <!--Ricetta-->
                     <div class="col-12">
                         <div class="row gy-2">
-                            <div class="col-12">
+                            <div class="col-3 text-center">
                                 <label class="form-label" for="titolo">Titolo</label>
                                 <input type="text" class="form-control" id="titolo" th:field="*{titolo}"
                                     th:errorClass="is-invalid">
@@ -31,7 +31,7 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="col-4">
+                            <div class="col-3 text-center">
                                 <label class="form-label" for="tempoDiPreparazione">Tempo di preparazione</label>
                                 <input type="text" class="form-control" id="tempoDiPreparazione"
                                     th:field="*{tempoDiPreparazione}" th:errorClass="is-invalid">
@@ -42,7 +42,7 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="col-4">
+                            <div class="col-3 text-center">
                                 <label class="form-label" for="livelloDiDifficolta">Difficolt&agrave;</label>
                                 <select id="livelloDiDifficolta" class="form-control" th:field="*{livelloDiDifficolta}">
                                     <option th:value="1" selected>Facile</option>
@@ -56,7 +56,7 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="col-4">
+                            <div class="col-3 text-center">
                                 <label class="form-label" for="categoria">Categoria</label>
                                 <select id="categoria" class="form-control" th:field="*{categoria}">
                                     <option th:value="1" selected>Antipasto</option>
@@ -94,9 +94,9 @@
                             </div>
                         </div>
                         <!--Submit-->
-                        <div class="col-12">
-                            <button class="btn btn-success" type="submit"><i class="fas fa-check"></i> Salva</button>
-                            <a class="btn btn-success" th:href="@{/home/index}"><i class="fas fa-times"></i>
+                        <div class="col-12 mt-2 text-center">
+                            <button class="btn btn-warning" type="submit"><i class="fas fa-check"></i> Salva</button>
+                            <a class="btn btn-warning" th:href="@{/admin/modifica}"><i class="fas fa-times"></i>
                                 Indietro</a>
                         </div>
 
@@ -107,7 +107,8 @@
 
 
     </div>
-
+	<script type="text/javascript" th:src="@{/js/mainEdit.js}"></script>
+    <div th:replace="fragments/resources :: scripts"></div>
 </body>
 
 </html>
