@@ -11,6 +11,8 @@
     <div class="container mt-3">
         <h1 class="text-center">Gestione commenti</h1>
         <hr>
+        <div class="text-center"><a th:href="@{/admin/commenti/email}" class="btn btn-danger mb-4">Elenco email bannate</a></div>
+        
         <table class="table" th:each="ricetta : ${lista}" th:if="${ricetta.commenti.size() > 0}">
             <thead>
                 <div class="h4" th:text="${ricetta.titolo}"></div>

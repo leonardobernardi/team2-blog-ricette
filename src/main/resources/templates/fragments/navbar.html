@@ -11,7 +11,7 @@
 			  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 				<li class="nav-item dropdown">
 				  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-					Categorie
+					Filtra per categorie
 				  </a>
 				  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 					<li th:each="cat : ${categorie}"><a class="dropdown-item" th:href="@{|/categoria/${cat.id}|}" th:text="${cat.nome}"></a></li>
@@ -44,7 +44,7 @@
 					<!-- <li><a class="nav-link active" th:href="@{/admin}">Attivit&agrave;</a></li> -->
 					<li><a class="nav-link active" th:href="@{/admin/commenti}">Gestione commenti</a></li>
 			  </ul>
-			  <a class="btn btn-primary" th:href="@{/}">Torna a user</a>
+			  <a class="btn btn-success" th:href="@{/}">Torna a user</a>
 			</div>
 		</div>
 	</nav>
