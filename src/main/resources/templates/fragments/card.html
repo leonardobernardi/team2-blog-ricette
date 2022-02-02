@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-<div class="card shadow" th:fragment="card">
-    <div class="card-body">
+<html xmlns:th="http://www.thymeleaf.org" S>
+<div class="card shadow h-100" th:fragment="card">
+    <div class="card-body ">
         <div class="d-flex justify-content-between">
             <span th:text="${ricetta.titolo}" class="h5 card-title"></span>
             <th:block th:switch="${ricetta.livelloDiDifficolta}">
@@ -14,7 +14,8 @@
             </th:block>
         </div>
         <div class="position-relative">
-        	<img class="img-fluid" th:if="${ricetta.immagini.size == 0}" src="https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png?w=640"></img>
+            <img class="img-fluid" th:if="${ricetta.immagini.size == 0}"
+                src="https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png?w=640"></img>
             <img th:src="@{|/${ricetta.id}/img|}" class="img-fluid" alt="img" th:if="${ricetta.immagini.size > 0}">
             <div class="text-center bg-success text-light px-1 position-bottom-left" th:if="${ricetta.isVegan == true}">
                 <span><i class="fas fa-seedling"></i> vegano</span>
@@ -24,7 +25,9 @@
                 <span><i class="fas fa-leaf"></i> vegetariano</span>
             </div>
         </div>
+
         <p class="card-text" th:text="${ricetta.descrizione}"></p>
+
     </div>
 </div>
 
