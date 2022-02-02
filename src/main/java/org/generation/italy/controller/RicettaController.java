@@ -151,6 +151,7 @@ public class RicettaController {
 			model.addAttribute("piuRecenti", service.findLastSevenDays());
 			model.addAttribute("piuViste", service.findMostViewed());
 			model.addAttribute("piuCommentate", service.findMostCommented());
+			model.addAttribute("piuPiaciute", service.findMostLiked());
 			model.addAttribute("admin", true);
 			return "/admin/attivita";
 		}
