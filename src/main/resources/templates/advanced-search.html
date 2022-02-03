@@ -13,7 +13,8 @@
       <hr>
       <div th:unless="${search}">
         <form th:action="@{/ricerca-avanzata}" method="get">
-        <div class="col-3">
+        <div class="row">
+        <div class="col-3 mt-2">
           <label for="titolo" class="form-lavel">Titolo</label>
           <input
             name="titolo"
@@ -57,7 +58,9 @@
           </select>
         </select>
         </div>
-
+        </div>
+		<div class="row mt-2">
+		<div class="col-3">
         <label class="form-label" for="isVegan"
           >Vegano</label
         >
@@ -71,7 +74,8 @@
           <option th:value="true">Si</option>
           <option th:value="false">No</option>
         </select>
-
+        </div>
+		<div class="col-3">
         <label class="form-label" for="isVegetarian"
           >Vegetariano</label
         >
@@ -85,6 +89,8 @@
           <option th:value="true">Si</option>
           <option th:value="false">No</option>
         </select>
+        </div>
+        </div>
 
           <button class="btn btn-light bg-success mt-1" type="submit">
             <span class="text-light"><i class="fas fa-search"></i> Cerca</span>
