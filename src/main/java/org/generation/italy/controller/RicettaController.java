@@ -2,6 +2,7 @@ package org.generation.italy.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -158,16 +159,14 @@ public class RicettaController {
 		
 		@GetMapping("/ricetta/{id}")
 		public String detail(@PathVariable("id") Integer id, Model model) {
+			List<Commento> list = service.getById(id).getCommenti();
+			Collections.reverse(list);
 			model.addAttribute("categorie", catService.findAll());
 			service.visualizzazioniPiuUno(service.getById(id));
 			model.addAttribute("ricetta", service.getById(id));		
 			model.addAttribute("commento", new Commento());
-			model.addAttribute("list", service.getById(id).getCommenti());
-//			if (!service.getById(id).getImmagini().isEmpty()) {
-//				for (Immagine img : service.getById(id).getImmagini()) {
-//					model.addAttribute("img" + service.getById(id).getImmagini().indexOf(img), img);
-//				} 
-//			}
+			model.addAttribute("list", list);
+
 			model.addAttribute("ingredienti", service.getById(id).getIngrediente());
 			return "ricetta/dettagli";
 		}
@@ -179,6 +178,10 @@ public class RicettaController {
 				Model model, RedirectAttributes redirectAttributes) {
 			redirectAttributes.addAttribute("categorie", catService.findAll());
 			
+			if(bindingResult.hasErrors()) {
+				
+				return "/ricetta/dettagli"; 
+			}
 			if(formCommento.getEmail()!=null) {
 				if(emailRepo.findByEmailContaining(formCommento.getEmail().getEmail())!=null) {
 					if(emailRepo.findByEmailContaining(formCommento.getEmail().getEmail()).getIsBanned()==true){
@@ -348,7 +351,9 @@ public class RicettaController {
 		Ricetta formRicetta, @PathVariable("id") Integer id, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
 			redirectAttributes.addAttribute("categorie", catService.findAll());
 			redirectAttributes.addAttribute("admin", true);
+			
 			if (bindingResult.hasErrors()) {
+				model.addAttribute("admin", true);
 				return "/admin/edit-ricetta";
 			}
 			service.updateRicetta(formRicetta, id);

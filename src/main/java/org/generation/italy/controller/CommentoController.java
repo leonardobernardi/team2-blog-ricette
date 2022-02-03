@@ -1,6 +1,5 @@
 package org.generation.italy.controller;
 
-import org.generation.italy.service.CategoriaService;
 import org.generation.italy.service.CommentoService;
 import org.generation.italy.service.EmailService;
 import org.generation.italy.service.RicettaService;
@@ -25,8 +24,6 @@ public class CommentoController {
 	@Autowired
 	private RicettaService ricettaService;
 
-	@Autowired 
-	private CategoriaService catService;
 	
 	@GetMapping
 	public String gestioneCommenti(Model model){

@@ -18,6 +18,7 @@ public class Commento {
 	
 	@NotNull
 	@NotEmpty(message="Il campo nome non può essere vuoto")
+
 	private String nome;
 	
 	@Lob
