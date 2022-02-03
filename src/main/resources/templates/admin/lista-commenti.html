@@ -10,20 +10,27 @@
     <nav th:replace="fragments/navbar :: navbar"></nav>
     <div class="container mt-3">
         <h1 class="text-center">Gestione commenti</h1>
-        <hr>
-        <div class="text-center"><a th:href="@{/admin/commenti/email}" class="btn btn-danger mb-4">Elenco email bannate</a></div>
+       
+        <input
+    class="form-control mt-2"
+    type="text"
+    id="ricettaInput"
+    placeholder="Cerca una ricetta"
+  />
+        <div class="text-center mt-3"><a th:href="@{/admin/commenti/email}" class="btn btn-danger mb-4">Elenco email bannate</a></div>
         
-        <table class="table" th:each="ricetta : ${lista}" th:if="${ricetta.commenti.size() > 0}">
+        <table class="table ricette" th:each="ricetta : ${lista}" th:if="${ricetta.commenti.size() > 0}" th:attr="id=${ricetta.titolo}">
             <thead>
-                <div class="h4" th:text="${ricetta.titolo}"></div>
                 <tr>
-                    <th>Email</th>
+                <th class="h4" colspan="5" th:text="${ricetta.titolo}"></th  >
+                <tr>
+                  <th>Email</th>
                     <th></th>
                     <th>Nome</th>
                     <th>Commento</th>
                     <th></th>
                 </tr>
-            </thead>
+            </thead >
             <tbody>
                 <tr th:each="commento : ${ricetta.commenti}" th:classAppend="${commento.email.isBanned} ? table-danger">
                     <td th:text="${commento.email.email}" class="col-3"></td>
@@ -43,7 +50,7 @@
                         title="Elimina"><i class="fas fa-trash-alt"></i></a></td>
                 </tr>
             </tbody>
-        </table>
+        </table >
     </div>
         <div th:replace="fragments/resources :: scripts"></div>
 </body>
