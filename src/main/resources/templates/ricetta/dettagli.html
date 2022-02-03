@@ -34,7 +34,7 @@
                         </div>
                         <div class="carousel-inner">
                             <div th:each="img, iter : ${ricetta.immagini}" class="rounded"
-                                style="height: 480px; width: 635px; ;"
+                                style="height: 480px; width: 635px;"
                                 th:classAppend="${iter.count == 1} ? 'carousel-item active' : 'carousel-item'">
 
                                 <img th:src="@{|/detail/${img.id}/img|}" style="max-width:95%; max-height:95%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);" th:alt="|img${img.id}|">
@@ -144,7 +144,7 @@
 
         <div class="col">
             <div th:if="${list.size() > 0}" class="row mt-5">
-                <h5>Commenti di altri utenti</h5>
+                <h5>Commenti</h5>
                 <div th:each="item : ${list}" class="border rounded-2 p-3 m-2" th:if="${item.email.isBanned == false}">
                     <span th:text="${item.nome}" class="text-success"></span>
                     <p th:text="${item.testo}" class="border border-2 p-2 rounded-2"></p>

@@ -4,15 +4,27 @@
 <head>
     <div th:replace="fragments/resources :: headTags"></div>
     <link rel="stylesheet" th:href="@{/css/style.css}">
-    <title th:text="${categoriaNome.nome}"></title>
+    <th:block th:switch="${categoriaNome.id}">
+    <title th:case="'1'">Antipasti</title>
+    <title th:case="'2'">Primi</title>
+    <title th:case="'3'">Secondi</title>
+    <title th:case="'4'">Contorni</title>
+    <title th:case="'5'">Dolci</title> 
+</th:block>
 </head>
 
 <body class="bg-light">
     <nav th:replace="fragments/navbar :: navbar"></nav>
     <div class="container mt-3">
-        <h1 class="text-center" th:text="${categoriaNome.nome}"></h1>
+        <th:block th:switch="${categoriaNome.id}">
+		    <h1 class="text-center" th:case="'1'">Antipasti</h1>
+		    <h1 class="text-center" th:case="'2'">Primi</h1>
+		    <h1 class="text-center" th:case="'3'">Secondi</h1>
+		    <h1 class="text-center" th:case="'4'">Contorni</h1>
+		    <h1 class="text-center" th:case="'5'">Dolci</h1> 
+		</th:block>
         <hr>
-        <div class="row mb-4">
+        <div class="row mb-4 gy-2">
             <div th:each="ricetta : ${lista}" class="col-4">
                 <a th:href="@{|/ricetta/${ricetta.id}|}" class="text-decoration-none text-dark">
                 	<div th:replace="fragments/card :: card"></div>  

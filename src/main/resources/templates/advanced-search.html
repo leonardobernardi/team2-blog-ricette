@@ -5,14 +5,17 @@
     <link rel="stylesheet" th:href="@{/css/style.css}" />
     <title>Ricerca avanzata</title>
   </head>
+  
   <body class="bg-light">
     <nav th:replace="fragments/navbar :: navbar"></nav>
     <div class="container my-2 mt-3">
-      <h1>Ricerca Avanzata</h1>
+      <h1 class="text-center">Ricerca Avanzata</h1>
       <hr>
       <div th:unless="${search}">
         <form th:action="@{/ricerca-avanzata}" method="get">
-            <label for="titolo" class="form-lavel">Titolo</label>
+        <div class="row">
+        <div class="col-3 mt-2">
+          <label for="titolo" class="form-lavel">Titolo</label>
           <input
             name="titolo"
             th:value="${titolo}"
@@ -21,6 +24,8 @@
             placeholder="Titolo"
             aria-label="Search"
           />
+          </div>
+          <div class="col-3">
           <label class="form-label" for="categoria">Categoria</label>
           <select
             name="categoriaId"
@@ -35,7 +40,8 @@
             <option th:value="4">Contorno</option>    
             <option th:value="5">Dolce</option>    
           </select>
-
+          </div>
+          <div class="col-3">
           <label class="form-label" for="livelloDiDifficolta"
             >Difficolt&agrave;</label
           >
@@ -51,7 +57,10 @@
             <option th:value="3">Difficile</option>
           </select>
         </select>
-
+        </div>
+        </div>
+		<div class="row mt-2">
+		<div class="col-3">
         <label class="form-label" for="isVegan"
           >Vegano</label
         >
@@ -65,7 +74,8 @@
           <option th:value="true">Si</option>
           <option th:value="false">No</option>
         </select>
-
+        </div>
+		<div class="col-3">
         <label class="form-label" for="isVegetarian"
           >Vegetariano</label
         >
@@ -79,6 +89,8 @@
           <option th:value="true">Si</option>
           <option th:value="false">No</option>
         </select>
+        </div>
+        </div>
 
           <button class="btn btn-light bg-success mt-1" type="submit">
             <span class="text-light"><i class="fas fa-search"></i> Cerca</span>
@@ -88,7 +100,7 @@
 
       <!--Risultati-->
       <div th:if="${search}">
-        <div class="row mb-4">
+        <div class="row mb-4 gy-2">
           <div th:each="ricetta : ${lista}" class="col-4">
             <a
               th:href="@{|/ricetta/${ricetta.id}|}"
