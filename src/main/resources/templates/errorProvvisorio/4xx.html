@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <div th:replace="fragments/resources :: headTags"></div>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <title>Pagina di errore</title>
+</head>
+
+<body class="bg-light">
+    <nav th:replace="fragments/navbar :: navbar"></nav>
+    <div class="container mt-3">
+        <!-- <h1 class="text-center">Blog ricette</h1> -->
+        <hr>
+        <div class="h2 text-center mb-4 gy-2">
+            <div>
+                Qualcosa è andato storto.
+            </div>
+        </div>
+        <div>Questa pagina non esiste, o non hai i permessi necessari per accedere.</div>
+        <div th:replace="fragments/resources :: scripts"></div>
+</body>
+</html>
