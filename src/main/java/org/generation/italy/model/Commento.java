@@ -17,7 +17,7 @@ public class Commento {
 	private Integer id;
 	
 	@NotNull
-	@NotEmpty
+	@NotEmpty(message="ci deve essere un nome")
 	private String nome;
 	
 	@Lob

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <div th:replace="fragments/resources :: headTags"></div>
@@ -11,13 +11,13 @@
     <div class="container mt-3">
         <h1 class="text-center">Crea nuova ricetta</h1>
         <hr>
-        <form id="ricetta-form" th:object="${ricetta}"
+        <form id="ricetta-form" 
+        	th:object="${ricetta}"
             th:action="${edit} ? @{/admin/ricetta/modifica/{id}(id=${ricetta.id})} : @{/admin/ricetta/crea}"
-            method="post" enctype="multipart/form-data">
-            <ul>
-                <li th:each="err : ${#fields.allErrors()}" th:text="${err}" class="text-danger"></li>
-            </ul>
-
+            method="post" 
+            enctype="multipart/form-data"
+     	>
+        
             <div class="row">
                 <!--Ricetta-->
                 <div class="col-6">
