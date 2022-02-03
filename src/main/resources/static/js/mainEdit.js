@@ -2,6 +2,28 @@
 // var i = 0;
 // addBtn.onclick = addIng(i);
 
+const ricettaInput = document.getElementById('ricettaInput');
+
+ricettaInput.addEventListener('input', getRicetta);
+
+function getRicetta(){
+	let input = ricettaInput.value;	
+	if(input !== ''){
+		axios
+		.get('localhost:8080/api/ricetta/cerca' + input)
+		.then((response)=>{
+			const list = response.data;
+		})
+		.catch((error)=>{
+			console.log(error);
+		})
+	};
+	for(let r in list){
+		
+	};
+	
+}
+
 
 function addIng(i){
     let btn = document.getElementById('btn' + i);
