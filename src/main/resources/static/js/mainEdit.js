@@ -49,7 +49,7 @@ function addIng(i){
         let div = document.getElementById(i);
         div.className = 'row'
         let newBtn = document.getElementById('btn' + (1 + i));
-        newBtn.className = 'btn btn-success w-auto m-2'
+        newBtn.className = 'btn btn-warning w-auto m-2'
     }else if(i==25){
      document.getElementById('alert').className = 'alert alert-warning w-auto m-2';       
     }
@@ -61,9 +61,9 @@ function addImg(i){
 	imgBtn.className = 'd-none';
 	if(i<5){
 		let div = document.getElementById('img' + i);
-		div.className = 'row'
+		div.className = 'row mt-2'
 		let newBtn = document.getElementById('imgBtn' + (1+i));
-		newBtn.className = 'btn btn-success w-auto m-2';
+		newBtn.className = 'btn btn-warning w-auto m-2';
 	}else if(i==5){
 		document.getElementById('imgAlert').className = 'alert alert-warning w-auto m-2';
 	}
