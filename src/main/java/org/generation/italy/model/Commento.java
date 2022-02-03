@@ -17,12 +17,13 @@ public class Commento {
 	private Integer id;
 	
 	@NotNull
-	@NotEmpty(message="ci deve essere un nome")
+	@NotEmpty(message="Il campo nome non può essere vuoto")
+
 	private String nome;
 	
 	@Lob
 	@NotNull
-	@NotEmpty
+	@NotEmpty(message="Il messaggio non può essere vuoto")
 	private String testo;
 	
 	@ManyToOne

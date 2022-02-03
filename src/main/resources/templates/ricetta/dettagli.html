@@ -53,25 +53,27 @@
                 </div>
 
 
-
-                <div class="col p-2 m-0">
+                <div class="col p-2 m-0 d-flex align-items-center">
+                    <div>
                     <p> 
-                    	<span><i class="far fa-eye"></i></span>
+                        
+                        <span><i class="far fa-eye"></i></span>
+
                         <span th:text="${ricetta.visualizzazioni}"></span>
-                        <button type="button" id="likeBtn"
+                        <button type="button" id="likeBtn" class="btn btn-success text-decoration-none m-2"
                             th:attr="onclick=|increaseLike('http://localhost:8080/api/ricetta/mipiace/${ricetta.id}')|"><i
-                                class="far fa-thumbs-up" id="clicks" th:text="${ricetta.miPiace}"></i></button>
+                                class="fas fa-thumbs-up" ></i>&nbsp; <spanid="clicks"  th:text="${ricetta.miPiace}"></span></button>
                     </p>
                     <p>
-                        <span>Tempo di Preparazione: </span>
-                        <span th:text="${ricetta.tempoDiPreparazione}"></span>
+                        <div class="fw-bold">Tempo di Preparazione </div>
+                        <div th:text="${ricetta.tempoDiPreparazione}"></div>
                     </p>
                     <p>
                         <span th:if="${ricetta.isVegan == true}">Ricetta vegana&nbsp;<i class="text-success fas fa-seedling"></i></span>
                         <span th:if="${ricetta.isVegan == false and ricetta.isVegetarian == true}">Ricetta vegetariana&nbsp;<i class="text-success fas fa-leaf"></i></span>
                     </p>
                     <p>
-                        <span>Difficoltà: </span>
+                        <div class="fw-bold">Difficoltà </div>
                         <th:block th:switch="${ricetta.livelloDiDifficolta}">
                             <span th:case="'1'">facile</span>
                             <span th:case="'2'">medio</span>
@@ -79,10 +81,11 @@
                         </th:block>
                     </p>
                     <p>
-                        <span>Descrizione: </span>
-                        <br>
-                        <span th:text="${ricetta.descrizione}"></span>
+                        <div class="fw-bold">Descrizione </div>
+                        
+                        <div th:text="${ricetta.descrizione}"></div>
                     </p>
+                </div>
                 </div>
             </div>
         </div>
@@ -116,7 +119,7 @@
                     <li th:each="error : ${#fields.errors}"></li>
                 </ul>
             </div>
-            <div class="col-6 border rounded-3 border-2 p-2">
+            <div class="col-8 border rounded-3 border-2 p-2">
                 <div class="row p-3">
                     <label for="email" class="form-label">Email</label>
                     <input type="email" th:field="*{email.email}" class="form-control" id="email"
@@ -136,19 +139,24 @@
             </div>
         </form>
 
-        <div class="col">
+        <div class="col-8">
             <div th:if="${list.size() > 0}" class="row mt-5">
+
                 <div class="h5">Commenti</div>
+
                 <div th:each="item : ${list}" class="border rounded-2 p-3 m-2" th:if="${item.email.isBanned == false}">
                     <span th:text="${item.nome}" class="text-success"></span>
                     <p th:text="${item.testo}" class="border border-2 p-2 rounded-2"></p>
                 </div>
             </div>
+
             <div class="row mt-5 justify-content-start" th:unless="${list.size() > 0}">
             	<div class="col-4 border border-danger p-3">non ci sono commenti</div>
             </div>
             <hr>
+
         </div>
+        <hr class="col-12"> 
     </div>
     
     <div th:replace="fragments/resources :: scripts"></div>
