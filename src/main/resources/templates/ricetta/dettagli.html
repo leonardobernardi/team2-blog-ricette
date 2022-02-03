@@ -62,7 +62,7 @@
                         <span th:text="${ricetta.visualizzazioni}"></span>
                         <button type="button" id="likeBtn" class="btn btn-success text-decoration-none m-2"
                             th:attr="onclick=|increaseLike('http://localhost:8080/api/ricetta/mipiace/${ricetta.id}')|"><i
-                                class="fas fa-thumbs-up" ></i>&nbsp; <spanid="clicks"  th:text="${ricetta.miPiace}"></span></button>
+                                class="fas fa-thumbs-up" ></i>&nbsp; <span id="clicks"  th:text="${ricetta.miPiace}"></span></button>
                     </p>
                     <p>
                         <div class="fw-bold">Tempo di Preparazione </div>
