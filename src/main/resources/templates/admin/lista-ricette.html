@@ -11,14 +11,15 @@
     <nav th:replace="fragments/navbar :: navbar"></nav>
     <div class="container mt-3">
     <h1 class="text-center">Gestione ricette</h1>
-    <hr>
+    
     <input
     class="form-control"
     type="text"
     id="ricettaInput"
     placeholder="Cerca una ricetta"
-  />
-  <div class="d-none" id="results"></div>
+  	/>
+  	<hr>
+  	<div class="d-none" id="results"></div>
         <div class="row">
                 <div class="fs-4 col-6 ricette" th:each="ricetta : ${lista}" th:attr="id=${ricetta.titolo}">
                     <a th:text="|&#8226; ${ricetta.titolo}|" target="_blank" th:href="@{|/ricetta/${ricetta.id}|}"
