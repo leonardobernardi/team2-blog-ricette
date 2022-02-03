@@ -151,6 +151,7 @@ public class RicettaController {
 			model.addAttribute("piuRecenti", service.findLastSevenDays());
 			model.addAttribute("piuViste", service.findMostViewed());
 			model.addAttribute("piuCommentate", service.findMostCommented());
+			model.addAttribute("piuPiaciute", service.findMostLiked());
 			model.addAttribute("admin", true);
 			return "/admin/attivita";
 		}
@@ -291,6 +292,7 @@ public class RicettaController {
 		@GetMapping("/admin/ricetta/modifica/{id}/ingredienti")
 		public String editIngredienti(@PathVariable("id") Integer id, Model model) {
 			model.addAttribute("categorie", catService.findAll());
+			model.addAttribute("admin", true);
 			List<Ingrediente> ingredientiList = new ArrayList<Ingrediente>();
 			IngredienteList ingredientiForm = new IngredienteList(ingredientiList);
 			for (int i = 0; i < 26; i++) {
@@ -305,6 +307,7 @@ public class RicettaController {
 		public String doEditIngredienti (@ModelAttribute("ingredientiForm") 
 		IngredienteList ingredientiList, @PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
 			redirectAttributes.addAttribute("categorie", catService.findAll());
+			redirectAttributes.addAttribute("admin", true);
 			service.updateIngredienti(id, ingredientiList);
 			 return "redirect:/admin/ricetta/modifica/" + id + "/ingredienti";
 			
@@ -349,7 +352,7 @@ public class RicettaController {
 				return "/admin/edit-ricetta";
 			}
 			service.updateRicetta(formRicetta, id);
-			return "redirect:/ricetta/" + id;
+			return "redirect:/admin/modifica";
 		}
 
 		

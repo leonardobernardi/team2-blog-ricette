@@ -11,28 +11,28 @@
       <h1 class="text-center">Modifica ingredienti</h1>
       <hr/>
       <div class="row">
-        <div class="col-6">         
+        <div class="col-4">         
             <ul th:each="ing : ${ricetta.ingrediente}">
               <li>
                 <span th:text="${ing.nome}"></span>:
                 <span th:text="${ing.quantita}"></span>
-                <a class="text-decoration-none text-success m-1" th:href="@{|/admin/ricetta/modifica/ingrediente/cancella/${ing.id}|}" onclick="return confirm('Sei sicuro?')" data-bs-toggle="tooltip" data-bs-placement="top" title="Elimina ingrediente"><i class="fas fa-trash-alt"></i></a> 
+                <a class="text-decoration-none text-dark m-1" th:href="@{|/admin/ricetta/modifica/ingrediente/cancella/${ing.id}|}" onclick="return confirm('Sei sicuro?')" data-bs-toggle="tooltip" data-bs-placement="top" title="Elimina ingrediente"><i class="fas fa-trash-alt"></i></a> 
               </li>
             </ul>
-          </div>       
-        <div class="col-6">
+        </div>       
+        <div class="col-8">
           <form
             id="ingredienti-form"
             th:action="@{/admin/ricetta/modifica/{id}/ingredienti(id=${ricetta.id})}"
             th:object="${ingredientiForm}"
             method="post"
           >
-            <div class="row">
+            <div class="row" th:object="${ingredientiForm}">
               <!--Ingredienti-->
-              <div class="col-6" th:object="${ingredientiForm}">
+              
                 <!--Singolo Ingrediente-->
                 <div class="row">
-                  <div class="col-4">
+                  <div class="col-6">
                     <label class="form-label" for="nome"
                       >Nome ingrediente</label
                     >
@@ -44,7 +44,7 @@
                       th:errorClass="is-invalid"
                     />
                   </div>
-                  <div class="col-4">
+                  <div class="col-3">
                     <label class="form-label" for="quantita"
                       >Quantit&agrave; ingrediente</label
                     >
@@ -66,7 +66,7 @@
                         th:field="*{ingredienti[0].isVegan}"
                       />
                       <label class="form-check-label" for="isVegan">
-                        Vegano?
+                        Vegano
                       </label>
                     </div>
                     <div class="form-check">
@@ -78,14 +78,14 @@
                         th:field="*{ingredienti[0].isVegetarian}"
                       />
                       <label class="form-check-label" for="isVegetarian">
-                        Vegetariano?
+                        Vegetariano
                       </label>
                     </div>
                   </div>
                 </div>
                 <div class="row">
                   <button
-                    class="btn btn-success w-auto m-2"
+                    class="btn btn-warning w-auto m-2"
                     id="btn1"
                     type="button"
                     th:onclick="addIng(1)"
@@ -95,7 +95,7 @@
                 </div>
                 <!--Singolo Ingrediente-->
                 <div class="row d-none" id="1">
-                  <div class="col-4">
+                  <div class="col-6">
                     <label class="form-label" for="nome"
                       >Nome ingrediente</label
                     >
@@ -107,9 +107,9 @@
                       th:errorClass="is-invalid"
                     />
                   </div>
-                  <div class="col-4">
+                  <div class="col-3">
                     <label class="form-label" for="quantita"
-                      >Quantita ingrediente</label
+                      >Quantit&agrave; ingrediente</label
                     >
                     <input
                       type="text"
@@ -129,7 +129,7 @@
                         th:field="*{ingredienti[1].isVegan}"
                       />
                       <label class="form-check-label" for="isVegan">
-                        Vegano?
+                        Vegano
                       </label>
                     </div>
                     <div class="form-check">
@@ -141,14 +141,14 @@
                         th:field="*{ingredienti[1].isVegetarian}"
                       />
                       <label class="form-check-label" for="isVegetarian">
-                        Vegetariano?
+                        Vegetariano
                       </label>
                     </div>
                   </div>
                 </div>
                 <div class="row">
                   <button
-                    class="btn btn-success w-auto m-2 d-none"
+                    class="btn btn-warning w-auto m-2 d-none"
                     id="btn2"
                     type="button"
                     th:onclick="addIng(2)"
@@ -158,7 +158,7 @@
                 </div>
                 <!--Singolo Ingrediente-->
                 <div class="row d-none" id="2">
-                  <div class="col-4">
+                  <div class="col-6">
                     <label class="form-label" for="nome"
                       >Nome ingrediente</label
                     >
@@ -170,9 +170,9 @@
                       th:errorClass="is-invalid"
                     />
                   </div>
-                  <div class="col-4">
+                  <div class="col-3">
                     <label class="form-label" for="quantita"
-                      >Quantita ingrediente</label
+                      >Quantit&agrave; ingrediente</label
                     >
                     <input
                       type="text"
@@ -192,7 +192,7 @@
                         th:field="*{ingredienti[2].isVegan}"
                       />
                       <label class="form-check-label" for="isVegan">
-                        Vegano?
+                        Vegano
                       </label>
                     </div>
                     <div class="form-check">
@@ -204,14 +204,14 @@
                         th:field="*{ingredienti[2].isVegetarian}"
                       />
                       <label class="form-check-label" for="isVegetarian">
-                        Vegetariano?
+                        Vegetariano
                       </label>
                     </div>
                   </div>
                 </div>
                 <div class="row">
                   <button
-                    class="btn btn-success w-auto m-2 d-none"
+                    class="btn btn-warning w-auto m-2 d-none"
                     id="btn3"
                     type="button"
                     th:onclick="addIng(3)"
@@ -221,7 +221,7 @@
                 </div>
                 <!--Singolo Ingrediente-->
                 <div class="row d-none" id="3">
-                  <div class="col-4">
+                  <div class="col-6">
                     <label class="form-label" for="nome"
                       >Nome ingrediente</label
                     >
@@ -233,9 +233,9 @@
                       th:errorClass="is-invalid"
                     />
                   </div>
-                  <div class="col-4">
+                  <div class="col-3">
                     <label class="form-label" for="quantita"
-                      >Quantita ingrediente</label
+                      >Quantit&agrave; ingrediente</label
                     >
                     <input
                       type="text"
@@ -255,7 +255,7 @@
                         th:field="*{ingredienti[3].isVegan}"
                       />
                       <label class="form-check-label" for="isVegan">
-                        Vegano?
+                        Vegano
                       </label>
                     </div>
                     <div class="form-check">
@@ -267,14 +267,14 @@
                         th:field="*{ingredienti[3].isVegetarian}"
                       />
                       <label class="form-check-label" for="isVegetarian">
-                        Vegetariano?
+                        Vegetariano
                       </label>
                     </div>
                   </div>
                 </div>
                 <div class="row">
                   <button
-                    class="btn btn-success w-auto m-2 d-none"
+                    class="btn btn-warning w-auto m-2 d-none"
                     id="btn4"
                     type="button"
                     th:onclick="addIng(4)"
@@ -284,7 +284,7 @@
                 </div>
                 <!--Singolo Ingrediente-->
                 <div class="row d-none" id="4">
-                  <div class="col-4">
+                  <div class="col-6">
                     <label class="form-label" for="nome"
                       >Nome ingrediente</label
                     >
@@ -296,9 +296,9 @@
                       th:errorClass="is-invalid"
                     />
                   </div>
-                  <div class="col-4">
+                  <div class="col-3">
                     <label class="form-label" for="quantita"
-                      >Quantita ingrediente</label
+                      >Quantit&agrave; ingrediente</label
                     >
                     <input
                       type="text"
@@ -318,7 +318,7 @@
                         th:field="*{ingredienti[4].isVegan}"
                       />
                       <label class="form-check-label" for="isVegan">
-                        Vegano?
+                        Vegano
                       </label>
                     </div>
                     <div class="form-check">
@@ -330,14 +330,14 @@
                         th:field="*{ingredienti[4].isVegetarian}"
                       />
                       <label class="form-check-label" for="isVegetarian">
-                        Vegetariano?
+                        Vegetariano
                       </label>
                     </div>
                   </div>
                 </div>
                 <div class="row">
                   <button
-                    class="btn btn-success w-auto m-2 d-none"
+                    class="btn btn-warning w-auto m-2 d-none"
                     id="btn5"
                     type="button"
                     th:onclick="addIng(5)"
@@ -347,7 +347,7 @@
                 </div>
                 <!--Singolo Ingrediente-->
                 <div class="row d-none" id="5">
-                  <div class="col-4">
+                  <div class="col-6">
                     <label class="form-label" for="nome"
                       >Nome ingrediente</label
                     >
@@ -359,9 +359,9 @@
                       th:errorClass="is-invalid"
                     />
                   </div>
-                  <div class="col-4">
+                  <div class="col-3">
                     <label class="form-label" for="quantita"
-                      >Quantita ingrediente</label
+                      >Quantit&agrave; ingrediente</label
                     >
                     <input
                       type="text"
@@ -381,7 +381,7 @@
                         th:field="*{ingredienti[5].isVegan}"
                       />
                       <label class="form-check-label" for="isVegan">
-                        Vegano?
+                        Vegano
                       </label>
                     </div>
                     <div class="form-check">
@@ -393,14 +393,14 @@
                         th:field="*{ingredienti[5].isVegetarian}"
                       />
                       <label class="form-check-label" for="isVegetarian">
-                        Vegetariano?
+                        Vegetariano
                       </label>
                     </div>
                   </div>
                 </div>
                 <div class="row">
                   <button
-                    class="btn btn-success w-auto m-2 d-none"
+                    class="btn btn-warning w-auto m-2 d-none"
                     id="btn6"
                     type="button"
                     th:onclick="addIng(6)"
@@ -410,7 +410,7 @@
                 </div>
                 <!--Singolo Ingrediente-->
                 <div class="row d-none" id="6">
-                  <div class="col-4">
+                  <div class="col-6">
                     <label class="form-label" for="nome"
                       >Nome ingrediente</label
                     >
@@ -422,9 +422,9 @@
                       th:errorClass="is-invalid"
                     />
                   </div>
-                  <div class="col-4">
+                  <div class="col-3">
                     <label class="form-label" for="quantita"
-                      >Quantita ingrediente</label
+                      >Quantit&agrave; ingrediente</label
                     >
                     <input
                       type="text"
@@ -444,7 +444,7 @@
                         th:field="*{ingredienti[6].isVegan}"
                       />
                       <label class="form-check-label" for="isVegan">
-                        Vegano?
+                        Vegano
                       </label>
                     </div>
                     <div class="form-check">
@@ -456,14 +456,14 @@
                         th:field="*{ingredienti[6].isVegetarian}"
                       />
                       <label class="form-check-label" for="isVegetarian">
-                        Vegetariano?
+                        Vegetariano
                       </label>
                     </div>
                   </div>
                 </div>
                 <div class="row">
                   <button
-                    class="btn btn-success w-auto m-2 d-none"
+                    class="btn btn-warning w-auto m-2 d-none"
                     id="btn7"
                     type="button"
                     th:onclick="addIng(7)"
@@ -473,7 +473,7 @@
                 </div>
                 <!--Singolo Ingrediente-->
                 <div class="row d-none" id="7">
-                  <div class="col-4">
+                  <div class="col-6">
                     <label class="form-label" for="nome"
                       >Nome ingrediente</label
                     >
@@ -485,9 +485,9 @@
                       th:errorClass="is-invalid"
                     />
                   </div>
-                  <div class="col-4">
+                  <div class="col-3">
                     <label class="form-label" for="quantita"
-                      >Quantita ingrediente</label
+                      >Quantit&agrave; ingrediente</label
                     >
                     <input
                       type="text"
@@ -507,7 +507,7 @@
                         th:field="*{ingredienti[7].isVegan}"
                       />
                       <label class="form-check-label" for="isVegan">
-                        Vegano?
+                        Vegano
                       </label>
                     </div>
                     <div class="form-check">
@@ -519,14 +519,14 @@
                         th:field="*{ingredienti[7].isVegetarian}"
                       />
                       <label class="form-check-label" for="isVegetarian">
-                        Vegetariano?
+                        Vegetariano
                       </label>
                     </div>
                   </div>
                 </div>
                 <div class="row">
                   <button
-                    class="btn btn-success w-auto m-2 d-none"
+                    class="btn btn-warning w-auto m-2 d-none"
                     id="btn8"
                     type="button"
                     th:onclick="addIng(8)"
@@ -536,7 +536,7 @@
                 </div>
                 <!--Singolo Ingrediente-->
                 <div class="row d-none" id="8">
-                  <div class="col-4">
+                  <div class="col-6">
                     <label class="form-label" for="nome"
                       >Nome ingrediente</label
                     >
@@ -548,9 +548,9 @@
                       th:errorClass="is-invalid"
                     />
                   </div>
-                  <div class="col-4">
+                  <div class="col-3">
                     <label class="form-label" for="quantita"
-                      >Quantita ingrediente</label
+                      >Quantit&agrave; ingrediente</label
                     >
                     <input
                       type="text"
@@ -570,7 +570,7 @@
                         th:field="*{ingredienti[8].isVegan}"
                       />
                       <label class="form-check-label" for="isVegan">
-                        Vegano?
+                        Vegano
                       </label>
                     </div>
                     <div class="form-check">
@@ -582,14 +582,14 @@
                         th:field="*{ingredienti[8].isVegetarian}"
                       />
                       <label class="form-check-label" for="isVegetarian">
-                        Vegetariano?
+                        Vegetariano
                       </label>
                     </div>
                   </div>
                 </div>
                 <div class="row">
                   <button
-                    class="btn btn-success w-auto m-2 d-none"
+                    class="btn btn-warning w-auto m-2 d-none"
                     id="btn9"
                     type="button"
                     th:onclick="addIng(9)"
@@ -599,7 +599,7 @@
                 </div>
                 <!--Singolo Ingrediente-->
                 <div class="row d-none" id="9">
-                  <div class="col-4">
+                  <div class="col-6">
                     <label class="form-label" for="nome"
                       >Nome ingrediente</label
                     >
@@ -611,9 +611,9 @@
                       th:errorClass="is-invalid"
                     />
                   </div>
-                  <div class="col-4">
+                  <div class="col-3">
                     <label class="form-label" for="quantita"
-                      >Quantita ingrediente</label
+                      >Quantit&agrave; ingrediente</label
                     >
                     <input
                       type="text"
@@ -633,7 +633,7 @@
                         th:field="*{ingredienti[9].isVegan}"
                       />
                       <label class="form-check-label" for="isVegan">
-                        Vegano?
+                        Vegano
                       </label>
                     </div>
                     <div class="form-check">
@@ -645,14 +645,14 @@
                         th:field="*{ingredienti[9].isVegetarian}"
                       />
                       <label class="form-check-label" for="isVegetarian">
-                        Vegetariano?
+                        Vegetariano
                       </label>
                     </div>
                   </div>
                 </div>
                 <div class="row">
                   <button
-                    class="btn btn-success w-auto m-2 d-none"
+                    class="btn btn-warning w-auto m-2 d-none"
                     id="btn10"
                     type="button"
                     th:onclick="addIng(10)"
@@ -662,7 +662,7 @@
                 </div>
                 <!--Singolo Ingrediente-->
                 <div class="row d-none" id="10">
-                  <div class="col-4">
+                  <div class="col-6">
                     <label class="form-label" for="nome"
                       >Nome ingrediente</label
                     >
@@ -674,9 +674,9 @@
                       th:errorClass="is-invalid"
                     />
                   </div>
-                  <div class="col-4">
+                  <div class="col-3">
                     <label class="form-label" for="quantita"
-                      >Quantita ingrediente</label
+                      >Quantit&agrave; ingrediente</label
                     >
                     <input
                       type="text"
@@ -696,7 +696,7 @@
                         th:field="*{ingredienti[10].isVegan}"
                       />
                       <label class="form-check-label" for="isVegan">
-                        Vegano?
+                        Vegano
                       </label>
                     </div>
                     <div class="form-check">
@@ -708,14 +708,14 @@
                         th:field="*{ingredienti[10].isVegetarian}"
                       />
                       <label class="form-check-label" for="isVegetarian">
-                        Vegetariano?
+                        Vegetariano
                       </label>
                     </div>
                   </div>
                 </div>
                 <div class="row">
                   <button
-                    class="btn btn-success w-auto m-2 d-none"
+                    class="btn btn-warning w-auto m-2 d-none"
                     id="btn11"
                     type="button"
                     th:onclick="addIng(11)"
@@ -725,7 +725,7 @@
                 </div>
                 <!--Singolo Ingrediente-->
                 <div class="row d-none" id="11">
-                  <div class="col-4">
+                  <div class="col-6">
                     <label class="form-label" for="nome"
                       >Nome ingrediente</label
                     >
@@ -737,9 +737,9 @@
                       th:errorClass="is-invalid"
                     />
                   </div>
-                  <div class="col-4">
+                  <div class="col-3">
                     <label class="form-label" for="quantita"
-                      >Quantita ingrediente</label
+                      >Quantit&agrave; ingrediente</label
                     >
                     <input
                       type="text"
@@ -759,7 +759,7 @@
                         th:field="*{ingredienti[11].isVegan}"
                       />
                       <label class="form-check-label" for="isVegan">
-                        Vegano?
+                        Vegano
                       </label>
                     </div>
                     <div class="form-check">
@@ -771,14 +771,14 @@
                         th:field="*{ingredienti[11].isVegetarian}"
                       />
                       <label class="form-check-label" for="isVegetarian">
-                        Vegetariano?
+                        Vegetariano
                       </label>
                     </div>
                   </div>
                 </div>
                 <div class="row">
                   <button
-                    class="btn btn-success w-auto m-2 d-none"
+                    class="btn btn-warning w-auto m-2 d-none"
                     id="btn12"
                     type="button"
                     th:onclick="addIng(12)"
@@ -788,7 +788,7 @@
                 </div>
                 <!--Singolo Ingrediente-->
                 <div class="row d-none" id="12">
-                  <div class="col-4">
+                  <div class="col-6">
                     <label class="form-label" for="nome"
                       >Nome ingrediente</label
                     >
@@ -800,9 +800,9 @@
                       th:errorClass="is-invalid"
                     />
                   </div>
-                  <div class="col-4">
+                  <div class="col-3">
                     <label class="form-label" for="quantita"
-                      >Quantita ingrediente</label
+                      >Quantit&agrave; ingrediente</label
                     >
                     <input
                       type="text"
@@ -822,7 +822,7 @@
                         th:field="*{ingredienti[12].isVegan}"
                       />
                       <label class="form-check-label" for="isVegan">
-                        Vegano?
+                        Vegano
                       </label>
                     </div>
                     <div class="form-check">
@@ -834,14 +834,14 @@
                         th:field="*{ingredienti[12].isVegetarian}"
                       />
                       <label class="form-check-label" for="isVegetarian">
-                        Vegetariano?
+                        Vegetariano
                       </label>
                     </div>
                   </div>
                 </div>
                 <div class="row">
                   <button
-                    class="btn btn-success w-auto m-2 d-none"
+                    class="btn btn-warning w-auto m-2 d-none"
                     id="btn13"
                     type="button"
                     th:onclick="addIng(13)"
@@ -851,7 +851,7 @@
                 </div>
                 <!--Singolo Ingrediente-->
                 <div class="row d-none" id="13">
-                  <div class="col-4">
+                  <div class="col-6">
                     <label class="form-label" for="nome"
                       >Nome ingrediente</label
                     >
@@ -863,9 +863,9 @@
                       th:errorClass="is-invalid"
                     />
                   </div>
-                  <div class="col-4">
+                  <div class="col-3">
                     <label class="form-label" for="quantita"
-                      >Quantita ingrediente</label
+                      >Quantit&agrave; ingrediente</label
                     >
                     <input
                       type="text"
@@ -885,7 +885,7 @@
                         th:field="*{ingredienti[13].isVegan}"
                       />
                       <label class="form-check-label" for="isVegan">
-                        Vegano?
+                        Vegano
                       </label>
                     </div>
                     <div class="form-check">
@@ -897,14 +897,14 @@
                         th:field="*{ingredienti[13].isVegetarian}"
                       />
                       <label class="form-check-label" for="isVegetarian">
-                        Vegetariano?
+                        Vegetariano
                       </label>
                     </div>
                   </div>
                 </div>
                 <div class="row">
                   <button
-                    class="btn btn-success w-auto m-2 d-none"
+                    class="btn btn-warning w-auto m-2 d-none"
                     id="btn14"
                     type="button"
                     th:onclick="addIng(14)"
@@ -914,7 +914,7 @@
                 </div>
                 <!--Singolo Ingrediente-->
                 <div class="row d-none" id="14">
-                  <div class="col-4">
+                  <div class="col-6">
                     <label class="form-label" for="nome"
                       >Nome ingrediente</label
                     >
@@ -926,9 +926,9 @@
                       th:errorClass="is-invalid"
                     />
                   </div>
-                  <div class="col-4">
+                  <div class="col-3">
                     <label class="form-label" for="quantita"
-                      >Quantita ingrediente</label
+                      >Quantit&agrave; ingrediente</label
                     >
                     <input
                       type="text"
@@ -948,7 +948,7 @@
                         th:field="*{ingredienti[14].isVegan}"
                       />
                       <label class="form-check-label" for="isVegan">
-                        Vegano?
+                        Vegano
                       </label>
                     </div>
                     <div class="form-check">
@@ -960,14 +960,14 @@
                         th:field="*{ingredienti[14].isVegetarian}"
                       />
                       <label class="form-check-label" for="isVegetarian">
-                        Vegetariano?
+                        Vegetariano
                       </label>
                     </div>
                   </div>
                 </div>
                 <div class="row">
                   <button
-                    class="btn btn-success w-auto m-2 d-none"
+                    class="btn btn-warning w-auto m-2 d-none"
                     id="btn15"
                     type="button"
                     th:onclick="addIng(15)"
@@ -977,7 +977,7 @@
                 </div>
                 <!--Singolo Ingrediente-->
                 <div class="row d-none" id="15">
-                  <div class="col-4">
+                  <div class="col-6">
                     <label class="form-label" for="nome"
                       >Nome ingrediente</label
                     >
@@ -989,9 +989,9 @@
                       th:errorClass="is-invalid"
                     />
                   </div>
-                  <div class="col-4">
+                  <div class="col-3">
                     <label class="form-label" for="quantita"
-                      >Quantita ingrediente</label
+                      >Quantit&agrave; ingrediente</label
                     >
                     <input
                       type="text"
@@ -1011,7 +1011,7 @@
                         th:field="*{ingredienti[15].isVegan}"
                       />
                       <label class="form-check-label" for="isVegan">
-                        Vegano?
+                        Vegano
                       </label>
                     </div>
                     <div class="form-check">
@@ -1023,14 +1023,14 @@
                         th:field="*{ingredienti[15].isVegetarian}"
                       />
                       <label class="form-check-label" for="isVegetarian">
-                        Vegetariano?
+                        Vegetariano
                       </label>
                     </div>
                   </div>
                 </div>
                 <div class="row">
                   <button
-                    class="btn btn-success w-auto m-2 d-none"
+                    class="btn btn-warning w-auto m-2 d-none"
                     id="btn16"
                     type="button"
                     th:onclick="addIng(16)"
@@ -1040,7 +1040,7 @@
                 </div>
                 <!--Singolo Ingrediente-->
                 <div class="row d-none" id="16">
-                  <div class="col-4">
+                  <div class="col-6">
                     <label class="form-label" for="nome"
                       >Nome ingrediente</label
                     >
@@ -1052,9 +1052,9 @@
                       th:errorClass="is-invalid"
                     />
                   </div>
-                  <div class="col-4">
+                  <div class="col-3">
                     <label class="form-label" for="quantita"
-                      >Quantita ingrediente</label
+                      >Quantit&agrave; ingrediente</label
                     >
                     <input
                       type="text"
@@ -1074,7 +1074,7 @@
                         th:field="*{ingredienti[16].isVegan}"
                       />
                       <label class="form-check-label" for="isVegan">
-                        Vegano?
+                        Vegano
                       </label>
                     </div>
                     <div class="form-check">
@@ -1086,14 +1086,14 @@
                         th:field="*{ingredienti[16].isVegetarian}"
                       />
                       <label class="form-check-label" for="isVegetarian">
-                        Vegetariano?
+                        Vegetariano
                       </label>
                     </div>
                   </div>
                 </div>
                 <div class="row">
                   <button
-                    class="btn btn-success w-auto m-2 d-none"
+                    class="btn btn-warning w-auto m-2 d-none"
                     id="btn17"
                     type="button"
                     th:onclick="addIng(17)"
@@ -1103,7 +1103,7 @@
                 </div>
                 <!--Singolo Ingrediente-->
                 <div class="row d-none" id="17">
-                  <div class="col-4">
+                  <div class="col-6">
                     <label class="form-label" for="nome"
                       >Nome ingrediente</label
                     >
@@ -1115,9 +1115,9 @@
                       th:errorClass="is-invalid"
                     />
                   </div>
-                  <div class="col-4">
+                  <div class="col-3">
                     <label class="form-label" for="quantita"
-                      >Quantita ingrediente</label
+                      >Quantit&agrave; ingrediente</label
                     >
                     <input
                       type="text"
@@ -1137,7 +1137,7 @@
                         th:field="*{ingredienti[17].isVegan}"
                       />
                       <label class="form-check-label" for="isVegan">
-                        Vegano?
+                        Vegano
                       </label>
                     </div>
                     <div class="form-check">
@@ -1149,14 +1149,14 @@
                         th:field="*{ingredienti[17].isVegetarian}"
                       />
                       <label class="form-check-label" for="isVegetarian">
-                        Vegetariano?
+                        Vegetariano
                       </label>
                     </div>
                   </div>
                 </div>
                 <div class="row">
                   <button
-                    class="btn btn-success w-auto m-2 d-none"
+                    class="btn btn-warning w-auto m-2 d-none"
                     id="btn18"
                     type="button"
                     th:onclick="addIng(18)"
@@ -1166,7 +1166,7 @@
                 </div>
                 <!--Singolo Ingrediente-->
                 <div class="row d-none" id="18">
-                  <div class="col-4">
+                  <div class="col-6">
                     <label class="form-label" for="nome"
                       >Nome ingrediente</label
                     >
@@ -1178,9 +1178,9 @@
                       th:errorClass="is-invalid"
                     />
                   </div>
-                  <div class="col-4">
+                  <div class="col-3">
                     <label class="form-label" for="quantita"
-                      >Quantita ingrediente</label
+                      >Quantit&agrave; ingrediente</label
                     >
                     <input
                       type="text"
@@ -1200,7 +1200,7 @@
                         th:field="*{ingredienti[18].isVegan}"
                       />
                       <label class="form-check-label" for="isVegan">
-                        Vegano?
+                        Vegano
                       </label>
                     </div>
                     <div class="form-check">
@@ -1212,14 +1212,14 @@
                         th:field="*{ingredienti[18].isVegetarian}"
                       />
                       <label class="form-check-label" for="isVegetarian">
-                        Vegetariano?
+                        Vegetariano
                       </label>
                     </div>
                   </div>
                 </div>
                 <div class="row">
                   <button
-                    class="btn btn-success w-auto m-2 d-none"
+                    class="btn btn-warning w-auto m-2 d-none"
                     id="btn19"
                     type="button"
                     th:onclick="addIng(19)"
@@ -1229,7 +1229,7 @@
                 </div>
                 <!--Singolo Ingrediente-->
                 <div class="row d-none" id="19">
-                  <div class="col-4">
+                  <div class="col-6">
                     <label class="form-label" for="nome"
                       >Nome ingrediente</label
                     >
@@ -1241,9 +1241,9 @@
                       th:errorClass="is-invalid"
                     />
                   </div>
-                  <div class="col-4">
+                  <div class="col-3">
                     <label class="form-label" for="quantita"
-                      >Quantita ingrediente</label
+                      >Quantit&agrave; ingrediente</label
                     >
                     <input
                       type="text"
@@ -1263,7 +1263,7 @@
                         th:field="*{ingredienti[19].isVegan}"
                       />
                       <label class="form-check-label" for="isVegan">
-                        Vegano?
+                        Vegano
                       </label>
                     </div>
                     <div class="form-check">
@@ -1275,14 +1275,14 @@
                         th:field="*{ingredienti[19].isVegetarian}"
                       />
                       <label class="form-check-label" for="isVegetarian">
-                        Vegetariano?
+                        Vegetariano
                       </label>
                     </div>
                   </div>
                 </div>
                 <div class="row">
                   <button
-                    class="btn btn-success w-auto m-2 d-none"
+                    class="btn btn-warning w-auto m-2 d-none"
                     id="btn20"
                     type="button"
                     th:onclick="addIng(20)"
@@ -1292,7 +1292,7 @@
                 </div>
                 <!--Singolo Ingrediente-->
                 <div class="row d-none" id="20">
-                  <div class="col-4">
+                  <div class="col-6">
                     <label class="form-label" for="nome"
                       >Nome ingrediente</label
                     >
@@ -1304,9 +1304,9 @@
                       th:errorClass="is-invalid"
                     />
                   </div>
-                  <div class="col-4">
+                  <div class="col-3">
                     <label class="form-label" for="quantita"
-                      >Quantita ingrediente</label
+                      >Quantit&agrave; ingrediente</label
                     >
                     <input
                       type="text"
@@ -1326,7 +1326,7 @@
                         th:field="*{ingredienti[20].isVegan}"
                       />
                       <label class="form-check-label" for="isVegan">
-                        Vegano?
+                        Vegano
                       </label>
                     </div>
                     <div class="form-check">
@@ -1338,14 +1338,14 @@
                         th:field="*{ingredienti[20].isVegetarian}"
                       />
                       <label class="form-check-label" for="isVegetarian">
-                        Vegetariano?
+                        Vegetariano
                       </label>
                     </div>
                   </div>
                 </div>
                 <div class="row">
                   <button
-                    class="btn btn-success w-auto m-2 d-none"
+                    class="btn btn-warning w-auto m-2 d-none"
                     id="btn21"
                     type="button"
                     th:onclick="addIng(21)"
@@ -1355,7 +1355,7 @@
                 </div>
                 <!--Singolo Ingrediente-->
                 <div class="row d-none" id="21">
-                  <div class="col-4">
+                  <div class="col-6">
                     <label class="form-label" for="nome"
                       >Nome ingrediente</label
                     >
@@ -1367,9 +1367,9 @@
                       th:errorClass="is-invalid"
                     />
                   </div>
-                  <div class="col-4">
+                  <div class="col-3">
                     <label class="form-label" for="quantita"
-                      >Quantita ingrediente</label
+                      >Quantit&agrave; ingrediente</label
                     >
                     <input
                       type="text"
@@ -1389,7 +1389,7 @@
                         th:field="*{ingredienti[21].isVegan}"
                       />
                       <label class="form-check-label" for="isVegan">
-                        Vegano?
+                        Vegano
                       </label>
                     </div>
                     <div class="form-check">
@@ -1401,14 +1401,14 @@
                         th:field="*{ingredienti[21].isVegetarian}"
                       />
                       <label class="form-check-label" for="isVegetarian">
-                        Vegetariano?
+                        Vegetariano
                       </label>
                     </div>
                   </div>
                 </div>
                 <div class="row">
                   <button
-                    class="btn btn-success w-auto m-2 d-none"
+                    class="btn btn-warning w-auto m-2 d-none"
                     id="btn22"
                     type="button"
                     th:onclick="addIng(22)"
@@ -1418,7 +1418,7 @@
                 </div>
                 <!--Singolo Ingrediente-->
                 <div class="row d-none" id="22">
-                  <div class="col-4">
+                  <div class="col-6">
                     <label class="form-label" for="nome"
                       >Nome ingrediente</label
                     >
@@ -1430,9 +1430,9 @@
                       th:errorClass="is-invalid"
                     />
                   </div>
-                  <div class="col-4">
+                  <div class="col-3">
                     <label class="form-label" for="quantita"
-                      >Quantita ingrediente</label
+                      >Quantit&agrave; ingrediente</label
                     >
                     <input
                       type="text"
@@ -1452,7 +1452,7 @@
                         th:field="*{ingredienti[22].isVegan}"
                       />
                       <label class="form-check-label" for="isVegan">
-                        Vegano?
+                        Vegano
                       </label>
                     </div>
                     <div class="form-check">
@@ -1464,14 +1464,14 @@
                         th:field="*{ingredienti[22].isVegetarian}"
                       />
                       <label class="form-check-label" for="isVegetarian">
-                        Vegetariano?
+                        Vegetariano
                       </label>
                     </div>
                   </div>
                 </div>
                 <div class="row">
                   <button
-                    class="btn btn-success w-auto m-2 d-none"
+                    class="btn btn-warning w-auto m-2 d-none"
                     id="btn23"
                     type="button"
                     th:onclick="addIng(23)"
@@ -1481,7 +1481,7 @@
                 </div>
                 <!--Singolo Ingrediente-->
                 <div class="row d-none" id="23">
-                  <div class="col-4">
+                  <div class="col-6">
                     <label class="form-label" for="nome"
                       >Nome ingrediente</label
                     >
@@ -1493,9 +1493,9 @@
                       th:errorClass="is-invalid"
                     />
                   </div>
-                  <div class="col-4">
+                  <div class="col-3">
                     <label class="form-label" for="quantita"
-                      >Quantita ingrediente</label
+                      >Quantit&agrave; ingrediente</label
                     >
                     <input
                       type="text"
@@ -1515,7 +1515,7 @@
                         th:field="*{ingredienti[23].isVegan}"
                       />
                       <label class="form-check-label" for="isVegan">
-                        Vegano?
+                        Vegano
                       </label>
                     </div>
                     <div class="form-check">
@@ -1527,14 +1527,14 @@
                         th:field="*{ingredienti[23].isVegetarian}"
                       />
                       <label class="form-check-label" for="isVegetarian">
-                        Vegetariano?
+                        Vegetariano
                       </label>
                     </div>
                   </div>
                 </div>
                 <div class="row">
                   <button
-                    class="btn btn-success w-auto m-2 d-none"
+                    class="btn btn-warning w-auto m-2 d-none"
                     id="btn24"
                     type="button"
                     th:onclick="addIng(24)"
@@ -1544,7 +1544,7 @@
                 </div>
                 <!--Singolo Ingrediente-->
                 <div class="row d-none" id="24">
-                  <div class="col-4">
+                  <div class="col-6">
                     <label class="form-label" for="nome"
                       >Nome ingrediente</label
                     >
@@ -1556,9 +1556,9 @@
                       th:errorClass="is-invalid"
                     />
                   </div>
-                  <div class="col-4">
+                  <div class="col-3">
                     <label class="form-label" for="quantita"
-                      >Quantita ingrediente</label
+                      >Quantit&agrave; ingrediente</label
                     >
                     <input
                       type="text"
@@ -1578,7 +1578,7 @@
                         th:field="*{ingredienti[24].isVegan}"
                       />
                       <label class="form-check-label" for="isVegan">
-                        Vegano?
+                        Vegano
                       </label>
                     </div>
                     <div class="form-check">
@@ -1590,14 +1590,14 @@
                         th:field="*{ingredienti[24].isVegetarian}"
                       />
                       <label class="form-check-label" for="isVegetarian">
-                        Vegetariano?
+                        Vegetariano
                       </label>
                     </div>
                   </div>
                 </div>
                 <div class="row">
                   <button
-                    class="btn btn-success w-auto m-2 d-none"
+                    class="btn btn-warning w-auto m-2 d-none"
                     id="btn25"
                     type="button"
                     th:onclick="addIng(25)"
@@ -1608,13 +1608,13 @@
                     Numero massimo ingredienti raggiunto
                   </div>
                 </div>
-              </div>
+              
               <div class="col-12">
-                <button class="btn btn-success" type="submit">
-                  <i class="fas fa-check"></i>Salva
+                <button class="btn btn-warning" type="submit">
+                  <i class="fas fa-check"></i> Salva
                 </button>
-                <a class="btn btn-success" th:href="@{/admin/modifica}">
-                  <i class="fas fa-times"></i>Indietro
+                <a class="btn btn-warning" th:href="@{/admin/modifica}">
+                  <i class="fas fa-times"></i> Indietro
                 </a>
               </div>
             </div>
