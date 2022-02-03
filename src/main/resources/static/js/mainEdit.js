@@ -13,7 +13,6 @@ function getRicetta(){
 	const previous = document.getElementsByClassName('ricette')
 	//console.log(previous);
 	for(let p of previous){
-		
 		p.classList.remove('d-none');
 	}
 	
@@ -26,30 +25,13 @@ function getRicetta(){
 			console.log(all.item(i));
 			results.push(all.item(i))
 		}
-	}
-	
-	/*const result = Array.prototype.filter(all,filterResults(all, input));
-		for(let r in all){
-			if(!results.includes(r))
-			r.className = 'fs-4 col-6 ricette d-none';
-		}
-		*/
-		
-		
+	}		
 		for (let el of results) {
 			el.classList.add('d-none');
 		}
 		
 	};
 	
-	function filterResults(all,input){
-		let results;
-		for(let r in all){
-			if(r.id.includes(input))
-			results.push(r);
-		}
-		return results;
-	};
 	
     	
 		
