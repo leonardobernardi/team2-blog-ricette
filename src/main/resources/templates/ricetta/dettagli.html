@@ -55,23 +55,26 @@
 
 
 
-                <div class="col p-2 m-0">
-                    <p> <span><i class="far fa-eye"></i></span>
+                <div class="col p-2 m-0 d-flex align-items-center">
+                    <div>
+                    <p> 
+                        
+                        <span><i class="far fa-eye"></i></span>
                         <span th:text="${ricetta.visualizzazioni}"></span>
-                        <button type="button" id="likeBtn"
+                        <button type="button" id="likeBtn" class="btn btn-success text-decoration-none m-2"
                             th:attr="onclick=|increaseLike('http://localhost:8080/api/ricetta/mipiace/${ricetta.id}')|"><i
-                                class="far fa-thumbs-up" id="clicks" th:text="${ricetta.miPiace}"></i></button>
+                                class="fas fa-thumbs-up" ></i>&nbsp; <spanid="clicks"  th:text="${ricetta.miPiace}"></span></button>
                     </p>
                     <p>
-                        <span>Tempo di Preparazione: </span>
-                        <span th:text="${ricetta.tempoDiPreparazione}"></span>
+                        <div class="fw-bold">Tempo di Preparazione </div>
+                        <div th:text="${ricetta.tempoDiPreparazione}"></div>
                     </p>
                     <p>
                         <span th:if="${ricetta.isVegan == true}">Ricetta vegana&nbsp;<i class="text-success fas fa-seedling"></i></span>
                         <span th:if="${ricetta.isVegan == false and ricetta.isVegetarian == true}">Ricetta vegetariana&nbsp;<i class="text-success fas fa-leaf"></i></span>
                     </p>
                     <p>
-                        <span>Difficoltà: </span>
+                        <div class="fw-bold">Difficoltà </div>
                         <th:block th:switch="${ricetta.livelloDiDifficolta}">
                             <span th:case="'1'">facile</span>
                             <span th:case="'2'">medio</span>
@@ -79,10 +82,11 @@
                         </th:block>
                     </p>
                     <p>
-                        <span>Descrizione: </span>
-                        <br>
-                        <span th:text="${ricetta.descrizione}"></span>
+                        <div class="fw-bold">Descrizione </div>
+                        
+                        <div th:text="${ricetta.descrizione}"></div>
                     </p>
+                </div>
                 </div>
             </div>
         </div>
