@@ -125,7 +125,7 @@
                     <li th:each="error : ${#fields.errors}"></li>
                 </ul>
             </div>
-            <div class="col-6 border rounded-3 border-2 p-2">
+            <div class="col-8 border rounded-3 border-2 p-2">
                 <div class="row p-3">
                     <label for="email" class="form-label">Email</label>
                     <input type="email" th:field="*{email.email}" class="form-control" id="email"
@@ -146,16 +146,16 @@
 
         </form>
 
-        <div class="col">
+        <div class="col-8">
             <div th:if="${list.size() > 0}" class="row mt-5">
-                <h5>Commenti di altri utenti</h5>
+                <h5>Commenti</h5>
                 <div th:each="item : ${list}" class="border rounded-2 p-3 m-2" th:if="${item.email.isBanned == false}">
                     <span th:text="${item.nome}" class="text-success"></span>
                     <p th:text="${item.testo}" class="border border-2 p-2 rounded-2"></p>
                 </div>
             </div>
-            <hr>
         </div>
+        <hr class="col-12"> 
     </div>
     <div th:replace="fragments/resources :: scripts"></div>
     <script type="text/javascript" th:src="@{/js/mainEdit.js}"></script>
