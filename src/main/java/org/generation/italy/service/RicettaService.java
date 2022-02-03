@@ -194,6 +194,17 @@ public class RicettaService {
 		
 		return piuCommentate;
 	}
+	
+	public List<Ricetta> findMostLiked(){
+		List<Ricetta> lista = repo.findAll(Sort.by(Direction.DESC, "miPiace"));
+		List<Ricetta> mostLiked = new ArrayList<Ricetta>();
+		int i = 0;
+		while (i < 10 && i < lista.size()) {
+			mostLiked.add(lista.get(i));
+			i++;
+		}
+		return mostLiked;
+	}
 
 	public List<Ricetta> findSixMostRecent() {
 		List<Ricetta> lista = repo.findAll(Sort.by(Direction.DESC, "dataDiCreazione"));
@@ -307,7 +318,7 @@ public class RicettaService {
 		ricettaDaModificare.setCategoria(nuovaCategoria);
 		vecchiaCategoria.setRicetta(vecchiaCLista);
 		catService.repo.save(vecchiaCategoria);
-				List<Ricetta> nuovaCLista = nuovaCategoria.getRicetta();
+		List<Ricetta> nuovaCLista = nuovaCategoria.getRicetta();
 		nuovaCLista.add(ricettaDaModificare);
 		ricettaDaModificare.setCategoria(nuovaCategoria);
 		catService.repo.save(nuovaCategoria);
