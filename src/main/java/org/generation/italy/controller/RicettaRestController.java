@@ -55,5 +55,21 @@ public class RicettaRestController {
 		}
 	}
 	
+	@GetMapping("/cerca/{titolo}")
+	public ResponseEntity<List<Ricetta>> search(@PathVariable String titolo){
+		List<Ricetta> ricette = service.findByTitolo(titolo);
+		
+		try {
+			return new ResponseEntity<List<Ricetta>>(ricette, HttpStatus.OK);
+		} catch (NoSuchElementException e) {
+
+			return new ResponseEntity<List<Ricetta>>(ricette, HttpStatus.NOT_FOUND);
+		}catch (Exception e) {
+
+			return new ResponseEntity<List<Ricetta>>(ricette, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+	}
+	
 
 }
