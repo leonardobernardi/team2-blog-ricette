@@ -1,5 +1,6 @@
 package org.generation.italy.service;
 
+import java.util.Collections;
 import java.util.List;
 
 
@@ -16,6 +17,7 @@ import org.generation.italy.repository.EmailRepository;
 import org.generation.italy.repository.RicettaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -53,7 +55,9 @@ public class CommentoService {
 	}
 	
 	public List<Commento> findAll(){
-		return repo.findAll(Sort.by("ricetta"));
+		List<Commento> list = repo.findAll(Sort.by(Direction.ASC,"ricetta"));
+		Collections.reverse(list);
+		return list;
 	}
 
 	

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <div th:replace="fragments/resources :: headTags"></div>
@@ -11,13 +11,13 @@
     <div class="container mt-3">
         <h1 class="text-center">Crea nuova ricetta</h1>
         <hr>
-        <form id="ricetta-form" th:object="${ricetta}"
+        <form id="ricetta-form" 
+        	th:object="${ricetta}"
             th:action="${edit} ? @{/admin/ricetta/modifica/{id}(id=${ricetta.id})} : @{/admin/ricetta/crea}"
-            method="post" enctype="multipart/form-data">
-            <ul>
-                <li th:each="err : ${#fields.allErrors()}" th:text="${err}" class="text-danger"></li>
-            </ul>
-
+            method="post" 
+            enctype="multipart/form-data"
+     	>
+        
             <div class="row">
                 <!--Ricetta-->
                 <div class="col-6">
@@ -72,7 +72,7 @@
                         </div>
                         <div class="col-12">
                             <label class="form-label" for="descrizione">Descrizione</label>
-                            <textarea rows="3" cols="6" class="form-control" id="descrizione" th:field="*{descrizione}"
+                            <textarea rows="3" cols="6" maxlength="250" class="form-control" id="descrizione" th:field="*{descrizione}"
                                 th:errorClass="is-invalid"></textarea>
                             <div th:if="${#fields.hasErrors('descrizione')}" class="invalid-feedback">
                                 <ul>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org/%22%3E">
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <div th:replace="fragments/resources :: headTags"></div>
@@ -73,7 +73,7 @@
                             </div>
                             <div class="col-12">
                                 <label class="form-label" for="descrizione">Descrizione</label>
-                                <textarea rows="3" cols="6" class="form-control" id="descrizione"
+                                <textarea rows="3" cols="6" maxlength="250" class="form-control" id="descrizione"
                                     th:field="*{descrizione}" th:errorClass="is-invalid"></textarea>
                                 <div th:if="${#fields.hasErrors('descrizione')}" class="invalid-feedback">
                                     <ul>

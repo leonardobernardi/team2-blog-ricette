@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <div th:replace="fragments/resources :: headTags"></div>
     <link rel="stylesheet" th:href="@{/css/style.css}">
     <th:block th:switch="${categoriaNome.id}">
-    <title th:case="'1'">Antipasti</title>
-    <title th:case="'2'">Primi</title>
-    <title th:case="'3'">Secondi</title>
-    <title th:case="'4'">Contorni</title>
-    <title th:case="'5'">Dolci</title> 
+	    <title th:case="'1'">Antipasti</title>
+	    <title th:case="'2'">Primi</title>
+	    <title th:case="'3'">Secondi</title>
+	    <title th:case="'4'">Contorni</title>
+	    <title th:case="'5'">Dolci</title> 
 </th:block>
 </head>
 

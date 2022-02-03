@@ -18,7 +18,7 @@ public class Email {
 	
 	@javax.validation.constraints.Email
 	@NotNull
-	@NotEmpty
+	@NotEmpty(message="Il campo E-mail non può essere vuoto")
 //	@Pattern(regexp="^(.+)@(\\S+)$")
 	private String email;
 	
